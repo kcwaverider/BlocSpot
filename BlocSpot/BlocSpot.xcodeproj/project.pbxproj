@@ -18,6 +18,7 @@
 		88A581941BC3299700B0E8A4 /* BlocSpotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A581931BC3299700B0E8A4 /* BlocSpotTests.m */; };
 		88A5819F1BC3299700B0E8A4 /* BlocSpotUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A5819E1BC3299700B0E8A4 /* BlocSpotUITests.m */; };
 		88A581AD1BC329A300B0E8A4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A581AC1BC329A300B0E8A4 /* MapKit.framework */; };
+		88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B693E41BC6D4500023DBF7 /* MapViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 		88A5819E1BC3299700B0E8A4 /* BlocSpotUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlocSpotUITests.m; sourceTree = "<group>"; };
 		88A581A01BC3299700B0E8A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88A581AC1BC329A300B0E8A4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		88B693E31BC6D4500023DBF7 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		88B693E41BC6D4500023DBF7 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +119,8 @@
 				88A5817D1BC3299700B0E8A4 /* MasterViewController.m */,
 				88A5817F1BC3299700B0E8A4 /* DetailViewController.h */,
 				88A581801BC3299700B0E8A4 /* DetailViewController.m */,
+				88B693E31BC6D4500023DBF7 /* MapViewController.h */,
+				88B693E41BC6D4500023DBF7 /* MapViewController.m */,
 				88A581821BC3299700B0E8A4 /* Main.storyboard */,
 				88A581851BC3299700B0E8A4 /* Assets.xcassets */,
 				88A581871BC3299700B0E8A4 /* LaunchScreen.storyboard */,
@@ -290,6 +295,7 @@
 				88A581811BC3299700B0E8A4 /* DetailViewController.m in Sources */,
 				88A5817E1BC3299700B0E8A4 /* MasterViewController.m in Sources */,
 				88A5817B1BC3299700B0E8A4 /* BlocSpot.xcdatamodeld in Sources */,
+				88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */,
 				88A581781BC3299700B0E8A4 /* AppDelegate.m in Sources */,
 				88A581751BC3299700B0E8A4 /* main.m in Sources */,
 			);
@@ -517,6 +523,7 @@
 				88A581A51BC3299700B0E8A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		88A581A61BC3299700B0E8A4 /* Build configuration list for PBXNativeTarget "BlocSpotTests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +532,7 @@
 				88A581A81BC3299700B0E8A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		88A581A91BC3299700B0E8A4 /* Build configuration list for PBXNativeTarget "BlocSpotUITests" */ = {
 			isa = XCConfigurationList;
@@ -533,6 +541,7 @@
 				88A581AB1BC3299700B0E8A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

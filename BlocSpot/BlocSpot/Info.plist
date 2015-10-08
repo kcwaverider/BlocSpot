@@ -53,5 +53,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string></string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>BlocSpot tracks your location when in use!</string>
 </dict>
 </plist>
