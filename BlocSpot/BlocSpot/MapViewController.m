@@ -21,7 +21,7 @@
 @end
 
 #define METERS_PER_MILE 1609.344
-#define SEARCH_BAR_MAX_WIDTH 300
+#define SEARCH_BAR_MAX_WIDTH 250
 
 
 @implementation MapViewController
@@ -33,8 +33,22 @@
     _locationManager.delegate = self;
     [self.locationManager requestWhenInUseAuthorization];
     [_locationManager startUpdatingLocation];
+    
     // Do any additional setup after loading the view.
-    NSLog(@"%f", self.view.frame.size.width);
+    
+    CGFloat screenWidth = self.view.frame.size.width;
+    CGFloat searchBarWidth = screenWidth < 400 ? screenWidth * 1 / 2 : SEARCH_BAR_MAX_WIDTH;
+    CGRect searchBarFrame = CGRectMake((screenWidth - searchBarWidth) / 2, self.navigationController.navigationBar.frame.size.height / 2 - 10, searchBarWidth, 20);
+    
+    self.searchBar = [[UITextField alloc] initWithFrame:searchBarFrame];
+    self.searchBar.text= @"Search";
+    self.searchBar.textAlignment = NSTextAlignmentCenter;
+    self.searchBar.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
+    self.searchBar.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.3];
+    [self.navigationController.navigationBar addSubview:self.searchBar];
+    self.searchBar.delegate = self;
+    //self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    //self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
     
     
     
@@ -47,18 +61,7 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    
-    self.searchBar = [[UITextField alloc] initWithFrame:CGRectMake(self.navigationController.navigationBar.frame.size.width / 2 - 30, self.navigationController.navigationBar.frame.size.height / 2 - 10, 60, 20)];
-    self.searchBar.text= @"Search";
-    self.searchBar.textColor = [UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1];
-    self.searchBar.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.3];
-    [self.navigationController.navigationBar addSubview:self.searchBar];
-    self.searchBar.delegate = self;
-    //self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
-    //self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
-    
-    NSLog(@"%@", NSStringFromCGRect(self.searchBar.frame));
-    
+
     
     CLLocationCoordinate2D zoomLocation;
     zoomLocation.latitude = -36.8406;
@@ -75,6 +78,7 @@
     NSLog(@"%@", searchString);
     
     // Call search function here...
+    [self conductSearchFor:searchString];
     
     return NO;
 }
@@ -85,6 +89,20 @@
     return YES;
 }
 
+- (void) conductSearchFor:(NSString *)searchString {
+    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
+    request.naturalLanguageQuery = searchString;
+    request.region = self.mapView.region;
+    
+    MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
+    [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
+        NSLog(@"Map Items: %@", response.mapItems);
+    }];
+}
+
+- (void) dropPinsFor:(NSArray *)mapItems {
+    
+}
 /*
 #pragma mark - Navigation
 
