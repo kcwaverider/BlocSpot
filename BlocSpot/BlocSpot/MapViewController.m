@@ -47,12 +47,20 @@
     self.searchBar.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.3];
     [self.navigationController.navigationBar addSubview:self.searchBar];
     self.searchBar.delegate = self;
+    self.navigationController.navigationBar.alpha = 0.6;
     //self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     //self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
     
     
     
     
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:YES];
+    
+    [self.searchBar removeFromSuperview];
+    self.navigationController.navigationBar.alpha = 1;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -95,13 +103,41 @@
     request.region = self.mapView.region;
     
     MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
+    
+    
     [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
         NSLog(@"Map Items: %@", response.mapItems);
+        [self dropPinsFor:response.mapItems];
     }];
 }
 
-- (void) dropPinsFor:(NSArray *)mapItems {
+- (void) dropPinsFor:(NSArray *)mapItemsArray {
     
+    id userLocation = [self.mapView userLocation];
+    NSMutableArray *pins = [[NSMutableArray alloc] initWithArray:[self.mapView annotations]];
+    if (pins != nil) {
+        if (userLocation != nil) {
+            [pins removeObject:userLocation];
+        }
+        
+        [self.mapView removeAnnotations:pins];
+    }
+    
+    
+    
+    for (MKMapItem *mapItem in mapItemsArray) {
+        
+        CGFloat latitude = mapItem.placemark.location.coordinate.latitude;
+        CGFloat longitude = mapItem.placemark.location.coordinate.longitude;
+        CLLocationCoordinate2D pinPoint;
+        pinPoint.latitude = latitude;
+        pinPoint.longitude = longitude;
+        MKPointAnnotation *annot = [[MKPointAnnotation alloc] init];
+        annot.coordinate = pinPoint;
+        [self.mapView addAnnotation:annot];
+        
+        
+    }
 }
 /*
 #pragma mark - Navigation
