@@ -15,7 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-
+@property (strong, nonatomic) MKLocalSearch *search;
 //@property (strong, nonatomic)
 
 @end
@@ -98,16 +98,19 @@
 }
 
 - (void) conductSearchFor:(NSString *)searchString {
+    
+    [self.search cancel];
     MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
     request.naturalLanguageQuery = searchString;
     request.region = self.mapView.region;
     
-    MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
+    self.search = [[MKLocalSearch alloc] initWithRequest:request];
     
     
-    [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
+    [self.search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
         NSLog(@"Map Items: %@", response.mapItems);
         [self dropPinsFor:response.mapItems];
+        self.search = nil;
     }];
 }
 
@@ -132,8 +135,11 @@
         CLLocationCoordinate2D pinPoint;
         pinPoint.latitude = latitude;
         pinPoint.longitude = longitude;
+        
         MKPointAnnotation *annot = [[MKPointAnnotation alloc] init];
         annot.coordinate = pinPoint;
+         
+       // MKPinAnnotationView *annot = [[MKPinAnnotationView alloc] ini]
         [self.mapView addAnnotation:annot];
         
         

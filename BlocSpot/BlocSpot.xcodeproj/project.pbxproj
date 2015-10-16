@@ -19,6 +19,9 @@
 		88A5819F1BC3299700B0E8A4 /* BlocSpotUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A5819E1BC3299700B0E8A4 /* BlocSpotUITests.m */; };
 		88A581AD1BC329A300B0E8A4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A581AC1BC329A300B0E8A4 /* MapKit.framework */; };
 		88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B693E41BC6D4500023DBF7 /* MapViewController.m */; settings = {ASSET_TAGS = (); }; };
+		88D24A111BD03C7300EB3920 /* ListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A101BD03C7300EB3920 /* ListTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		88D24A141BD03E8D00EB3920 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A131BD03E8D00EB3920 /* DataSource.m */; settings = {ASSET_TAGS = (); }; };
+		88D24A171BD050E100EB3920 /* PointOfInterest.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A161BD050E100EB3920 /* PointOfInterest.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +64,12 @@
 		88A581AC1BC329A300B0E8A4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		88B693E31BC6D4500023DBF7 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		88B693E41BC6D4500023DBF7 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		88D24A0F1BD03C7300EB3920 /* ListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTableViewController.h; sourceTree = "<group>"; };
+		88D24A101BD03C7300EB3920 /* ListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListTableViewController.m; sourceTree = "<group>"; };
+		88D24A121BD03E8D00EB3920 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
+		88D24A131BD03E8D00EB3920 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
+		88D24A151BD050E100EB3920 /* PointOfInterest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointOfInterest.h; sourceTree = "<group>"; };
+		88D24A161BD050E100EB3920 /* PointOfInterest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointOfInterest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +136,12 @@
 				88A5818A1BC3299700B0E8A4 /* Info.plist */,
 				88A581791BC3299700B0E8A4 /* BlocSpot.xcdatamodeld */,
 				88A581731BC3299700B0E8A4 /* Supporting Files */,
+				88D24A0F1BD03C7300EB3920 /* ListTableViewController.h */,
+				88D24A101BD03C7300EB3920 /* ListTableViewController.m */,
+				88D24A121BD03E8D00EB3920 /* DataSource.h */,
+				88D24A131BD03E8D00EB3920 /* DataSource.m */,
+				88D24A151BD050E100EB3920 /* PointOfInterest.h */,
+				88D24A161BD050E100EB3920 /* PointOfInterest.m */,
 			);
 			path = BlocSpot;
 			sourceTree = "<group>";
@@ -294,7 +309,10 @@
 			files = (
 				88A581811BC3299700B0E8A4 /* DetailViewController.m in Sources */,
 				88A5817E1BC3299700B0E8A4 /* MasterViewController.m in Sources */,
+				88D24A141BD03E8D00EB3920 /* DataSource.m in Sources */,
 				88A5817B1BC3299700B0E8A4 /* BlocSpot.xcdatamodeld in Sources */,
+				88D24A171BD050E100EB3920 /* PointOfInterest.m in Sources */,
+				88D24A111BD03C7300EB3920 /* ListTableViewController.m in Sources */,
 				88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */,
 				88A581781BC3299700B0E8A4 /* AppDelegate.m in Sources */,
 				88A581751BC3299700B0E8A4 /* main.m in Sources */,
