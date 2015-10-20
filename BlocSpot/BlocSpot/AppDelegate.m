@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "DetailViewController.h"
 #import "MasterViewController.h"
+#import "PointOfInterest.h"
+#import "Location.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
 
@@ -18,6 +20,34 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+     // CoreData trial
+    NSManagedObjectContext *context = [self managedObjectContext];
+    PointOfInterest *favoritePoints = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:context];
+    favoritePoints.name = @"Test Point";
+
+    favoritePoints.favorite = [NSNumber numberWithBool: YES];
+    favoritePoints.category = [NSNumber numberWithInt:1];
+    Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:context];
+    location.latitude = [NSNumber numberWithDouble:43.34567];
+    location.longitude = [NSNumber numberWithDouble:13.76548];
+    location.pointOfInterest = favoritePoints;
+    favoritePoints.location = location;
+    NSError *error;
+    if(![context save:&error]) {
+        NSLog(@"Whoops, coudn't save: %@", [error localizedDescription]);
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    for (PointOfInterest *info in fetchedObjects) {
+        NSLog(@"Name: %@", info.name);
+        NSLog(@"Latitude: %@", info.location.latitude);
+        NSLog(@"Longitude: %@", info.location.longitude);
+    }
+    
+    
     // Override point for customization after application launch.
     UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
     UINavigationController *navigationController = [splitViewController.viewControllers lastObject];

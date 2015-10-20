@@ -9,14 +9,18 @@
 #import "MapViewController.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "SearchResultsTableViewController.h"
 
 @interface MapViewController ()  <CLLocationManagerDelegate, UITextFieldDelegate>
-@property (strong, nonatomic) IBOutlet UITextField *searchBar;
 
+@property (strong, nonatomic) IBOutlet UITextField *searchBar;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) IBOutlet UIButton *listButton;
+
+
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) MKLocalSearch *search;
-//@property (strong, nonatomic)
+//@property (strong, nonatomic) S;
 
 @end
 
@@ -51,8 +55,13 @@
     //self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     //self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
     
+    self.listButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.listButton.frame =CGRectMake(CGRectGetMaxX(searchBarFrame) + 40, CGRectGetMinY(searchBarFrame) - 5, 35, 30);
+    [self.listButton setTitle:NSLocalizedString(@"List", @"List") forState:UIControlStateNormal];
+    self.listButton.titleLabel.font = [UIFont systemFontOfSize:20];
     
-    
+    //[self.navigationController.navigationBar addSubview:self.listButton];
+    //[self.listButton removeFromSuperview];
     
 }
 
@@ -60,6 +69,7 @@
     [super viewWillDisappear:YES];
     
     [self.searchBar removeFromSuperview];
+    [self.listButton removeFromSuperview];
     self.navigationController.navigationBar.alpha = 1;
 }
 
@@ -87,6 +97,7 @@
     
     // Call search function here...
     [self conductSearchFor:searchString];
+    [self.navigationController.navigationBar addSubview:self.listButton];
     
     return NO;
 }
@@ -126,8 +137,6 @@
         [self.mapView removeAnnotations:pins];
     }
     
-    
-    
     for (MKMapItem *mapItem in mapItemsArray) {
         
         CGFloat latitude = mapItem.placemark.location.coordinate.latitude;
@@ -141,7 +150,6 @@
          
        // MKPinAnnotationView *annot = [[MKPinAnnotationView alloc] ini]
         [self.mapView addAnnotation:annot];
-        
         
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		884DD0921BD5779500A43B1C /* SearchResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */; settings = {ASSET_TAGS = (); }; };
 		88A581751BC3299700B0E8A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A581741BC3299700B0E8A4 /* main.m */; };
 		88A581781BC3299700B0E8A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A581771BC3299700B0E8A4 /* AppDelegate.m */; };
 		88A5817B1BC3299700B0E8A4 /* BlocSpot.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 88A581791BC3299700B0E8A4 /* BlocSpot.xcdatamodeld */; };
@@ -21,7 +22,10 @@
 		88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B693E41BC6D4500023DBF7 /* MapViewController.m */; settings = {ASSET_TAGS = (); }; };
 		88D24A111BD03C7300EB3920 /* ListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A101BD03C7300EB3920 /* ListTableViewController.m */; settings = {ASSET_TAGS = (); }; };
 		88D24A141BD03E8D00EB3920 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A131BD03E8D00EB3920 /* DataSource.m */; settings = {ASSET_TAGS = (); }; };
-		88D24A171BD050E100EB3920 /* PointOfInterest.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A161BD050E100EB3920 /* PointOfInterest.m */; settings = {ASSET_TAGS = (); }; };
+		88D24A321BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2B1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
+		88D24A331BD16FC100EB3920 /* PointOfInterest.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2D1BD16FC100EB3920 /* PointOfInterest.m */; settings = {ASSET_TAGS = (); }; };
+		88D24A341BD16FC100EB3920 /* Location+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2F1BD16FC100EB3920 /* Location+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
+		88D24A351BD16FC100EB3920 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A311BD16FC100EB3920 /* Location.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		884DD0901BD5779500A43B1C /* SearchResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsTableViewController.h; sourceTree = "<group>"; };
+		884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsTableViewController.m; sourceTree = "<group>"; };
 		88A581701BC3299700B0E8A4 /* BlocSpot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlocSpot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A581741BC3299700B0E8A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		88A581761BC3299700B0E8A4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -68,8 +74,14 @@
 		88D24A101BD03C7300EB3920 /* ListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListTableViewController.m; sourceTree = "<group>"; };
 		88D24A121BD03E8D00EB3920 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
 		88D24A131BD03E8D00EB3920 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
-		88D24A151BD050E100EB3920 /* PointOfInterest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointOfInterest.h; sourceTree = "<group>"; };
-		88D24A161BD050E100EB3920 /* PointOfInterest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointOfInterest.m; sourceTree = "<group>"; };
+		88D24A2A1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PointOfInterest+CoreDataProperties.h"; path = "../PointOfInterest+CoreDataProperties.h"; sourceTree = "<group>"; };
+		88D24A2B1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PointOfInterest+CoreDataProperties.m"; path = "../PointOfInterest+CoreDataProperties.m"; sourceTree = "<group>"; };
+		88D24A2C1BD16FC100EB3920 /* PointOfInterest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PointOfInterest.h; path = ../PointOfInterest.h; sourceTree = "<group>"; };
+		88D24A2D1BD16FC100EB3920 /* PointOfInterest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PointOfInterest.m; path = ../PointOfInterest.m; sourceTree = "<group>"; };
+		88D24A2E1BD16FC100EB3920 /* Location+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Location+CoreDataProperties.h"; path = "../Location+CoreDataProperties.h"; sourceTree = "<group>"; };
+		88D24A2F1BD16FC100EB3920 /* Location+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Location+CoreDataProperties.m"; path = "../Location+CoreDataProperties.m"; sourceTree = "<group>"; };
+		88D24A301BD16FC100EB3920 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = ../Location.h; sourceTree = "<group>"; };
+		88D24A311BD16FC100EB3920 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = ../Location.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,10 +150,18 @@
 				88A581731BC3299700B0E8A4 /* Supporting Files */,
 				88D24A0F1BD03C7300EB3920 /* ListTableViewController.h */,
 				88D24A101BD03C7300EB3920 /* ListTableViewController.m */,
+				88D24A2A1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.h */,
+				88D24A2B1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m */,
+				88D24A2C1BD16FC100EB3920 /* PointOfInterest.h */,
+				88D24A2D1BD16FC100EB3920 /* PointOfInterest.m */,
+				88D24A2E1BD16FC100EB3920 /* Location+CoreDataProperties.h */,
+				88D24A2F1BD16FC100EB3920 /* Location+CoreDataProperties.m */,
+				88D24A301BD16FC100EB3920 /* Location.h */,
+				88D24A311BD16FC100EB3920 /* Location.m */,
 				88D24A121BD03E8D00EB3920 /* DataSource.h */,
 				88D24A131BD03E8D00EB3920 /* DataSource.m */,
-				88D24A151BD050E100EB3920 /* PointOfInterest.h */,
-				88D24A161BD050E100EB3920 /* PointOfInterest.m */,
+				884DD0901BD5779500A43B1C /* SearchResultsTableViewController.h */,
+				884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */,
 			);
 			path = BlocSpot;
 			sourceTree = "<group>";
@@ -309,12 +329,16 @@
 			files = (
 				88A581811BC3299700B0E8A4 /* DetailViewController.m in Sources */,
 				88A5817E1BC3299700B0E8A4 /* MasterViewController.m in Sources */,
+				884DD0921BD5779500A43B1C /* SearchResultsTableViewController.m in Sources */,
 				88D24A141BD03E8D00EB3920 /* DataSource.m in Sources */,
+				88D24A331BD16FC100EB3920 /* PointOfInterest.m in Sources */,
 				88A5817B1BC3299700B0E8A4 /* BlocSpot.xcdatamodeld in Sources */,
-				88D24A171BD050E100EB3920 /* PointOfInterest.m in Sources */,
+				88D24A341BD16FC100EB3920 /* Location+CoreDataProperties.m in Sources */,
 				88D24A111BD03C7300EB3920 /* ListTableViewController.m in Sources */,
 				88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */,
+				88D24A321BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m in Sources */,
 				88A581781BC3299700B0E8A4 /* AppDelegate.m in Sources */,
+				88D24A351BD16FC100EB3920 /* Location.m in Sources */,
 				88A581751BC3299700B0E8A4 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

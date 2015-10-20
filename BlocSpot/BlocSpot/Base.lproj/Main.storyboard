@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Master-->
@@ -132,39 +133,51 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ycl-Sf-ZpO">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ycl-Sf-ZpO">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <items>
                                     <navigationItem id="ZHp-aJ-pXe">
                                         <nil key="title"/>
-                                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="@&quot;Search&quot;" textAlignment="natural" minimumFontSize="17" id="wc3-nZ-MOO">
-                                            <rect key="frame" x="180" y="7" width="240" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" red="0.98823535439999999" green="0.078431375319999996" blue="0.43921571970000001" alpha="1" colorSpace="deviceRGB"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O7w-CM-noD">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="605"/>
-                            </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9g8-LR-gqs">
-                                <rect key="frame" x="440" y="15" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nzk-uN-ank">
+                                <rect key="frame" x="472" y="7" width="46" height="30"/>
+                                <state key="normal" title="List"/>
                             </button>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O7w-CM-noD">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="O7w-CM-noD" firstAttribute="leading" secondItem="TXK-x1-fMx" secondAttribute="leading" id="4yR-QS-Pdh"/>
+                            <constraint firstItem="O7w-CM-noD" firstAttribute="trailing" secondItem="Ycl-Sf-ZpO" secondAttribute="trailing" id="B4B-Hx-dkQ"/>
+                            <constraint firstItem="O7w-CM-noD" firstAttribute="leading" secondItem="Ycl-Sf-ZpO" secondAttribute="leading" id="KES-F0-30u"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="O7w-CM-noD" secondAttribute="bottom" id="NSD-5w-v0Y"/>
+                            <constraint firstItem="O7w-CM-noD" firstAttribute="top" secondItem="Ycl-Sf-ZpO" secondAttribute="top" id="Rrg-Gp-XYZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="O7w-CM-noD" secondAttribute="trailing" id="lpe-Cs-sP3"/>
+                            <constraint firstItem="O7w-CM-noD" firstAttribute="top" secondItem="TXK-x1-fMx" secondAttribute="top" id="vZX-ru-ODX"/>
+                            <constraint firstItem="O7w-CM-noD" firstAttribute="leading" secondItem="TXK-x1-fMx" secondAttribute="leadingMargin" id="vgv-WR-afz"/>
+                            <constraint firstAttribute="trailing" secondItem="O7w-CM-noD" secondAttribute="trailing" id="wfG-p6-2fx"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="lpe-Cs-sP3"/>
+                                <exclude reference="vgv-WR-afz"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="listButton" destination="Nzk-uN-ank" id="Vxe-PI-4w9"/>
                         <outlet property="mapView" destination="O7w-CM-noD" id="Pl9-xx-9sc"/>
-                        <outlet property="searchBar" destination="wc3-nZ-MOO" id="PxE-ic-8DC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lmf-Tq-L58" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1512" y="-634"/>
+            <point key="canvasLocation" x="1514" y="-617"/>
         </scene>
         <!--List Table View Controller-->
         <scene sceneID="oSY-uI-Td5">
@@ -181,6 +194,15 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dsP-HL-XkN" id="m4S-eK-wkz">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpH-H9-abU">
+                                            <rect key="frame" x="26" y="5" width="30" height="30"/>
+                                            <state key="normal" title="Map"/>
+                                            <connections>
+                                                <segue destination="C8b-UM-VgL" kind="show" id="CRg-ko-Ur4"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -211,6 +233,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="DIM-gt-Lh9"/>
         <segue reference="6S0-TO-JiA"/>
     </inferredMetricsTieBreakers>
 </document>
