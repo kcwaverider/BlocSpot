@@ -20,7 +20,6 @@
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) MKLocalSearch *search;
-//@property (strong, nonatomic) S;
 
 @end
 
@@ -55,10 +54,7 @@
     //self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     //self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
     
-    self.listButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.listButton.frame =CGRectMake(CGRectGetMaxX(searchBarFrame) + 40, CGRectGetMinY(searchBarFrame) - 5, 35, 30);
-    [self.listButton setTitle:NSLocalizedString(@"List", @"List") forState:UIControlStateNormal];
-    self.listButton.titleLabel.font = [UIFont systemFontOfSize:20];
+    
     
     //[self.navigationController.navigationBar addSubview:self.listButton];
     //[self.listButton removeFromSuperview];
@@ -97,7 +93,7 @@
     
     // Call search function here...
     [self conductSearchFor:searchString];
-    [self.navigationController.navigationBar addSubview:self.listButton];
+    
     
     return NO;
 }
@@ -122,6 +118,11 @@
         NSLog(@"Map Items: %@", response.mapItems);
         [self dropPinsFor:response.mapItems];
         self.search = nil;
+        
+        [self placeListButton];
+        
+        
+        
     }];
 }
 
@@ -152,6 +153,29 @@
         [self.mapView addAnnotation:annot];
         
     }
+}
+
+- (void) placeListButton {
+    [self.listButton removeFromSuperview];
+    self.listButton = nil;
+    CGFloat screenWidth = self.view.frame.size.width;
+    CGFloat searchBarWidth = screenWidth < 400 ? screenWidth * 1 / 2 : SEARCH_BAR_MAX_WIDTH;
+    CGRect searchBarFrame = CGRectMake((screenWidth - searchBarWidth) / 2, self.navigationController.navigationBar.frame.size.height / 2 - 10, searchBarWidth, 20);
+    
+    self.listButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.listButton.frame =CGRectMake(CGRectGetMaxX(searchBarFrame) + 40, CGRectGetMinY(searchBarFrame) - 5, 35, 30);
+    [self.listButton setTitle:NSLocalizedString(@"List", @"List") forState:UIControlStateNormal];
+    self.listButton.titleLabel.font = [UIFont systemFontOfSize:20];
+    
+    [self.listButton addTarget:self action:@selector(showList) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationController.navigationBar addSubview:self.listButton];
+    
+}
+
+- (void) showList{
+    SearchResultsTableViewController *list = [[SearchResultsTableViewController alloc] init];
+    list.view.frame = CGRectMake( 120, 0, CGRectGetWidth(self.view.frame) - 120, CGRectGetHeight(self.view.frame) );
+    [self presentViewController:list animated:YES  completion:nil];
 }
 /*
 #pragma mark - Navigation
