@@ -10,4 +10,7 @@
 
 @interface SearchResultsTableViewController : UITableViewController
 
+
+@property (nonatomic, strong) NSMutableArray *pointOfInterestArray;
+
 @end

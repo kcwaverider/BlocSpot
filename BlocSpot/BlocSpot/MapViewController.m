@@ -7,6 +7,7 @@
 //
 
 #import "MapViewController.h"
+#import "DataSource.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "SearchResultsTableViewController.h"
@@ -15,11 +16,12 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *searchBar;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) IBOutlet UIButton *listButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *listButton;
 
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) MKLocalSearch *search;
+@property (strong, nonatomic) NSMutableArray *pointOfInterestArray;
 
 @end
 
@@ -31,6 +33,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [DataSource sharedInstance];
+    
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     _locationManager.delegate = self;
@@ -51,7 +55,7 @@
     [self.navigationController.navigationBar addSubview:self.searchBar];
     self.searchBar.delegate = self;
     self.navigationController.navigationBar.alpha = 0.6;
-    //self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+   //self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     //self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
     
     
@@ -65,7 +69,7 @@
     [super viewWillDisappear:YES];
     
     [self.searchBar removeFromSuperview];
-    [self.listButton removeFromSuperview];
+    //[self.listButton removeFromSuperview];
     self.navigationController.navigationBar.alpha = 1;
 }
 
@@ -116,10 +120,13 @@
     
     [self.search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
         NSLog(@"Map Items: %@", response.mapItems);
-        [self dropPinsFor:response.mapItems];
+        
+        self.pointOfInterestArray = nil;
+        [DataSource sharedInstance].localPlacesList = [response.mapItems mutableCopy];
         self.search = nil;
         
-        [self placeListButton];
+        [self dropPinsFor:response.mapItems];
+        //[self placeListButton];
         
         
         
@@ -154,7 +161,7 @@
         
     }
 }
-
+/*
 - (void) placeListButton {
     [self.listButton removeFromSuperview];
     self.listButton = nil;
@@ -171,20 +178,26 @@
     [self.navigationController.navigationBar addSubview:self.listButton];
     
 }
+ */
 
 - (void) showList{
     SearchResultsTableViewController *list = [[SearchResultsTableViewController alloc] init];
     list.view.frame = CGRectMake( 120, 0, CGRectGetWidth(self.view.frame) - 120, CGRectGetHeight(self.view.frame) );
-    [self presentViewController:list animated:YES  completion:nil];
+    list.pointOfInterestArray = [[NSMutableArray alloc]initWithArray:self.pointOfInterestArray];
+    [self presentViewController:list animated:YES  completion:^{
+        //list.pointOfInterestArray = [[NSMutableArray alloc]initWithArray:self.pointOfInterestArray];
+    }];
+    
 }
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    int i = 3;
 }
-*/
+
 
 @end

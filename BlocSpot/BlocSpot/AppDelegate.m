@@ -21,6 +21,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
      // CoreData trial
+        /*
     NSManagedObjectContext *context = [self managedObjectContext];
     PointOfInterest *favoritePoints = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:context];
     favoritePoints.name = @"Test Point";
@@ -46,7 +47,7 @@
         NSLog(@"Latitude: %@", info.location.latitude);
         NSLog(@"Longitude: %@", info.location.longitude);
     }
-    
+         */
     
     // Override point for customization after application launch.
     UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;

@@ -1,12 +1,13 @@
-//
+    //
 //  SearchResultsTableViewController.m
 //  BlocSpot
 //
 //  Created by Chad Clayton on 10/19/15.
 //  Copyright © 2015 Chad Clayton. All rights reserved.
 //
-
+#import <MapKit/MapKit.h>
 #import "SearchResultsTableViewController.h"
+#import "DataSource.h"
 
 @interface SearchResultsTableViewController ()
 
@@ -17,11 +18,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //[self.tableView registerClass:[SearchResultsTableViewController class] forCellReuseIdentifier:@"poiCell"];
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+     self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,24 +36,30 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    
+    return 3;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+   
+    static NSString *CellIdentifier = @"pointOfInterestCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    MKMapItem *mapItem = [[MKMapItem alloc] init];
+    mapItem = [DataSource sharedInstance].localPlacesList[indexPath.row];
+    cell.textLabel.text = mapItem.name;
     
     return cell;
+    
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

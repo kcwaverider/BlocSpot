@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		884DD0921BD5779500A43B1C /* SearchResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		887531801BD80188007D31C1 /* PointOfInterestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8875317F1BD80188007D31C1 /* PointOfInterestCell.m */; settings = {ASSET_TAGS = (); }; };
 		88A581751BC3299700B0E8A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A581741BC3299700B0E8A4 /* main.m */; };
 		88A581781BC3299700B0E8A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A581771BC3299700B0E8A4 /* AppDelegate.m */; };
 		88A5817B1BC3299700B0E8A4 /* BlocSpot.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 88A581791BC3299700B0E8A4 /* BlocSpot.xcdatamodeld */; };
@@ -20,7 +21,6 @@
 		88A5819F1BC3299700B0E8A4 /* BlocSpotUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A5819E1BC3299700B0E8A4 /* BlocSpotUITests.m */; };
 		88A581AD1BC329A300B0E8A4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A581AC1BC329A300B0E8A4 /* MapKit.framework */; };
 		88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B693E41BC6D4500023DBF7 /* MapViewController.m */; settings = {ASSET_TAGS = (); }; };
-		88D24A111BD03C7300EB3920 /* ListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A101BD03C7300EB3920 /* ListTableViewController.m */; settings = {ASSET_TAGS = (); }; };
 		88D24A141BD03E8D00EB3920 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A131BD03E8D00EB3920 /* DataSource.m */; settings = {ASSET_TAGS = (); }; };
 		88D24A321BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2B1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
 		88D24A331BD16FC100EB3920 /* PointOfInterest.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2D1BD16FC100EB3920 /* PointOfInterest.m */; settings = {ASSET_TAGS = (); }; };
@@ -48,6 +48,8 @@
 /* Begin PBXFileReference section */
 		884DD0901BD5779500A43B1C /* SearchResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsTableViewController.h; sourceTree = "<group>"; };
 		884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsTableViewController.m; sourceTree = "<group>"; };
+		8875317E1BD80188007D31C1 /* PointOfInterestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointOfInterestCell.h; sourceTree = "<group>"; };
+		8875317F1BD80188007D31C1 /* PointOfInterestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointOfInterestCell.m; sourceTree = "<group>"; };
 		88A581701BC3299700B0E8A4 /* BlocSpot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlocSpot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A581741BC3299700B0E8A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		88A581761BC3299700B0E8A4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -70,8 +72,6 @@
 		88A581AC1BC329A300B0E8A4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		88B693E31BC6D4500023DBF7 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		88B693E41BC6D4500023DBF7 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
-		88D24A0F1BD03C7300EB3920 /* ListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTableViewController.h; sourceTree = "<group>"; };
-		88D24A101BD03C7300EB3920 /* ListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListTableViewController.m; sourceTree = "<group>"; };
 		88D24A121BD03E8D00EB3920 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
 		88D24A131BD03E8D00EB3920 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
 		88D24A2A1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PointOfInterest+CoreDataProperties.h"; path = "../PointOfInterest+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -134,6 +134,10 @@
 		88A581721BC3299700B0E8A4 /* BlocSpot */ = {
 			isa = PBXGroup;
 			children = (
+				88A581821BC3299700B0E8A4 /* Main.storyboard */,
+				88A5818A1BC3299700B0E8A4 /* Info.plist */,
+				88A581791BC3299700B0E8A4 /* BlocSpot.xcdatamodeld */,
+				88A581871BC3299700B0E8A4 /* LaunchScreen.storyboard */,
 				88A581761BC3299700B0E8A4 /* AppDelegate.h */,
 				88A581771BC3299700B0E8A4 /* AppDelegate.m */,
 				88A5817C1BC3299700B0E8A4 /* MasterViewController.h */,
@@ -142,14 +146,6 @@
 				88A581801BC3299700B0E8A4 /* DetailViewController.m */,
 				88B693E31BC6D4500023DBF7 /* MapViewController.h */,
 				88B693E41BC6D4500023DBF7 /* MapViewController.m */,
-				88A581821BC3299700B0E8A4 /* Main.storyboard */,
-				88A581851BC3299700B0E8A4 /* Assets.xcassets */,
-				88A581871BC3299700B0E8A4 /* LaunchScreen.storyboard */,
-				88A5818A1BC3299700B0E8A4 /* Info.plist */,
-				88A581791BC3299700B0E8A4 /* BlocSpot.xcdatamodeld */,
-				88A581731BC3299700B0E8A4 /* Supporting Files */,
-				88D24A0F1BD03C7300EB3920 /* ListTableViewController.h */,
-				88D24A101BD03C7300EB3920 /* ListTableViewController.m */,
 				88D24A2A1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.h */,
 				88D24A2B1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m */,
 				88D24A2C1BD16FC100EB3920 /* PointOfInterest.h */,
@@ -162,6 +158,10 @@
 				88D24A131BD03E8D00EB3920 /* DataSource.m */,
 				884DD0901BD5779500A43B1C /* SearchResultsTableViewController.h */,
 				884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */,
+				8875317E1BD80188007D31C1 /* PointOfInterestCell.h */,
+				8875317F1BD80188007D31C1 /* PointOfInterestCell.m */,
+				88A581851BC3299700B0E8A4 /* Assets.xcassets */,
+				88A581731BC3299700B0E8A4 /* Supporting Files */,
 			);
 			path = BlocSpot;
 			sourceTree = "<group>";
@@ -334,10 +334,10 @@
 				88D24A331BD16FC100EB3920 /* PointOfInterest.m in Sources */,
 				88A5817B1BC3299700B0E8A4 /* BlocSpot.xcdatamodeld in Sources */,
 				88D24A341BD16FC100EB3920 /* Location+CoreDataProperties.m in Sources */,
-				88D24A111BD03C7300EB3920 /* ListTableViewController.m in Sources */,
 				88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */,
 				88D24A321BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m in Sources */,
 				88A581781BC3299700B0E8A4 /* AppDelegate.m in Sources */,
+				887531801BD80188007D31C1 /* PointOfInterestCell.m in Sources */,
 				88D24A351BD16FC100EB3920 /* Location.m in Sources */,
 				88A581751BC3299700B0E8A4 /* main.m in Sources */,
 			);
