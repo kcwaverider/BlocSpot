@@ -8,6 +8,12 @@
 
 #import "LikeButton.h"
 
+@interface LikeButton ()
+
+
+
+@end
+
 @implementation LikeButton
 
 /*
@@ -20,9 +26,7 @@
 
 - (instancetype) init {
     self = [super init];
-    
-    [self setImage:[UIImage imageNamed:@"heart-empty"] forState:UIControlStateNormal];
-    
+    self.liked = NO;
     return self;
 }
 

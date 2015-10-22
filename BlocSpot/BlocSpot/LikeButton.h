@@ -10,4 +10,6 @@
 
 @interface LikeButton : UIButton
 
+@property (nonatomic, assign) BOOL liked;
+
 @end

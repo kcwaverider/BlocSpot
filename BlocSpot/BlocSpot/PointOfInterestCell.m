@@ -32,4 +32,14 @@
     // Configure the view for the selected state
 }
 
+- (void) likePressed {
+    if (self.likeButton.liked) {
+        self.likeButton.liked = NO;
+        [self.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
+    } else {
+        self.likeButton.liked = YES;
+        [self.likeButton setImage:[UIImage imageNamed: @"heart-full"] forState:UIControlStateNormal];
+    }
+}
+
 @end

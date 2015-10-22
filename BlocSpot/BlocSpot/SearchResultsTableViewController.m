@@ -63,11 +63,15 @@
     [cell.likeButton setTitle:nil forState:UIControlStateNormal];
     [cell.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
     cell.likeButton.tintColor = [UIColor purpleColor];
-    
+    [cell.likeButton addTarget:cell action: @selector(likePressed) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
+}
+/*
+- (void) likePressed {
     
 }
+ */
 
 
 /*
