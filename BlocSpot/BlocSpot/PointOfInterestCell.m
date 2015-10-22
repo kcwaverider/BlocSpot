@@ -7,10 +7,11 @@
 //
 
 #import "PointOfInterestCell.h"
+#import "LikeButton.h"
 
 @interface PointOfInterestCell ()
 
-@property (nonatomic, strong) IBOutlet UILabel *name;
+
 
 @end
 

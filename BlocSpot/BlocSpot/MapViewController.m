@@ -117,7 +117,6 @@
     
     self.search = [[MKLocalSearch alloc] initWithRequest:request];
     
-    
     [self.search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
         NSLog(@"Map Items: %@", response.mapItems);
         
@@ -126,10 +125,6 @@
         self.search = nil;
         
         [self dropPinsFor:response.mapItems];
-        //[self placeListButton];
-        
-        
-        
     }];
 }
 
@@ -161,24 +156,7 @@
         
     }
 }
-/*
-- (void) placeListButton {
-    [self.listButton removeFromSuperview];
-    self.listButton = nil;
-    CGFloat screenWidth = self.view.frame.size.width;
-    CGFloat searchBarWidth = screenWidth < 400 ? screenWidth * 1 / 2 : SEARCH_BAR_MAX_WIDTH;
-    CGRect searchBarFrame = CGRectMake((screenWidth - searchBarWidth) / 2, self.navigationController.navigationBar.frame.size.height / 2 - 10, searchBarWidth, 20);
-    
-    self.listButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.listButton.frame =CGRectMake(CGRectGetMaxX(searchBarFrame) + 40, CGRectGetMinY(searchBarFrame) - 5, 35, 30);
-    [self.listButton setTitle:NSLocalizedString(@"List", @"List") forState:UIControlStateNormal];
-    self.listButton.titleLabel.font = [UIFont systemFontOfSize:20];
-    
-    [self.listButton addTarget:self action:@selector(showList) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationController.navigationBar addSubview:self.listButton];
-    
-}
- */
+
 
 - (void) showList{
     SearchResultsTableViewController *list = [[SearchResultsTableViewController alloc] init];
@@ -196,7 +174,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    int i = 3;
+    
 }
 
 

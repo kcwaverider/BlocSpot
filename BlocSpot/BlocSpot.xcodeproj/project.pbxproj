@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		882A6FCF1BD9561B00C2FF76 /* LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 882A6FCE1BD9561B00C2FF76 /* LikeButton.m */; settings = {ASSET_TAGS = (); }; };
 		884DD0921BD5779500A43B1C /* SearchResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */; settings = {ASSET_TAGS = (); }; };
 		887531801BD80188007D31C1 /* PointOfInterestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8875317F1BD80188007D31C1 /* PointOfInterestCell.m */; settings = {ASSET_TAGS = (); }; };
 		88A581751BC3299700B0E8A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A581741BC3299700B0E8A4 /* main.m */; };
@@ -46,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		882A6FCD1BD9561B00C2FF76 /* LikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeButton.h; sourceTree = "<group>"; };
+		882A6FCE1BD9561B00C2FF76 /* LikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeButton.m; sourceTree = "<group>"; };
 		884DD0901BD5779500A43B1C /* SearchResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsTableViewController.h; sourceTree = "<group>"; };
 		884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsTableViewController.m; sourceTree = "<group>"; };
 		8875317E1BD80188007D31C1 /* PointOfInterestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointOfInterestCell.h; sourceTree = "<group>"; };
@@ -160,6 +163,8 @@
 				884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */,
 				8875317E1BD80188007D31C1 /* PointOfInterestCell.h */,
 				8875317F1BD80188007D31C1 /* PointOfInterestCell.m */,
+				882A6FCD1BD9561B00C2FF76 /* LikeButton.h */,
+				882A6FCE1BD9561B00C2FF76 /* LikeButton.m */,
 				88A581851BC3299700B0E8A4 /* Assets.xcassets */,
 				88A581731BC3299700B0E8A4 /* Supporting Files */,
 			);
@@ -335,6 +340,7 @@
 				88A5817B1BC3299700B0E8A4 /* BlocSpot.xcdatamodeld in Sources */,
 				88D24A341BD16FC100EB3920 /* Location+CoreDataProperties.m in Sources */,
 				88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */,
+				882A6FCF1BD9561B00C2FF76 /* LikeButton.m in Sources */,
 				88D24A321BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m in Sources */,
 				88A581781BC3299700B0E8A4 /* AppDelegate.m in Sources */,
 				887531801BD80188007D31C1 /* PointOfInterestCell.m in Sources */,

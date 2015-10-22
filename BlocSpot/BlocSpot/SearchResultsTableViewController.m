@@ -8,8 +8,12 @@
 #import <MapKit/MapKit.h>
 #import "SearchResultsTableViewController.h"
 #import "DataSource.h"
+#import "PointOfInterestCell.h"
+
 
 @interface SearchResultsTableViewController ()
+
+
 
 @end
 
@@ -41,7 +45,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 3;
+    return [DataSource sharedInstance].localPlacesList.count;
 }
 
 
@@ -49,12 +53,17 @@
    
     static NSString *CellIdentifier = @"pointOfInterestCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    PointOfInterestCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     MKMapItem *mapItem = [[MKMapItem alloc] init];
     mapItem = [DataSource sharedInstance].localPlacesList[indexPath.row];
-    cell.textLabel.text = mapItem.name;
+    cell.name.text = mapItem.name;
+    cell.likeImage = [[UIImageView alloc] init];
+    [cell.likeButton setTitle:nil forState:UIControlStateNormal];
+    [cell.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
+    cell.likeButton.tintColor = [UIColor purpleColor];
+    
     
     return cell;
     

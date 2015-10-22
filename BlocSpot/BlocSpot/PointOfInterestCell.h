@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PointOfInterest.h"
+#import "LikeButton.h"
+
+
+
 
 @interface PointOfInterestCell : UITableViewCell
+
+@property (nonatomic, strong) IBOutlet UILabel *name;
+@property (nonatomic, strong) IBOutlet UIImageView *likeImage;
+@property (nonatomic, strong) PointOfInterest *pointOfInterest;
+@property (nonatomic, strong) IBOutlet LikeButton *likeButton;
 
 @end
