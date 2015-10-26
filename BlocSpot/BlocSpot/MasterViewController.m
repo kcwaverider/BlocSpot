@@ -8,6 +8,7 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "MapViewController.h"
 #import "DataSource.h"
 @import MapKit;
 
@@ -67,6 +68,10 @@
         [controller setDetailItem:object];
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
+    } else if ([[segue identifier] isEqualToString:@"showMapView"]) {
+        MapViewController *controller = (MapViewController *)[segue destinationViewController];
+        controller.context = [self.fetchedResultsController managedObjectContext];
+        
     }
 }
 

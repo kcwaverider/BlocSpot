@@ -13,4 +13,10 @@
 
 // Insert code here to add functionality to your managed object subclass
 
+- (instancetype) init {
+    self = [super init];
+    
+    return self;
+}
+
 @end

@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "PointOfInterest.h"
 #import "LikeButton.h"
+@class PointOfInterestCell;
+@protocol PointOfInterestCellDelegate <NSObject>
 
+- (void) cellDidPressLikeButton:(PointOfInterestCell *)cell;
 
+@end
 
 
 @interface PointOfInterestCell : UITableViewCell

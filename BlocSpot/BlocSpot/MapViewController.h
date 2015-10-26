@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
 @interface MapViewController : UIViewController 
+
+@property (nonatomic, strong) NSManagedObjectContext *context;
 
 @end

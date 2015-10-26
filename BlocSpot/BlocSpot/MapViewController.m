@@ -9,6 +9,7 @@
 #import "MapViewController.h"
 #import "DataSource.h"
 #import <MapKit/MapKit.h>
+#import "AppDelegate.h"
 #import <CoreLocation/CoreLocation.h>
 #import "SearchResultsTableViewController.h"
 
@@ -43,25 +44,8 @@
     
     // Do any additional setup after loading the view.
     
-    CGFloat screenWidth = self.view.frame.size.width;
-    CGFloat searchBarWidth = screenWidth < 400 ? screenWidth * 1 / 2 : SEARCH_BAR_MAX_WIDTH;
-    CGRect searchBarFrame = CGRectMake((screenWidth - searchBarWidth) / 2, self.navigationController.navigationBar.frame.size.height / 2 - 10, searchBarWidth, 20);
-    
-    self.searchBar = [[UITextField alloc] initWithFrame:searchBarFrame];
-    self.searchBar.text= @"Search";
-    self.searchBar.textAlignment = NSTextAlignmentCenter;
-    self.searchBar.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
-    self.searchBar.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.3];
-    [self.navigationController.navigationBar addSubview:self.searchBar];
-    self.searchBar.delegate = self;
-    self.navigationController.navigationBar.alpha = 0.6;
-   //self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
-    //self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
     
     
-    
-    //[self.navigationController.navigationBar addSubview:self.listButton];
-    //[self.listButton removeFromSuperview];
     
 }
 
@@ -79,6 +63,19 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
+
+    CGFloat screenWidth = self.view.frame.size.width;
+    CGFloat searchBarWidth = screenWidth < 400 ? screenWidth * 1 / 2 : SEARCH_BAR_MAX_WIDTH;
+    CGRect searchBarFrame = CGRectMake((screenWidth - searchBarWidth) / 2, self.navigationController.navigationBar.frame.size.height / 2 - 10, searchBarWidth, 20);
+    
+    self.searchBar = [[UITextField alloc] initWithFrame:searchBarFrame];
+    self.searchBar.text= @"Search";
+    self.searchBar.textAlignment = NSTextAlignmentCenter;
+    self.searchBar.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
+    self.searchBar.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.3];
+    [self.navigationController.navigationBar addSubview:self.searchBar];
+    self.searchBar.delegate = self;
+    self.navigationController.navigationBar.alpha = 0.6;
 
     
     CLLocationCoordinate2D zoomLocation;
@@ -121,7 +118,23 @@
         NSLog(@"Map Items: %@", response.mapItems);
         
         self.pointOfInterestArray = nil;
-        [DataSource sharedInstance].localPlacesList = [response.mapItems mutableCopy];
+        //[DataSource sharedInstance].localPlacesList = [response.mapItems mutableCopy];
+        
+        // TODO: call a method that deletes all items from the data store
+        [DataSource sharedInstance].localPlacesList = nil;
+        for (NSUInteger i = 0; i < response.mapItems.count; i++) {
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:self.context];
+//            NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.context];
+            PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.context];
+
+ //            //PointOfInterest *pointOfInterest = [DataSource sharedInstance].localPlacesList[i];
+            pointOfInterest.name = response.mapItems[i].name;
+            pointOfInterest.location.latitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.latitude];
+            pointOfInterest.location.longitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.longitude];
+        }
+        [self.context save:nil];
+        [[DataSource sharedInstance] updateLocalPlacesList];
+        
         self.search = nil;
         
         [self dropPinsFor:response.mapItems];

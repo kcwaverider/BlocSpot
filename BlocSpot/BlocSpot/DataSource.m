@@ -25,4 +25,9 @@
     
     return self;
 }
+
+- (void) updateLocalPlacesList {
+    // TODO do a fetch and retrieve all items in the PointOfInterest entity
+    //self.localPlacesList = the return from the fetch request
+}
 @end

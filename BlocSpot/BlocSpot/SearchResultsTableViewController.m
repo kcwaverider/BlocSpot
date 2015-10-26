@@ -8,7 +8,7 @@
 #import <MapKit/MapKit.h>
 #import "SearchResultsTableViewController.h"
 #import "DataSource.h"
-#import "PointOfInterestCell.h"
+
 
 
 @interface SearchResultsTableViewController ()
@@ -45,7 +45,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [DataSource sharedInstance].localPlacesList.count;
+    // TODO: this needs to be populated from the data store
+    return 5;//[DataSource sharedInstance].localPlacesList.count;
 }
 
 
@@ -56,22 +57,25 @@
     PointOfInterestCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    MKMapItem *mapItem = [[MKMapItem alloc] init];
-    mapItem = [DataSource sharedInstance].localPlacesList[indexPath.row];
-    cell.name.text = mapItem.name;
+    //PointOfInterest *pointOfInterest = [[PointOfInterest alloc] init];
+    PointOfInterest *pointOfInterest = [DataSource sharedInstance].localPlacesList[indexPath.row];
+    //pointOfInterest = [DataSource sharedInstance].localPlacesList[indexPath.row];
+    cell.name.text = pointOfInterest.name;
     cell.likeImage = [[UIImageView alloc] init];
     [cell.likeButton setTitle:nil forState:UIControlStateNormal];
     [cell.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
     cell.likeButton.tintColor = [UIColor purpleColor];
+    
     [cell.likeButton addTarget:cell action: @selector(likePressed) forControlEvents:UIControlEventTouchUpInside];
+    [cell.likeButton addTarget:self action:@selector(makeFavorite) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
-/*
-- (void) likePressed {
+
+#pragma mark - Cell Like Delegate
+- (void) cellDidPressLikeButton:(PointOfInterestCell *)cell {
     
 }
- */
 
 
 /*
