@@ -45,7 +45,7 @@
     [_locationManager startUpdatingLocation];
     
     // Do any additional setup after loading the view.
-    
+    self.context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     
     
     
@@ -125,7 +125,7 @@
        // [DataSource sharedInstance].localPlacesList = [response.mapItems mutableCopy];
         self.pointOfInterestArray = [[ NSMutableArray alloc] init];
         // TODO: call a method that deletes all items from the data store
-        [DataSource sharedInstance].localPlacesList = nil;
+        //[DataSource sharedInstance].localPlacesList = nil;
         for (NSUInteger i = 0; i < response.mapItems.count; i++) {
           /*
             PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:self.context];
@@ -149,19 +149,21 @@
             searchResult.lattitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.latitude];
             searchResult.longitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.latitude];
             searchResult.favorite = [self searchResult:searchResult matchesLocationInArray:[DataSource sharedInstance].favoritePlacesList];
+            self.pointOfInterestArray[i] = searchResult;
             
         }
         [DataSource sharedInstance].localPlacesList = self.pointOfInterestArray;
         
         //ASK STEVE ABOUT THIS
-        NSLog(@"DataSource Length: %lu", (unsigned long)[DataSource sharedInstance].localPlacesList.count);
-        [self.context save:nil];
+        //[DaNSLog(@"DataSource Length: %lu", (unsigned long)[DataSource sharedInstance].localPlacesList.count);
+        //[self.context save:nil];
         
         //[[DataSource sharedInstance] updateLocalPlacesList];
-        
+       // NSMutableArray *testArray = [DataSource sharedInstance].localPlacesList;
         self.search = nil;
         
-        [self dropPinsFor:response.mapItems];
+        [self dropPinsFor:[DataSource sharedInstance].localPlacesList];
+        NSLog(@"PINS DROPPED");
     }];
 }
 
@@ -169,7 +171,7 @@
     
     for (PointOfInterest *info in array) {
         PointOfInterest *pointOfInterest = info;
-        if (searchResult.name == pointOfInterest.name && searchResult.lattitude == pointOfInterest.location.latitude && searchResult.longitude == pointOfInterest.location.longitude) {
+        if ([searchResult.name isEqualToString: pointOfInterest.name] && [searchResult.lattitude isEqualToNumber: pointOfInterest.location.latitude] && [searchResult.longitude isEqualToNumber: pointOfInterest.location.longitude]) {
             return [NSNumber numberWithBool:YES];
         }
     }
@@ -188,18 +190,17 @@
         [self.mapView removeAnnotations:pins];
     }
     
-    for (MKMapItem *mapItem in mapItemsArray) {
+    for (SearchResult *result in mapItemsArray) {
         
-        CGFloat latitude = mapItem.placemark.location.coordinate.latitude;
-        CGFloat longitude = mapItem.placemark.location.coordinate.longitude;
         CLLocationCoordinate2D pinPoint;
-        pinPoint.latitude = latitude;
-        pinPoint.longitude = longitude;
+        pinPoint.latitude = [result.lattitude floatValue];
+        pinPoint.longitude = [result.longitude floatValue];
         
         MKPointAnnotation *annot = [[MKPointAnnotation alloc] init];
         annot.coordinate = pinPoint;
          
-       // MKPinAnnotationView *annotView = [[MKPinAnnotationView alloc] init];
+        //MKPinAnnotationView *annotView = [[MKPinAnnotationView alloc] init];
+        
         [self.mapView addAnnotation:annot];
         
     }
@@ -212,6 +213,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([[segue identifier] isEqualToString:@"showMapView"]) {
+        MapViewController *controller = (MapViewController *)[segue destinationViewController];
+        controller.context = self.context;
+    }
     
 }
 

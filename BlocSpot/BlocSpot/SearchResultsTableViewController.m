@@ -8,10 +8,14 @@
 #import <MapKit/MapKit.h>
 #import "SearchResultsTableViewController.h"
 #import "DataSource.h"
+#import "PointOfInterestCell.h"
+#import "Location.h"
+#import "PointOfInterest.h"
+#import "AppDelegate.h"
 
 
 
-@interface SearchResultsTableViewController ()
+@interface SearchResultsTableViewController ()<PointOfInterestCellDelegate>
 
 
 
@@ -21,11 +25,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     //[self.tableView registerClass:[SearchResultsTableViewController class] forCellReuseIdentifier:@"poiCell"];
     // Uncomment the following line to preserve selection between presentations.
      self.clearsSelectionOnViewWillAppear = NO;
-    
+     
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -74,6 +78,24 @@
 
 #pragma mark - Cell Like Delegate
 - (void) cellDidPressLikeButton:(PointOfInterestCell *)cell ToLikeState:(BOOL)likeState {
+    NSLog(@"Like Button Pushed");
+    
+    PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:self.context];
+    
+    Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.context];
+    pointOfInterest.name = cell.searchResult.name;
+    pointOfInterest.category = cell.searchResult.category;
+    pointOfInterest.favorite = cell.searchResult.favorite;
+    
+    location.latitude = cell.searchResult.lattitude;
+    location.longitude = cell.searchResult.longitude;
+    pointOfInterest.location = location;
+    location.pointOfInterest = pointOfInterest;
+    
+    NSError *error;
+    if(![self.context save:&error]) {
+        NSLog(@"Whoops, coudn't save: %@", [error localizedDescription]);
+    }
     
 }
 

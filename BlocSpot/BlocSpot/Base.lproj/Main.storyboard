@@ -160,7 +160,7 @@
                     <navigationItem key="navigationItem" id="4oy-Qb-t5Y">
                         <barButtonItem key="rightBarButtonItem" title="List" id="GMv-lf-Wck">
                             <connections>
-                                <segue destination="W0Z-x7-pO1" kind="show" id="uKF-Jc-iQJ"/>
+                                <segue destination="W0Z-x7-pO1" kind="show" identifier="ShowSearchList" id="uKF-Jc-iQJ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

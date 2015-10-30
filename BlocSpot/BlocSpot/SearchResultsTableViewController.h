@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PointOfInterestCell.h"
-#import "Location.h"
 
-@interface SearchResultsTableViewController : UITableViewController<PointOfInterestCellDelegate>
 
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@interface SearchResultsTableViewController : UITableViewController
+
+@property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSMutableArray *pointOfInterestArray;
 
 

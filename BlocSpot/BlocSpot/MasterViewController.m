@@ -11,11 +11,13 @@
 #import "MapViewController.h"
 #import "DataSource.h"
 #import "PointOfInterestCell.h"
+#import "SearchResultsTableViewController.h"
+#import "PointOfInterest.h"
+
 @import MapKit;
 
 @interface MasterViewController ()
 
-@property (nonatomic, strong) NSFetchRequest *fetchRequest;
 
 @end
 
@@ -87,8 +89,8 @@
         [controller setDetailItem:object];
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
-    } else if ([[segue identifier] isEqualToString:@"showMapView"]) {
-        MapViewController *controller = (MapViewController *)[segue destinationViewController];
+    } else if ([[segue identifier] isEqualToString:@"ShowSearchList"]) {
+        SearchResultsTableViewController *controller = (MapViewController *)[segue destinationViewController];
         controller.context = [self.fetchedResultsController managedObjectContext];
         
     }
@@ -114,8 +116,9 @@
     // Configure the cell...
     //cell.pointOfInterest = self.favoritesArray[indexPath.row];
     //pointOfInterest = [DataSource sharedInstance].localPlacesList[indexPath.row];
-    //cell.name.text = [DataSource sharedInstance].favoritePlacesList[indexPath.row];
-    cell.name.text = [DataSource sharedInstance].localPlacesList[indexPath.row];
+    
+    PointOfInterest *pointOfInterest = [DataSource sharedInstance].favoritePlacesList[indexPath.row];
+    cell.name.text = pointOfInterest.name;
     cell.likeImage = [[UIImageView alloc] init];
     [cell.likeButton setTitle:nil forState:UIControlStateNormal];
     [cell.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
