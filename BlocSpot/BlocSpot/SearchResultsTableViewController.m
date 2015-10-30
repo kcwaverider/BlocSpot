@@ -26,6 +26,7 @@
     // Uncomment the following line to preserve selection between presentations.
      self.clearsSelectionOnViewWillAppear = NO;
     
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
@@ -46,7 +47,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     // TODO: this needs to be populated from the data store
-    return 5;//[DataSource sharedInstance].localPlacesList.count;
+    NSLog(@"Local POI Rows: %lu", (unsigned long)[DataSource sharedInstance].localPlacesList.count);
+    return [DataSource sharedInstance].localPlacesList.count;
 }
 
 
@@ -55,25 +57,23 @@
     static NSString *CellIdentifier = @"pointOfInterestCell";
     
     PointOfInterestCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+    cell.delegate = self;
     // Configure the cell...
-    //PointOfInterest *pointOfInterest = [[PointOfInterest alloc] init];
-    PointOfInterest *pointOfInterest = [DataSource sharedInstance].localPlacesList[indexPath.row];
+    cell.searchResult = [DataSource sharedInstance].localPlacesList[indexPath.row];
     //pointOfInterest = [DataSource sharedInstance].localPlacesList[indexPath.row];
-    cell.name.text = pointOfInterest.name;
-    cell.likeImage = [[UIImageView alloc] init];
-    [cell.likeButton setTitle:nil forState:UIControlStateNormal];
-    [cell.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
-    cell.likeButton.tintColor = [UIColor purpleColor];
+    cell.name.text = cell.searchResult.name;
+    if (cell.searchResult.favorite == [NSNumber numberWithBool:YES]) {
+        [cell.likeButton setImage:[UIImage imageNamed:@"heart-full"] forState:UIControlStateNormal];
+    }
+
     
-    [cell.likeButton addTarget:cell action: @selector(likePressed) forControlEvents:UIControlEventTouchUpInside];
-    [cell.likeButton addTarget:self action:@selector(makeFavorite) forControlEvents:UIControlEventTouchUpInside];
+
     
     return cell;
 }
 
 #pragma mark - Cell Like Delegate
-- (void) cellDidPressLikeButton:(PointOfInterestCell *)cell {
+- (void) cellDidPressLikeButton:(PointOfInterestCell *)cell ToLikeState:(BOOL)likeState {
     
 }
 

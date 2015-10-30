@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PointOfInterest.h"
+#import "SearchResult.h"
 #import "LikeButton.h"
 @class PointOfInterestCell;
 @protocol PointOfInterestCellDelegate <NSObject>
-
-- (void) cellDidPressLikeButton:(PointOfInterestCell *)cell;
+@required
+- (void) cellDidPressLikeButton:(PointOfInterestCell *)cell ToLikeState:(BOOL)likeState;
 
 @end
 
@@ -23,7 +23,9 @@
 
 @property (nonatomic, strong) IBOutlet UILabel *name;
 @property (nonatomic, strong) IBOutlet UIImageView *likeImage;
-@property (nonatomic, strong) PointOfInterest *pointOfInterest;
+@property (nonatomic, strong) SearchResult *searchResult;
 @property (nonatomic, strong) IBOutlet LikeButton *likeButton;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, assign) id <PointOfInterestCellDelegate> delegate;
 
 @end

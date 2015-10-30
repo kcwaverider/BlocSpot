@@ -12,6 +12,8 @@
 #import "AppDelegate.h"
 #import <CoreLocation/CoreLocation.h>
 #import "SearchResultsTableViewController.h"
+#import "PointOfInterest.h"
+#import "Location.h"
 
 @interface MapViewController ()  <CLLocationManagerDelegate, UITextFieldDelegate>
 
@@ -100,7 +102,9 @@
 }
 
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
-    textField.text = nil;
+    if ([textField.text  isEqual: @"Search"]) {
+        textField.text = nil;
+    }
     
     return YES;
 }
@@ -118,27 +122,58 @@
         NSLog(@"Map Items: %@", response.mapItems);
         
         self.pointOfInterestArray = nil;
-        //[DataSource sharedInstance].localPlacesList = [response.mapItems mutableCopy];
-        
+       // [DataSource sharedInstance].localPlacesList = [response.mapItems mutableCopy];
+        self.pointOfInterestArray = [[ NSMutableArray alloc] init];
         // TODO: call a method that deletes all items from the data store
         [DataSource sharedInstance].localPlacesList = nil;
         for (NSUInteger i = 0; i < response.mapItems.count; i++) {
-            NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:self.context];
-//            NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.context];
-            PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.context];
-
- //            //PointOfInterest *pointOfInterest = [DataSource sharedInstance].localPlacesList[i];
+          /*
+            PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:self.context];
+           
+            Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.context];
+            
             pointOfInterest.name = response.mapItems[i].name;
-            pointOfInterest.location.latitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.latitude];
-            pointOfInterest.location.longitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.longitude];
+            pointOfInterest.category = [NSNumber numberWithInteger:i];
+            
+            NSNumber *latitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.latitude];
+            location.latitude = latitude;
+            NSNumber *longitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.longitude];
+            location.longitude = longitude;
+            pointOfInterest.location = location;
+            location.pointOfInterest = pointOfInterest;
+            self.pointOfInterestArray[i] = pointOfInterest;
+            */
+            SearchResult *searchResult = [[SearchResult alloc] init];
+            searchResult.name = response.mapItems[i].name;
+            searchResult.category = [NSNumber numberWithInteger:i];
+            searchResult.lattitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.latitude];
+            searchResult.longitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.latitude];
+            searchResult.favorite = [self searchResult:searchResult matchesLocationInArray:[DataSource sharedInstance].favoritePlacesList];
+            
         }
+        [DataSource sharedInstance].localPlacesList = self.pointOfInterestArray;
+        
+        //ASK STEVE ABOUT THIS
+        NSLog(@"DataSource Length: %lu", (unsigned long)[DataSource sharedInstance].localPlacesList.count);
         [self.context save:nil];
-        [[DataSource sharedInstance] updateLocalPlacesList];
+        
+        //[[DataSource sharedInstance] updateLocalPlacesList];
         
         self.search = nil;
         
         [self dropPinsFor:response.mapItems];
     }];
+}
+
+- (NSNumber *) searchResult:(SearchResult *)searchResult matchesLocationInArray:(NSArray*) array {
+    
+    for (PointOfInterest *info in array) {
+        PointOfInterest *pointOfInterest = info;
+        if (searchResult.name == pointOfInterest.name && searchResult.lattitude == pointOfInterest.location.latitude && searchResult.longitude == pointOfInterest.location.longitude) {
+            return [NSNumber numberWithBool:YES];
+        }
+    }
+    return [NSNumber numberWithBool:NO];
 }
 
 - (void) dropPinsFor:(NSArray *)mapItemsArray {
@@ -164,22 +199,12 @@
         MKPointAnnotation *annot = [[MKPointAnnotation alloc] init];
         annot.coordinate = pinPoint;
          
-       // MKPinAnnotationView *annot = [[MKPinAnnotationView alloc] ini]
+       // MKPinAnnotationView *annotView = [[MKPinAnnotationView alloc] init];
         [self.mapView addAnnotation:annot];
         
     }
 }
 
-
-- (void) showList{
-    SearchResultsTableViewController *list = [[SearchResultsTableViewController alloc] init];
-    list.view.frame = CGRectMake( 120, 0, CGRectGetWidth(self.view.frame) - 120, CGRectGetHeight(self.view.frame) );
-    list.pointOfInterestArray = [[NSMutableArray alloc]initWithArray:self.pointOfInterestArray];
-    [self presentViewController:list animated:YES  completion:^{
-        //list.pointOfInterestArray = [[NSMutableArray alloc]initWithArray:self.pointOfInterestArray];
-    }];
-    
-}
 
 #pragma mark - Navigation
 

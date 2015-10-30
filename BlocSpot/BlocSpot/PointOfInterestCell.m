@@ -23,7 +23,12 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.likeImage = [[UIImageView alloc] init];
+    [self.likeButton setTitle:nil forState:UIControlStateNormal];
+    [self.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
+    self.likeButton.tintColor = [UIColor purpleColor];
     
+    [self.likeButton addTarget:self action: @selector(likePressed) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -36,10 +41,24 @@
     if (self.likeButton.liked) {
         self.likeButton.liked = NO;
         [self.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
+        
     } else {
         self.likeButton.liked = YES;
         [self.likeButton setImage:[UIImage imageNamed: @"heart-full"] forState:UIControlStateNormal];
     }
+    
+    [self.delegate cellDidPressLikeButton:self ToLikeState:self.likeButton.liked];
+    
 }
+
+
+
+
+
+
+
+
+
+
 
 @end

@@ -10,9 +10,12 @@
 #import "DetailViewController.h"
 #import "MapViewController.h"
 #import "DataSource.h"
+#import "PointOfInterestCell.h"
 @import MapKit;
 
 @interface MasterViewController ()
+
+@property (nonatomic, strong) NSFetchRequest *fetchRequest;
 
 @end
 
@@ -20,9 +23,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSError * error = nil;
+    [DataSource sharedInstance].favoritePlacesList = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error]mutableCopy];
     
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    
 
 //    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 //    self.navigationItem.rightBarButtonItem = addButton;
@@ -32,6 +41,16 @@
 - (void)viewWillAppear:(BOOL)animated {
     self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     [super viewWillAppear:animated];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSError * error = nil;
+    [DataSource sharedInstance].favoritePlacesList = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error]mutableCopy];
+    
+    NSLog(@"viewDidLoad");
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -78,17 +97,32 @@
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[self.fetchedResultsController sections] count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
+     //NSLog(@"Master Cells: %lu", [sectionInfo numberOfObjects]);
+    return [DataSource sharedInstance].favoritePlacesList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    [self configureCell:cell atIndexPath:indexPath];
+    static NSString *CellIdentifier = @"pointOfInterestCell";
+    
+    PointOfInterestCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    // Configure the cell...
+    //cell.pointOfInterest = self.favoritesArray[indexPath.row];
+    //pointOfInterest = [DataSource sharedInstance].localPlacesList[indexPath.row];
+    //cell.name.text = [DataSource sharedInstance].favoritePlacesList[indexPath.row];
+    cell.name.text = [DataSource sharedInstance].localPlacesList[indexPath.row];
+    cell.likeImage = [[UIImageView alloc] init];
+    [cell.likeButton setTitle:nil forState:UIControlStateNormal];
+    [cell.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
+    cell.likeButton.tintColor = [UIColor purpleColor];
+    
+    [cell.likeButton addTarget:cell action: @selector(likePressed) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
 }
 

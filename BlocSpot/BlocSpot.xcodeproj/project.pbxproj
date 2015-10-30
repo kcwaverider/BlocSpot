@@ -27,6 +27,7 @@
 		88D24A331BD16FC100EB3920 /* PointOfInterest.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2D1BD16FC100EB3920 /* PointOfInterest.m */; settings = {ASSET_TAGS = (); }; };
 		88D24A341BD16FC100EB3920 /* Location+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2F1BD16FC100EB3920 /* Location+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
 		88D24A351BD16FC100EB3920 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A311BD16FC100EB3920 /* Location.m */; settings = {ASSET_TAGS = (); }; };
+		88D9BD681BE025DE0045CA17 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9BD671BE025DE0045CA17 /* SearchResult.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,8 @@
 		88D24A2F1BD16FC100EB3920 /* Location+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Location+CoreDataProperties.m"; path = "../Location+CoreDataProperties.m"; sourceTree = "<group>"; };
 		88D24A301BD16FC100EB3920 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = ../Location.h; sourceTree = "<group>"; };
 		88D24A311BD16FC100EB3920 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = ../Location.m; sourceTree = "<group>"; };
+		88D9BD661BE025DE0045CA17 /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
+		88D9BD671BE025DE0045CA17 /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +170,8 @@
 				882A6FCE1BD9561B00C2FF76 /* LikeButton.m */,
 				88A581851BC3299700B0E8A4 /* Assets.xcassets */,
 				88A581731BC3299700B0E8A4 /* Supporting Files */,
+				88D9BD661BE025DE0045CA17 /* SearchResult.h */,
+				88D9BD671BE025DE0045CA17 /* SearchResult.m */,
 			);
 			path = BlocSpot;
 			sourceTree = "<group>";
@@ -332,6 +337,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88D9BD681BE025DE0045CA17 /* SearchResult.m in Sources */,
 				88A581811BC3299700B0E8A4 /* DetailViewController.m in Sources */,
 				88A5817E1BC3299700B0E8A4 /* MasterViewController.m in Sources */,
 				884DD0921BD5779500A43B1C /* SearchResultsTableViewController.m in Sources */,

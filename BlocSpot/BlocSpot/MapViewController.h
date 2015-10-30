@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "SearchResult.h"
+#import "PointOfInterestCell.h"
+#import "Location.h"
 
 @interface MapViewController : UIViewController 
 
