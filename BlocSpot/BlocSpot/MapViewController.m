@@ -15,7 +15,7 @@
 #import "PointOfInterest.h"
 #import "Location.h"
 
-@interface MapViewController ()  <CLLocationManagerDelegate, UITextFieldDelegate>
+@interface MapViewController ()  <CLLocationManagerDelegate, UITextFieldDelegate, MKMapViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *searchBar;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -36,8 +36,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mapView.delegate = self;
     [DataSource sharedInstance];
-    
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     _locationManager.delegate = self;
@@ -46,7 +46,6 @@
     
     // Do any additional setup after loading the view.
     self.context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    
     
     
 }
@@ -79,13 +78,14 @@
     self.searchBar.delegate = self;
     self.navigationController.navigationBar.alpha = 0.6;
 
-    
+    /*
     CLLocationCoordinate2D zoomLocation;
     zoomLocation.latitude = -36.8406;
     zoomLocation.longitude = 174.7400;
     
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, .5 * METERS_PER_MILE, .5 * METERS_PER_MILE);
     [self.mapView setRegion:viewRegion animated:YES];
+     */
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
@@ -147,7 +147,7 @@
             searchResult.name = response.mapItems[i].name;
             searchResult.category = [NSNumber numberWithInteger:i];
             searchResult.lattitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.latitude];
-            searchResult.longitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.latitude];
+            searchResult.longitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.longitude];
             searchResult.favorite = [self searchResult:searchResult matchesLocationInArray:[DataSource sharedInstance].favoritePlacesList];
             self.pointOfInterestArray[i] = searchResult;
             
@@ -193,8 +193,8 @@
     for (SearchResult *result in mapItemsArray) {
         
         CLLocationCoordinate2D pinPoint;
-        pinPoint.latitude = [result.lattitude floatValue];
-        pinPoint.longitude = [result.longitude floatValue];
+        pinPoint.latitude = [result.lattitude doubleValue];
+        pinPoint.longitude = [result.longitude doubleValue];
         
         MKPointAnnotation *annot = [[MKPointAnnotation alloc] init];
         annot.coordinate = pinPoint;
@@ -202,10 +202,50 @@
         //MKPinAnnotationView *annotView = [[MKPinAnnotationView alloc] init];
         
         [self.mapView addAnnotation:annot];
+       // MKAnnotationView *annotView = [self mapView:self.mapView viewForAnnotation:annot];
+       // [self.mapView addSubview:annotView];
         
     }
 }
 
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    //FIRST TRY
+    /*
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    MKAnnotationView *annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"loc"];
+    annotationView.canShowCallout = YES;
+    annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    return annotationView;
+     */
+    
+    //SECOND TRY
+    MKPinAnnotationView *pinView = nil;
+    if (annotation != mapView.userLocation) {
+        
+        static NSString *defaultPinID = @"resultPin";
+        pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:defaultPinID];
+        
+        if (pinView == nil) {
+            pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:defaultPinID];
+        }
+        
+        pinView.pinColor = MKPinAnnotationColorGreen;
+        pinView.canShowCallout = YES;
+        pinView.animatesDrop = YES;
+    }
+    
+    return pinView;
+}
+
+
+-(void) mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+    CLLocationCoordinate2D location = self.mapView.userLocation.location.coordinate;
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location, 1000.0, 1000.0);
+    
+    [self.mapView setRegion:region animated:YES];
+}
 
 #pragma mark - Navigation
 

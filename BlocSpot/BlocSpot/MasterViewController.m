@@ -50,6 +50,7 @@
     NSError * error = nil;
     [DataSource sharedInstance].favoritePlacesList = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error]mutableCopy];
     
+    [self.tableView reloadData];
     NSLog(@"viewDidLoad");
     
     
