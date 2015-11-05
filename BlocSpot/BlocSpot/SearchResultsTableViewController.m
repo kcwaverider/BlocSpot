@@ -67,34 +67,48 @@
     //pointOfInterest = [DataSource sharedInstance].localPlacesList[indexPath.row];
     cell.name.text = cell.searchResult.name;
     if (cell.searchResult.favorite == [NSNumber numberWithBool:YES]) {
-        [cell.likeButton setImage:[UIImage imageNamed:@"heart-full"] forState:UIControlStateNormal];
+        //[cell.likeButton setImage:[UIImage imageNamed:@"heart-full"] forState:UIControlStateNormal];
+        cell.likeButton.alpha = 1.0;
+    } else {
+        cell.likeButton.alpha = 0.3;
     }
-
-    
-
     
     return cell;
 }
 
 #pragma mark - Cell Like Delegate
-- (void) cellDidPressLikeButton:(PointOfInterestCell *)cell ToLikeState:(BOOL)likeState {
-    NSLog(@"Like Button Pushed");
-    
-    PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:self.context];
-    
-    Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.context];
-    pointOfInterest.name = cell.searchResult.name;
-    pointOfInterest.category = cell.searchResult.category;
-    pointOfInterest.favorite = cell.searchResult.favorite;
-    
-    location.latitude = cell.searchResult.lattitude;
-    location.longitude = cell.searchResult.longitude;
-    pointOfInterest.location = location;
-    location.pointOfInterest = pointOfInterest;
-    
-    NSError *error;
-    if(![self.context save:&error]) {
-        NSLog(@"Whoops, coudn't save: %@", [error localizedDescription]);
+- (void) cellDidPressLikeButton:(PointOfInterestCell *)cell ToLikeState:(BOOL)liked {
+    if (liked) {
+        NSLog(@"Like Button Pushed");
+        
+        PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:self.context];
+        
+        Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.context];
+        pointOfInterest.name = cell.searchResult.name;
+        pointOfInterest.category = cell.searchResult.category;
+        pointOfInterest.favorite = cell.searchResult.favorite;
+        
+        location.latitude = cell.searchResult.latitude;
+        location.longitude = cell.searchResult.longitude;
+        pointOfInterest.location = location;
+        location.pointOfInterest = pointOfInterest;
+        
+        NSError *error;
+        if(![self.context save:&error]) {
+            NSLog(@"Whoops, coudn't save: %@", [error localizedDescription]);
+        }
+
+    } else {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:self.context];
+        [fetchRequest setEntity:entity];
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"name == %@ AND location.latitude == %@ AND location.longitude == %@", cell.searchResult.name, cell.searchResult.latitude, cell.searchResult.longitude]];
+        NSError *error = nil;
+        NSArray *results = [self.context executeFetchRequest:fetchRequest error:&error];
+        
+        for (int i = 0; i < results.count; i++){
+            [self.context deleteObject:results[i]];
+        }
     }
     
 }

@@ -28,6 +28,7 @@
 		88D24A341BD16FC100EB3920 /* Location+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2F1BD16FC100EB3920 /* Location+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
 		88D24A351BD16FC100EB3920 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A311BD16FC100EB3920 /* Location.m */; settings = {ASSET_TAGS = (); }; };
 		88D9BD681BE025DE0045CA17 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9BD671BE025DE0045CA17 /* SearchResult.m */; settings = {ASSET_TAGS = (); }; };
+		88D9BD711BEBEB550045CA17 /* CallOutBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9BD701BEBEB550045CA17 /* CallOutBubble.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,8 @@
 		88D24A311BD16FC100EB3920 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = ../Location.m; sourceTree = "<group>"; };
 		88D9BD661BE025DE0045CA17 /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
 		88D9BD671BE025DE0045CA17 /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
+		88D9BD6F1BEBEB550045CA17 /* CallOutBubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallOutBubble.h; sourceTree = "<group>"; };
+		88D9BD701BEBEB550045CA17 /* CallOutBubble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallOutBubble.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,32 +149,11 @@
 				88A581871BC3299700B0E8A4 /* LaunchScreen.storyboard */,
 				88A581761BC3299700B0E8A4 /* AppDelegate.h */,
 				88A581771BC3299700B0E8A4 /* AppDelegate.m */,
-				88A5817C1BC3299700B0E8A4 /* MasterViewController.h */,
-				88A5817D1BC3299700B0E8A4 /* MasterViewController.m */,
-				88A5817F1BC3299700B0E8A4 /* DetailViewController.h */,
-				88A581801BC3299700B0E8A4 /* DetailViewController.m */,
-				88B693E31BC6D4500023DBF7 /* MapViewController.h */,
-				88B693E41BC6D4500023DBF7 /* MapViewController.m */,
-				88D24A2A1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.h */,
-				88D24A2B1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m */,
-				88D24A2C1BD16FC100EB3920 /* PointOfInterest.h */,
-				88D24A2D1BD16FC100EB3920 /* PointOfInterest.m */,
-				88D24A2E1BD16FC100EB3920 /* Location+CoreDataProperties.h */,
-				88D24A2F1BD16FC100EB3920 /* Location+CoreDataProperties.m */,
-				88D24A301BD16FC100EB3920 /* Location.h */,
-				88D24A311BD16FC100EB3920 /* Location.m */,
-				88D24A121BD03E8D00EB3920 /* DataSource.h */,
-				88D24A131BD03E8D00EB3920 /* DataSource.m */,
-				884DD0901BD5779500A43B1C /* SearchResultsTableViewController.h */,
-				884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */,
-				8875317E1BD80188007D31C1 /* PointOfInterestCell.h */,
-				8875317F1BD80188007D31C1 /* PointOfInterestCell.m */,
-				882A6FCD1BD9561B00C2FF76 /* LikeButton.h */,
-				882A6FCE1BD9561B00C2FF76 /* LikeButton.m */,
+				88D9BD6E1BEBEA5E0045CA17 /* Controllers */,
+				88D9BD6D1BEBEA560045CA17 /* Views */,
+				88D9BD6C1BEBEA4E0045CA17 /* Model */,
 				88A581851BC3299700B0E8A4 /* Assets.xcassets */,
 				88A581731BC3299700B0E8A4 /* Supporting Files */,
-				88D9BD661BE025DE0045CA17 /* SearchResult.h */,
-				88D9BD671BE025DE0045CA17 /* SearchResult.m */,
 			);
 			path = BlocSpot;
 			sourceTree = "<group>";
@@ -200,6 +182,53 @@
 				88A581A01BC3299700B0E8A4 /* Info.plist */,
 			);
 			path = BlocSpotUITests;
+			sourceTree = "<group>";
+		};
+		88D9BD6C1BEBEA4E0045CA17 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				88D24A2A1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.h */,
+				88D24A2B1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m */,
+				88D24A2C1BD16FC100EB3920 /* PointOfInterest.h */,
+				88D24A2D1BD16FC100EB3920 /* PointOfInterest.m */,
+				88D24A2E1BD16FC100EB3920 /* Location+CoreDataProperties.h */,
+				88D24A2F1BD16FC100EB3920 /* Location+CoreDataProperties.m */,
+				88D24A301BD16FC100EB3920 /* Location.h */,
+				88D24A311BD16FC100EB3920 /* Location.m */,
+				88D24A121BD03E8D00EB3920 /* DataSource.h */,
+				88D24A131BD03E8D00EB3920 /* DataSource.m */,
+				88D9BD661BE025DE0045CA17 /* SearchResult.h */,
+				88D9BD671BE025DE0045CA17 /* SearchResult.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		88D9BD6D1BEBEA560045CA17 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				882A6FCD1BD9561B00C2FF76 /* LikeButton.h */,
+				882A6FCE1BD9561B00C2FF76 /* LikeButton.m */,
+				8875317E1BD80188007D31C1 /* PointOfInterestCell.h */,
+				8875317F1BD80188007D31C1 /* PointOfInterestCell.m */,
+				88D9BD6F1BEBEB550045CA17 /* CallOutBubble.h */,
+				88D9BD701BEBEB550045CA17 /* CallOutBubble.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		88D9BD6E1BEBEA5E0045CA17 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				88A5817C1BC3299700B0E8A4 /* MasterViewController.h */,
+				88A5817D1BC3299700B0E8A4 /* MasterViewController.m */,
+				88A5817F1BC3299700B0E8A4 /* DetailViewController.h */,
+				88A581801BC3299700B0E8A4 /* DetailViewController.m */,
+				88B693E31BC6D4500023DBF7 /* MapViewController.h */,
+				88B693E41BC6D4500023DBF7 /* MapViewController.m */,
+				884DD0901BD5779500A43B1C /* SearchResultsTableViewController.h */,
+				884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -347,6 +376,7 @@
 				88D24A341BD16FC100EB3920 /* Location+CoreDataProperties.m in Sources */,
 				88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */,
 				882A6FCF1BD9561B00C2FF76 /* LikeButton.m in Sources */,
+				88D9BD711BEBEB550045CA17 /* CallOutBubble.m in Sources */,
 				88D24A321BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m in Sources */,
 				88A581781BC3299700B0E8A4 /* AppDelegate.m in Sources */,
 				887531801BD80188007D31C1 /* PointOfInterestCell.m in Sources */,

@@ -25,7 +25,7 @@
     // Initialization code
     self.likeImage = [[UIImageView alloc] init];
     [self.likeButton setTitle:nil forState:UIControlStateNormal];
-    [self.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
+    [self.likeButton setImage:[UIImage imageNamed: @"heart-full"] forState:UIControlStateNormal];
     self.likeButton.tintColor = [UIColor purpleColor];
     
     [self.likeButton addTarget:self action: @selector(likePressed) forControlEvents:UIControlEventTouchUpInside];
@@ -38,13 +38,16 @@
 }
 
 - (void) likePressed {
+    // button was pressed while in the like state, thus unliking the location
     if (self.likeButton.liked) {
         self.likeButton.liked = NO;
-        [self.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
-        
+        self.likeButton.alpha = 0.3;
+        //[self.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
+    // button was pressed while in the unlike state, thus liking the location
     } else {
         self.likeButton.liked = YES;
-        [self.likeButton setImage:[UIImage imageNamed: @"heart-full"] forState:UIControlStateNormal];
+        self.likeButton.alpha = 1.0;
+        //[self.likeButton setImage:[UIImage imageNamed: @"heart-full"] forState:UIControlStateNormal];
     }
     
     [self.delegate cellDidPressLikeButton:self ToLikeState:self.likeButton.liked];

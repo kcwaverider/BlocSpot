@@ -146,20 +146,21 @@
             SearchResult *searchResult = [[SearchResult alloc] init];
             searchResult.name = response.mapItems[i].name;
             searchResult.category = [NSNumber numberWithInteger:i];
-            searchResult.lattitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.latitude];
+            
+            searchResult.latitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.latitude];
             searchResult.longitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.longitude];
+            CLLocationCoordinate2D pinPoint;
+            pinPoint.latitude = [searchResult.latitude doubleValue];
+            pinPoint.longitude = [searchResult.longitude doubleValue];
+            searchResult.coordinate = pinPoint;
+            
             searchResult.favorite = [self searchResult:searchResult matchesLocationInArray:[DataSource sharedInstance].favoritePlacesList];
+            
             self.pointOfInterestArray[i] = searchResult;
             
         }
         [DataSource sharedInstance].localPlacesList = self.pointOfInterestArray;
         
-        //ASK STEVE ABOUT THIS
-        //[DaNSLog(@"DataSource Length: %lu", (unsigned long)[DataSource sharedInstance].localPlacesList.count);
-        //[self.context save:nil];
-        
-        //[[DataSource sharedInstance] updateLocalPlacesList];
-       // NSMutableArray *testArray = [DataSource sharedInstance].localPlacesList;
         self.search = nil;
         
         [self dropPinsFor:[DataSource sharedInstance].localPlacesList];
@@ -171,7 +172,9 @@
     
     for (PointOfInterest *info in array) {
         PointOfInterest *pointOfInterest = info;
-        if ([searchResult.name isEqualToString: pointOfInterest.name] && [searchResult.lattitude isEqualToNumber: pointOfInterest.location.latitude] && [searchResult.longitude isEqualToNumber: pointOfInterest.location.longitude]) {
+        if ([searchResult.name isEqualToString: pointOfInterest.name] &&
+            [searchResult.latitude isEqualToNumber: pointOfInterest.location.latitude] &&
+            [searchResult.longitude isEqualToNumber: pointOfInterest.location.longitude]) {
             return [NSNumber numberWithBool:YES];
         }
     }
@@ -192,16 +195,9 @@
     
     for (SearchResult *result in mapItemsArray) {
         
-        CLLocationCoordinate2D pinPoint;
-        pinPoint.latitude = [result.lattitude doubleValue];
-        pinPoint.longitude = [result.longitude doubleValue];
-        
-        MKPointAnnotation *annot = [[MKPointAnnotation alloc] init];
-        annot.coordinate = pinPoint;
-         
         //MKPinAnnotationView *annotView = [[MKPinAnnotationView alloc] init];
         
-        [self.mapView addAnnotation:annot];
+        [self.mapView addAnnotation:result];
        // MKAnnotationView *annotView = [self mapView:self.mapView viewForAnnotation:annot];
        // [self.mapView addSubview:annotView];
         
@@ -226,18 +222,30 @@
         
         static NSString *defaultPinID = @"resultPin";
         pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:defaultPinID];
-        
+
         if (pinView == nil) {
             pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:defaultPinID];
         }
-        
+        SearchResult *annot;
+        annot = annotation;
+        annot.title = annot.name;
         pinView.pinColor = MKPinAnnotationColorGreen;
-        pinView.canShowCallout = YES;
+        [pinView setCanShowCallout:YES];
+        
+        pinView.leftCalloutAccessoryView = [[UIView alloc] initWithFrame:CGRectMake(150, 150, 23, 23)];
+        
         pinView.animatesDrop = YES;
     }
     
     return pinView;
 }
+
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    //[view setCanShowCallout:YES];
+    NSLog(@"Title:%@",[view.annotation title]);
+}
+
 
 
 -(void) mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {

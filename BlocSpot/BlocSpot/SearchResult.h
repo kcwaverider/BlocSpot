@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
-
-@interface SearchResult : NSObject
+@interface SearchResult : MKPointAnnotation
 
 @property (nullable, nonatomic, retain) NSString *name;
 @property (nullable, nonatomic, retain) NSNumber *category;
 @property (nullable, nonatomic, retain) NSNumber *favorite;
-@property (nullable, nonatomic, retain) NSNumber *lattitude;
+@property (nullable, nonatomic, retain) NSNumber *latitude;
 @property (nullable, nonatomic, retain) NSNumber *longitude;
 
 //- (BOOL) matchesLocationInArray:(NSArray * _Nullable)array;
