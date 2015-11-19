@@ -23,10 +23,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.likeImage = [[UIImageView alloc] init];
     [self.likeButton setTitle:nil forState:UIControlStateNormal];
-    [self.likeButton setImage:[UIImage imageNamed: @"heart-full"] forState:UIControlStateNormal];
-    self.likeButton.tintColor = [UIColor purpleColor];
+    [self.likeButton setImage:[UIImage imageNamed: @"heart-full-gray"] forState:UIControlStateNormal];
+    self.likeButton.tintColor = [UIColor greenColor];
     
     [self.likeButton addTarget:self action: @selector(likePressed) forControlEvents:UIControlEventTouchUpInside];
 }

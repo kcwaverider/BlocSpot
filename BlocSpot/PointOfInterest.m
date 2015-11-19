@@ -19,4 +19,14 @@
     return self;
 }
 
+-(void) setLocationType:(LocationType)locationType {
+    self.locationType = locationType;
+    self.category = [NSNumber numberWithInteger:self.locationType];
+}
+
+-(LocationType) locationType {
+    self.locationType = [self.category integerValue];
+    return self.locationType;
+}
+
 @end

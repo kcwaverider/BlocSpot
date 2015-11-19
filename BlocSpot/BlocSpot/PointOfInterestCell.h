@@ -22,7 +22,7 @@
 - (void) likePressed;
 
 @property (nonatomic, strong) IBOutlet UILabel *name;
-@property (nonatomic, strong) IBOutlet UIImageView *likeImage;
+//@property (nonatomic, strong) IBOutlet UIImageView *likeImage;
 @property (nonatomic, strong) SearchResult *searchResult;
 @property (nonatomic, strong) IBOutlet LikeButton *likeButton;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;

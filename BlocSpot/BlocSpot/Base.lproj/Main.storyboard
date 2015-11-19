@@ -89,19 +89,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Beach Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1CQ-1Q-Nym">
-                                            <rect key="frame" x="13" y="-4" width="203" height="26"/>
+                                            <rect key="frame" x="13" y="0.0" width="203" height="26"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LqL-fI-cPZ" customClass="LikeButton">
-                                            <rect key="frame" x="232" y="6" width="28" height="27"/>
-                                            <state key="normal" image="heart-empty"/>
-                                        </button>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="likeButton" destination="LqL-fI-cPZ" id="9BD-Cb-rxh"/>
                                     <outlet property="name" destination="1CQ-1Q-Nym" id="3Rg-eB-2BA"/>
                                 </connections>
                             </tableViewCell>
@@ -139,6 +134,9 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O7w-CM-noD">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </mapView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMG-Ud-Moj">
+                                <rect key="frame" x="125" y="211" width="350" height="154"/>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -150,6 +148,9 @@
                             <constraint firstAttribute="trailing" secondItem="O7w-CM-noD" secondAttribute="trailing" id="wfG-p6-2fx"/>
                         </constraints>
                         <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="AMG-Ud-Moj"/>
+                            </mask>
                             <mask key="constraints">
                                 <exclude reference="lpe-Cs-sP3"/>
                                 <exclude reference="vgv-WR-afz"/>
@@ -166,6 +167,7 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="categorySelectionPicker" destination="AMG-Ud-Moj" id="iXi-cr-n9K"/>
                         <outlet property="listButton" destination="GMv-lf-Wck" id="TW8-42-SFi"/>
                         <outlet property="mapView" destination="O7w-CM-noD" id="Pl9-xx-9sc"/>
                     </connections>
@@ -191,7 +193,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Beach Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9R3-A0-1gt">
-                                            <rect key="frame" x="13" y="-10" width="203" height="26"/>
+                                            <rect key="frame" x="13" y="0.0" width="203" height="26"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>

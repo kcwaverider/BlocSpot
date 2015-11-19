@@ -13,6 +13,7 @@
 #import "PointOfInterestCell.h"
 #import "SearchResultsTableViewController.h"
 #import "PointOfInterest.h"
+#import "AppDelegate.h"
 
 @import MapKit;
 
@@ -120,7 +121,6 @@
     
     PointOfInterest *pointOfInterest = [DataSource sharedInstance].favoritePlacesList[indexPath.row];
     cell.name.text = pointOfInterest.name;
-    cell.likeImage = [[UIImageView alloc] init];
     [cell.likeButton setTitle:nil forState:UIControlStateNormal];
     [cell.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
     cell.likeButton.tintColor = [UIColor purpleColor];
@@ -137,7 +137,8 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        //NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
         [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
             
         NSError *error = nil;

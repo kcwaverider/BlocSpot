@@ -68,9 +68,9 @@
     cell.name.text = cell.searchResult.name;
     if (cell.searchResult.favorite == [NSNumber numberWithBool:YES]) {
         //[cell.likeButton setImage:[UIImage imageNamed:@"heart-full"] forState:UIControlStateNormal];
-        cell.likeButton.alpha = 1.0;
+        [cell.likeButton setImage:[UIImage imageNamed:@"heart-full-purple"] forState:UIControlStateNormal];
     } else {
-        cell.likeButton.alpha = 0.3;
+        //cell.likeButton.alpha = 0.3;
     }
     
     return cell;
@@ -108,6 +108,10 @@
         
         for (int i = 0; i < results.count; i++){
             [self.context deleteObject:results[i]];
+        }
+        
+        if(![self.context save:&error]) {
+            NSLog(@"Whoops, coudn't save: %@", [error localizedDescription]);
         }
     }
     

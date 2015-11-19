@@ -14,12 +14,18 @@
 #import "SearchResultsTableViewController.h"
 #import "PointOfInterest.h"
 #import "Location.h"
+#import "CallOutBubble.h"
+#import "LikeButton.h"
+#import "UIButton+LikeButton.h"
 
-@interface MapViewController ()  <CLLocationManagerDelegate, UITextFieldDelegate, MKMapViewDelegate>
+@interface MapViewController ()  <CLLocationManagerDelegate, UITextFieldDelegate, MKMapViewDelegate, UIPickerViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *searchBar;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *listButton;
+@property (weak, nonatomic) IBOutlet UIPickerView *categorySelectionPicker;
+@property (weak, nonatomic) IBOutlet UITableView *categorySelectionTable;
+@property (nonatomic, strong) UIView *categoryView;
 
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -34,6 +40,7 @@
 
 @implementation MapViewController
 
+#pragma mark - Standard View Controls
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mapView.delegate = self;
@@ -46,8 +53,7 @@
     
     // Do any additional setup after loading the view.
     self.context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    
-    
+    self.categorySelectionPicker.delegate = self;
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -87,7 +93,7 @@
     [self.mapView setRegion:viewRegion animated:YES];
      */
 }
-
+#pragma mark - Search Field
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     
@@ -181,6 +187,70 @@
     return [NSNumber numberWithBool:NO];
 }
 
+
+#pragma mark - MapView Controlls
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+
+    MKPinAnnotationView *pinView = nil;
+    if (annotation != mapView.userLocation) {
+        
+        static NSString *defaultPinID = @"resultPin";
+        pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:defaultPinID];
+
+        if (pinView == nil) {
+            pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:defaultPinID];
+        }
+        SearchResult *annot;
+        annot = annotation;
+        annot.title = annot.name;
+        
+        if (pinView.pinTintColor) {
+            pinView.pinTintColor = [self pinColorForSearchResult: annot];
+        } else {
+            if ([[self pinColorForSearchResult:annot] isEqual:[UIColor grayColor]]) {
+                pinView.pinColor = MKPinAnnotationColorPurple;
+            } else {
+                pinView.pinColor = MKPinAnnotationColorRed;
+            }
+        }
+        
+        [pinView setCanShowCallout:YES];
+        
+        
+        //pinView.leftCalloutAccessoryView = [[CallOutBubble alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        LikeButton *likeButton = [LikeButton buttonWithType:UIButtonTypeCustom];
+        [likeButton setImage:[UIImage imageNamed:@"heart-full-gray"] forState:UIControlStateNormal];
+        likeButton.frame = CGRectMake(0, 0, 30, 30);
+        [likeButton addTarget:self action:@selector(likeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        pinView.rightCalloutAccessoryView = likeButton;
+        
+        //pinView.detailCalloutAccessoryView = [[CallOutBubble alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+        
+        
+        pinView.animatesDrop = YES;
+    
+    }
+    
+    return pinView;
+}
+
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    //[view setCanShowCallout:YES];
+    //NSLog(@"Title:%@",[view.annotation title]);
+}
+
+
+
+-(void) mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+    CLLocationCoordinate2D location = self.mapView.userLocation.location.coordinate;
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location, 1000.0, 1000.0);
+    
+    [self.mapView setRegion:region animated:YES];
+}
+
+#pragma mark - Pins
+
 - (void) dropPinsFor:(NSArray *)mapItemsArray {
     
     id userLocation = [self.mapView userLocation];
@@ -198,62 +268,65 @@
         //MKPinAnnotationView *annotView = [[MKPinAnnotationView alloc] init];
         
         [self.mapView addAnnotation:result];
-       // MKAnnotationView *annotView = [self mapView:self.mapView viewForAnnotation:annot];
-       // [self.mapView addSubview:annotView];
-        
+        // MKAnnotationView *annotView = [self mapView:self.mapView viewForAnnotation:annot];
+        // [self.mapView addSubview:annotView];
     }
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-    //FIRST TRY
-    /*
-    if ([annotation isKindOfClass:[MKUserLocation class]]) {
-        return nil;
-    }
-    MKAnnotationView *annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"loc"];
-    annotationView.canShowCallout = YES;
-    annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    return annotationView;
-     */
-    
-    //SECOND TRY
-    MKPinAnnotationView *pinView = nil;
-    if (annotation != mapView.userLocation) {
-        
-        static NSString *defaultPinID = @"resultPin";
-        pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:defaultPinID];
+-(UIColor *) pinColorForSearchResult: (SearchResult *) searchResult {
 
-        if (pinView == nil) {
-            pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:defaultPinID];
-        }
-        SearchResult *annot;
-        annot = annotation;
-        annot.title = annot.name;
-        pinView.pinColor = MKPinAnnotationColorGreen;
-        [pinView setCanShowCallout:YES];
-        
-        pinView.leftCalloutAccessoryView = [[UIView alloc] initWithFrame:CGRectMake(150, 150, 23, 23)];
-        
-        pinView.animatesDrop = YES;
+    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:context];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@ AND location.latitude == %@ AND location.longitude == %@", searchResult.name, searchResult.latitude, searchResult.longitude];
+    
+    [fetchRequest setEntity:entity];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:fetchRequest error:&error];
+    
+    UIColor *color;
+    
+    // If it is favorited the appropriate color should be returned
+    if ( results.count > 0) {
+        color = [UIColor redColor];
+    }
+    // If search result is not saved/favorited, pin should be gray
+    else {
+        color = [UIColor grayColor];
     }
     
-    return pinView;
+    return color;
 }
 
--(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
-{
-    //[view setCanShowCallout:YES];
-    NSLog(@"Title:%@",[view.annotation title]);
-}
-
-
-
--(void) mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-    CLLocationCoordinate2D location = self.mapView.userLocation.location.coordinate;
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location, 1000.0, 1000.0);
+-(void) likeButtonPressed {
+    NSLog(@"likeButtonPressed");
+    CGFloat xLocation = self.view.bounds.size.width / 10;
+    CGFloat yLocation = self.view.bounds.size.height / 8;
+    CGFloat width = self.view.frame.size.width * (4.0/5.0);
+    CGFloat height = self.view.frame.size.height * (3.0/5.0);
+    NSLog(@"X: %f    Y: %f   Width: %f   Height: %f", xLocation, yLocation, height, width);
+    UIView *categorySelectionView = [[UIView alloc] initWithFrame:CGRectMake( xLocation, yLocation, width, height)];
+    categorySelectionView.layer.cornerRadius = 15.0;
+    categorySelectionView.backgroundColor = [UIColor whiteColor];
+    categorySelectionView.tintColor = [UIColor blackColor];
+    categorySelectionView.hidden = NO;
+    [self.view addSubview:categorySelectionView];
+    NSArray *categoryNames = @[@"Bar", @"Coffee Shop", @"Restaurant", @"Shopping", @"Recreation"];
+    //HeartColor  heartColors[5];
+    //heartColors = [HeartColorRed, HeartColorBlue, HeartColorYellow, HeartColorGreen, HeartColorPurple];
     
-    [self.mapView setRegion:region animated:YES];
+    for (NSInteger i = 0; i < 5; i++) {
+        UIButton *button = [UIButton likeButtonWithColor:i];
+        [button addTarget:self action:@selector(categorySelected:) forControlEvents:UIControlEventTouchUpInside];
+        button.titleLabel.text = categoryNames[i];
+        CGPoint 
+        button.frame = CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
+    }
 }
+
 
 #pragma mark - Navigation
 
@@ -267,6 +340,8 @@
     }
     
 }
+
+
 
 
 @end
