@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SearchResult.h"
 
 
 @interface UIButton (LikeButton)
@@ -20,6 +21,7 @@ typedef NS_ENUM(NSInteger, StarColor) {
     HeartColorGray      = 5,
 };
 
+@property (nonatomic, strong) SearchResult *searchResult;
 
 + (UIButton *) likeButtonWithColor:(StarColor) color;
 

@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PointOfInterest.h"
 
 @class LikeButton;
+@class SearchResult;
 @protocol LikeButtonDelegate <NSObject>
 
 -(void) likeButtonPressed;
@@ -18,6 +20,10 @@
 @interface LikeButton : UIButton
 
 @property (nonatomic, assign) BOOL liked;
-@property (nonatomic, assign) id <LikeButtonDelegate> delegate;
+@property (nonatomic, assign) _Nonnull id <LikeButtonDelegate> delegate;
+@property (nonatomic, strong) SearchResult *searchResult;
+
++ (instancetype _Nonnull) buttonForCategory: (LocationType) category;
++ (instancetype _Nonnull) buttonWithColor: (UIColor *) color;
 
 @end

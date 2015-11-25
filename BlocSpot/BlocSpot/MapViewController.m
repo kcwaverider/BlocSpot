@@ -17,6 +17,7 @@
 #import "CallOutBubble.h"
 #import "LikeButton.h"
 #import "UIButton+LikeButton.h"
+#import "MagicButton.h"
 
 @interface MapViewController ()  <CLLocationManagerDelegate, UITextFieldDelegate, MKMapViewDelegate, UIPickerViewDelegate>
 
@@ -26,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *categorySelectionPicker;
 @property (weak, nonatomic) IBOutlet UITableView *categorySelectionTable;
 @property (nonatomic, strong) UIView *categoryView;
+@property (nonatomic, strong) SearchResult *selectedSearchResult;
+@property (nonatomic, strong) NSMutableArray *buttonArray;
 
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -82,8 +85,9 @@
     self.searchBar.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.3];
     [self.navigationController.navigationBar addSubview:self.searchBar];
     self.searchBar.delegate = self;
+    self.searchBar.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.navigationController.navigationBar.alpha = 0.6;
-
+    
     /*
     CLLocationCoordinate2D zoomLocation;
     zoomLocation.latitude = -36.8406;
@@ -125,7 +129,7 @@
     self.search = [[MKLocalSearch alloc] initWithRequest:request];
     
     [self.search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
-        NSLog(@"Map Items: %@", response.mapItems);
+        //NSLog(@"Map Items: %@", response.mapItems);
         
         self.pointOfInterestArray = nil;
        // [DataSource sharedInstance].localPlacesList = [response.mapItems mutableCopy];
@@ -133,28 +137,16 @@
         // TODO: call a method that deletes all items from the data store
         //[DataSource sharedInstance].localPlacesList = nil;
         for (NSUInteger i = 0; i < response.mapItems.count; i++) {
-          /*
-            PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:self.context];
-           
-            Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.context];
-            
-            pointOfInterest.name = response.mapItems[i].name;
-            pointOfInterest.category = [NSNumber numberWithInteger:i];
-            
-            NSNumber *latitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.latitude];
-            location.latitude = latitude;
-            NSNumber *longitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.longitude];
-            location.longitude = longitude;
-            pointOfInterest.location = location;
-            location.pointOfInterest = pointOfInterest;
-            self.pointOfInterestArray[i] = pointOfInterest;
-            */
+
             SearchResult *searchResult = [[SearchResult alloc] init];
             searchResult.name = response.mapItems[i].name;
-            searchResult.category = [NSNumber numberWithInteger:i];
-            
             searchResult.latitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.latitude];
             searchResult.longitude = [NSNumber numberWithDouble:response.mapItems[i].placemark.coordinate.longitude];
+            if (![searchResult isSavedLocation]) {
+                searchResult.category = [NSNumber numberWithInteger:LocationTypeNone];
+            }
+
+            
             CLLocationCoordinate2D pinPoint;
             pinPoint.latitude = [searchResult.latitude doubleValue];
             pinPoint.longitude = [searchResult.longitude doubleValue];
@@ -203,14 +195,17 @@
         SearchResult *annot;
         annot = annotation;
         annot.title = annot.name;
-        
+        UIColor *categoryColor;
         if (pinView.pinTintColor) {
-            pinView.pinTintColor = [self pinColorForSearchResult: annot];
+            categoryColor = [self pinColorForSearchResult: annot];
+            pinView.pinTintColor = categoryColor;
         } else {
             if ([[self pinColorForSearchResult:annot] isEqual:[UIColor grayColor]]) {
                 pinView.pinColor = MKPinAnnotationColorPurple;
+                categoryColor = [UIColor purpleColor];
             } else {
                 pinView.pinColor = MKPinAnnotationColorRed;
+                categoryColor = [UIColor redColor];
             }
         }
         
@@ -218,10 +213,16 @@
         
         
         //pinView.leftCalloutAccessoryView = [[CallOutBubble alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        /*
         LikeButton *likeButton = [LikeButton buttonWithType:UIButtonTypeCustom];
+        likeButton.searchResult = annot;
         [likeButton setImage:[UIImage imageNamed:@"heart-full-gray"] forState:UIControlStateNormal];
         likeButton.frame = CGRectMake(0, 0, 30, 30);
-        [likeButton addTarget:self action:@selector(likeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+         */
+        LikeButton *likeButton = [LikeButton buttonWithColor:categoryColor];
+        likeButton.searchResult = annot;
+        
+        [likeButton addTarget:self action:@selector(likeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         pinView.rightCalloutAccessoryView = likeButton;
         
         //pinView.detailCalloutAccessoryView = [[CallOutBubble alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
@@ -268,15 +269,15 @@
         //MKPinAnnotationView *annotView = [[MKPinAnnotationView alloc] init];
         
         [self.mapView addAnnotation:result];
-        // MKAnnotationView *annotView = [self mapView:self.mapView viewForAnnotation:annot];
-        // [self.mapView addSubview:annotView];
+        
     }
 }
 
 -(UIColor *) pinColorForSearchResult: (SearchResult *) searchResult {
 
-    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:context];
+    //NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:self.context];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@ AND location.latitude == %@ AND location.longitude == %@", searchResult.name, searchResult.latitude, searchResult.longitude];
@@ -285,13 +286,34 @@
     [fetchRequest setPredicate:predicate];
     
     NSError *error = nil;
-    NSArray *results = [context executeFetchRequest:fetchRequest error:&error];
+    NSArray *results = [self.context executeFetchRequest:fetchRequest error:&error];
     
     UIColor *color;
     
     // If it is favorited the appropriate color should be returned
     if ( results.count > 0) {
-        color = [UIColor redColor];
+        LocationType category = [searchResult.category integerValue];
+        NSLog([NSString stringWithFormat:@"Name: %@ Category: %@", searchResult.name, searchResult.category]);
+        switch (category) {
+            case LocationTypeBar:
+                color = [UIColor redColor];
+                break;
+            case LocationTypeCoffeeShop:
+                color = [UIColor blueColor];
+                break;
+            case LocationTypeRestaurant:
+                color = [UIColor yellowColor];
+                break;
+            case LocationTypeShopping:
+                color = [UIColor greenColor];
+                break;
+            case LocationTypeRecreation:
+                color = [UIColor purpleColor];
+                break;
+            default:
+                color = [UIColor grayColor];
+                break;
+        }
     }
     // If search result is not saved/favorited, pin should be gray
     else {
@@ -301,7 +323,10 @@
     return color;
 }
 
--(void) likeButtonPressed {
+-(void) likeButtonPressed: (LikeButton *) source {
+    self.buttonArray = [[NSMutableArray alloc] init];
+    CGFloat cornerRadius = 15;
+    
     NSLog(@"likeButtonPressed");
     CGFloat xLocation = self.view.bounds.size.width / 10;
     CGFloat yLocation = self.view.bounds.size.height / 8;
@@ -309,22 +334,110 @@
     CGFloat height = self.view.frame.size.height * (3.0/5.0);
     NSLog(@"X: %f    Y: %f   Width: %f   Height: %f", xLocation, yLocation, height, width);
     UIView *categorySelectionView = [[UIView alloc] initWithFrame:CGRectMake( xLocation, yLocation, width, height)];
-    categorySelectionView.layer.cornerRadius = 15.0;
+    
+    categorySelectionView.layer.cornerRadius = cornerRadius;
     categorySelectionView.backgroundColor = [UIColor whiteColor];
     categorySelectionView.tintColor = [UIColor blackColor];
     categorySelectionView.hidden = NO;
+    
+    UILabel *instructionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, categorySelectionView.frame.size.width, categorySelectionView.frame.size.height * 2.0 / 7.0)];
+    NSString *instructionString = [NSString stringWithFormat:@"Select a category for \n %@.", source.searchResult.name];
+    [instructionLabel setText:instructionString];
+    instructionLabel.font = [UIFont boldSystemFontOfSize:20.0];
+    instructionLabel.numberOfLines = 0;
+    instructionLabel.textAlignment = NSTextAlignmentCenter;
+    instructionLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    [categorySelectionView addSubview:instructionLabel];
+    
     [self.view addSubview:categorySelectionView];
     NSArray *categoryNames = @[@"Bar", @"Coffee Shop", @"Restaurant", @"Shopping", @"Recreation"];
-    //HeartColor  heartColors[5];
-    //heartColors = [HeartColorRed, HeartColorBlue, HeartColorYellow, HeartColorGreen, HeartColorPurple];
+    NSArray *categoryColors = @[[UIColor redColor], [UIColor blueColor], [UIColor yellowColor], [UIColor greenColor], [UIColor purpleColor]];
     
     for (NSInteger i = 0; i < 5; i++) {
-        UIButton *button = [UIButton likeButtonWithColor:i];
+        self.buttonArray[i] = [MagicButton buttonWithType:UIButtonTypeSystem];
+        MagicButton *button = (MagicButton *)self.buttonArray[i];
+        //UIButton *button = self.buttonArray[i];
         [button addTarget:self action:@selector(categorySelected:) forControlEvents:UIControlEventTouchUpInside];
-        button.titleLabel.text = categoryNames[i];
-        CGPoint 
-        button.frame = CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
+        [button setTitle:categoryNames[i] forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:20.0];
+        
+        button.searchResult = source.searchResult;
+        
+        button.backgroundColor = [categoryColors[i] colorWithAlphaComponent:0.3];
+        CGPoint buttonOrigin = CGPointMake(0, (categorySelectionView.frame.size.height * (2.0 + (CGFloat)i) / 7.0));
+        button.frame = CGRectMake(buttonOrigin.x, buttonOrigin.y, categorySelectionView.frame.size.width, categorySelectionView.frame.size.height / 7);
+        
+        if (i == 4) {
+            
+            CAShapeLayer *maskLayer = [CAShapeLayer layer];
+            maskLayer.path = [UIBezierPath bezierPathWithRoundedRect:button.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:(CGSize){cornerRadius, cornerRadius}].CGPath;
+            maskLayer.frame = button.bounds;
+            button.layer.mask = maskLayer;
+            }
+        
+        [categorySelectionView addSubview:(MagicButton *)self.buttonArray[i]];
     }
+    
+    
+}
+
+- (void) categorySelected: (MagicButton *) source {
+    
+    SearchResult *searchResult = source.searchResult;
+    
+    PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:self.context];
+    
+    Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.context];
+    
+    pointOfInterest.location = location;
+    pointOfInterest.name = searchResult.name;
+    pointOfInterest.location.latitude = searchResult.latitude;
+    pointOfInterest.location.longitude = searchResult.longitude;
+    
+    LocationType locationType;
+    
+    NSString *type = source.titleLabel.text;
+    
+    UIColor *pinColor;
+    
+    if ([type isEqualToString:@"Bar"]) {
+        locationType = LocationTypeBar;
+        pinColor = [UIColor redColor];
+    } else if ([type isEqualToString:@"Coffee Shop"]) {
+        locationType = LocationTypeCoffeeShop;
+        pinColor = [UIColor blueColor];
+    }else if ([type isEqualToString:@"Restaurant"]) {
+        locationType = LocationTypeRestaurant;
+        pinColor = [UIColor yellowColor];
+    }else if ([type isEqualToString:@"Shopping"]) {
+        locationType = LocationTypeShopping;
+        pinColor = [UIColor greenColor];
+    }else {
+        locationType = LocationTypeRecreation;
+        pinColor = [UIColor purpleColor];
+    }
+    pointOfInterest.locationType = locationType;
+    
+    NSError *error = nil;
+    if (![self.context save:&error]) {
+        NSLog(@"Whoops couldn't save after category selection due to: %@", [error localizedDescription]);
+    } else {
+        NSLog(@"Saved %@ to disk with category: %@ - %@", pointOfInterest.name, pointOfInterest.category, source.titleLabel.text);
+    }
+    
+    [self.mapView removeAnnotation:searchResult];
+    static NSString *defaultPinID = @"resultPin";
+    MKPinAnnotationView *pinView;
+    if (pinView == nil) {
+        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:searchResult reuseIdentifier:defaultPinID];
+    }
+    pinView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:defaultPinID];
+    pinView.pinTintColor = pinColor;
+    [self.mapView addSubview:pinView];
+    source.superview.hidden = YES;
+    UIView *view = source.superview;
+    
+    view = nil;
 }
 
 

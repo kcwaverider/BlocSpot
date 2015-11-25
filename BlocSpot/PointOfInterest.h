@@ -11,17 +11,20 @@
 
 @class Location;
 
-typedef NS_ENUM(NSInteger, LocationType) {
-    LocationTypeBar             = 0,
-    LocationTypeCoffeeShop      = 1,
-    LocationTypeRestaurant      = 2,
-    LocationTypeShopping        = 3,
-    LocationTypeRecreation      = 4,
-};
+
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PointOfInterest : NSManagedObject
+
+typedef NS_ENUM(NSInteger, LocationType) {
+    LocationTypeNone            = 0,
+    LocationTypeBar             = 1,
+    LocationTypeCoffeeShop      = 2,
+    LocationTypeRestaurant      = 3,
+    LocationTypeShopping        = 4,
+    LocationTypeRecreation      = 5,
+};
 
 // Insert code here to declare functionality of your managed object subclass
 @property (nonatomic, assign) LocationType locationType;

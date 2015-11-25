@@ -1,17 +1,14 @@
 //
 //  AppDelegate.m
-//  BlocSpot
+//  test
 //
-//  Created by Chad Clayton on 10/5/15.
+//  Created by Chad Clayton on 11/24/15.
 //  Copyright © 2015 Chad Clayton. All rights reserved.
 //
 
 #import "AppDelegate.h"
 #import "DetailViewController.h"
 #import "MasterViewController.h"
-#import "PointOfInterest.h"
-#import "Location.h"
-#import "DataSource.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
 
@@ -21,31 +18,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-     // CoreData trial
-    
-    NSManagedObjectContext *context = self.managedObjectContext;
-
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    
-    NSError *error = nil;
-    [DataSource sharedInstance].favoritePlacesList = [[context executeFetchRequest:fetchRequest error:&error] mutableCopy];
-    /*
-    for (PointOfInterest *info in [DataSource sharedInstance].favoritePlacesList) {
-        NSLog(@"Name: %@", info.name);
-        NSLog(@"Category: %@", info.category);
-        Location *location = info.location;
-        NSLog(@"Latitude: %@", location.latitude);
-        NSLog(@"Longitude: %@", location.longitude);
-        //[context deleteObject:info];
-    }
-     */
-    if(![context save:&error]) {
-        NSLog(@"Whoops, coudn't save: %@", [error localizedDescription]);
-    }
-    
-    
     // Override point for customization after application launch.
     UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
     UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
@@ -100,7 +72,7 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 - (NSURL *)applicationDocumentsDirectory {
-    // The directory the application uses to store the Core Data store file. This code uses a directory named "com.brainfullabs.BlocSpot" in the application's documents directory.
+    // The directory the application uses to store the Core Data store file. This code uses a directory named "com.brainfullabs.test" in the application's documents directory.
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
@@ -109,7 +81,7 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"BlocSpot" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }
@@ -123,7 +95,7 @@
     // Create the coordinator and store
     
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"BlocSpot.sqlite"];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"test.sqlite"];
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {

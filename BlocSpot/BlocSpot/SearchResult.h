@@ -16,8 +16,13 @@
 @property (nullable, nonatomic, retain) NSNumber *favorite;
 @property (nullable, nonatomic, retain) NSNumber *latitude;
 @property (nullable, nonatomic, retain) NSNumber *longitude;
+@property (nonatomic, strong)  NSManagedObjectContext * _Nonnull context;
 
 //- (BOOL) matchesLocationInArray:(NSArray * _Nullable)array;
+
+//+ (instancetype) init;
+
+- (BOOL) isSavedLocation;
 
 
 @end

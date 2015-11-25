@@ -1,26 +1,15 @@
 //
 //  MasterViewController.m
-//  BlocSpot
+//  test
 //
-//  Created by Chad Clayton on 10/5/15.
+//  Created by Chad Clayton on 11/24/15.
 //  Copyright © 2015 Chad Clayton. All rights reserved.
 //
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
-#import "MapViewController.h"
-#import "DataSource.h"
-#import "SavedLocationCell.h"
-#import "SearchResultsTableViewController.h"
-#import "PointOfInterest.h"
-#import "AppDelegate.h"
 
-@import MapKit;
-
-@interface MasterViewController () <UITableViewDelegate>
-
-@property (nonatomic, strong) NSArray *savedLocationsArray;
-
+@interface MasterViewController ()
 
 @end
 
@@ -28,24 +17,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    self.fetchedResultsController = [self fetchedResultsController];
 
-//    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-//    self.navigationItem.rightBarButtonItem = addButton;
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+    self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     [super viewWillAppear:animated];
-    
-    //[self.tableView reloadData];
-    NSLog(@"viewDidAppear");
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,15 +59,11 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        PointOfInterest *pointOfInterest = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
-        [controller setDetailItem:pointOfInterest];
+        [controller setDetailItem:object];
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
-    } else if ([[segue identifier] isEqualToString:@"ShowSearchList"]) {
-        SearchResultsTableViewController *controller = (MapViewController *)[segue destinationViewController];
-        controller.context = [self.fetchedResultsController managedObjectContext];
-        
     }
 }
 
@@ -96,44 +74,15 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if([self.fetchedResultsController sections] > 0) {
-        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: section];
-        NSLog(@"Master Cells: %lu", [sectionInfo numberOfObjects]);
-        return [sectionInfo numberOfObjects];
-    } else {
-        return 0;
-    }
-    
-}
-
-- (void) tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    
-    cell.backgroundColor = [UIColor redColor];
-   
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"savedLocationCell";
-    
-    SavedLocationCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    PointOfInterest *pointOfInterest = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    cell.name.text = pointOfInterest.name;
-    NSLog(@"Name: %@", pointOfInterest.name);
-
-    
-    UIView* bgview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    bgview.opaque = YES;
-    bgview.backgroundColor = [self backgroundColorForCategory:pointOfInterest.category];
-    [cell setBackgroundView:bgview];
-    
-    
-
-    NSLog(@"Name: %@", cell.name.text);
-
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
-
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
@@ -143,7 +92,6 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        
         [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
             
         NSError *error = nil;
@@ -156,6 +104,10 @@
     }
 }
 
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+}
 
 #pragma mark - Fetched results controller
 
@@ -166,16 +118,15 @@
     }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    self.managedObjectContext = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
 
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
     
@@ -233,9 +184,9 @@
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
-//        case NSFetchedResultsChangeUpdate:
-//            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-//            break;
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
             
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -247,35 +198,6 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView endUpdates];
-}
-
-- (UIColor *) backgroundColorForCategory:(NSNumber *) category {
-    
-    UIColor *cellBackgroundColor;
-    switch ([category integerValue]) {
-        case LocationTypeBar:
-            cellBackgroundColor = [UIColor redColor];
-            break;
-        case LocationTypeCoffeeShop:
-            cellBackgroundColor = [UIColor blueColor];
-            break;
-        case LocationTypeRestaurant:
-            cellBackgroundColor = [UIColor yellowColor];
-            break;
-        case LocationTypeShopping:
-            cellBackgroundColor = [UIColor greenColor];
-            break;
-        case LocationTypeRecreation:
-            cellBackgroundColor = [UIColor purpleColor];
-            break;
-        default:
-            cellBackgroundColor = [UIColor grayColor];
-            break;
-    }
-    
-    cellBackgroundColor = [cellBackgroundColor colorWithAlphaComponent:0.1];
-    
-    return cellBackgroundColor;
 }
 
 /*

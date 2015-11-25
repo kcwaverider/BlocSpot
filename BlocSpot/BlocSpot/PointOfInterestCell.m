@@ -25,7 +25,6 @@
     // Initialization code
     [self.likeButton setTitle:nil forState:UIControlStateNormal];
     [self.likeButton setImage:[UIImage imageNamed: @"heart-full-gray"] forState:UIControlStateNormal];
-    self.likeButton.tintColor = [UIColor greenColor];
     
     [self.likeButton addTarget:self action: @selector(likePressed) forControlEvents:UIControlEventTouchUpInside];
 }

@@ -15,13 +15,14 @@
 
 - (instancetype) init {
     self = [super init];
+    self.locationType = 0;
     
     return self;
 }
 
 -(void) setLocationType:(LocationType)locationType {
-    self.locationType = locationType;
-    self.category = [NSNumber numberWithInteger:self.locationType];
+    //self.locationType = LocationTypeRestaurant;
+    self.category = [NSNumber numberWithInteger:locationType];
 }
 
 -(LocationType) locationType {

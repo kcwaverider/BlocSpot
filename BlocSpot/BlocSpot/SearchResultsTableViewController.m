@@ -37,6 +37,10 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -68,7 +72,8 @@
     cell.name.text = cell.searchResult.name;
     if (cell.searchResult.favorite == [NSNumber numberWithBool:YES]) {
         //[cell.likeButton setImage:[UIImage imageNamed:@"heart-full"] forState:UIControlStateNormal];
-        [cell.likeButton setImage:[UIImage imageNamed:@"heart-full-purple"] forState:UIControlStateNormal];
+        NSLog([NSString stringWithFormat:@"%@ - Category: %@", cell.searchResult.name, cell.searchResult.category]);
+        cell.likeButton = [LikeButton buttonForCategory:[cell.searchResult.favorite integerValue]];
     } else {
         //cell.likeButton.alpha = 0.3;
     }

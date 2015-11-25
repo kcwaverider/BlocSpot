@@ -42,12 +42,16 @@
     return button;
 }
 
-- (UIButton *) likeButton {
++ (UIButton *) likeButton {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0, 0, 30, 30);
     [button setImage:[UIImage imageNamed:@"star-full-gray"] forState:UIControlStateNormal];
     
     return button;
+}
+
+- (void) setsearchResult:(SearchResult *)searchResult {
+    self.searchResult = searchResult;
 }
 
 @end

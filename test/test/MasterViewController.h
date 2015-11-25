@@ -1,8 +1,8 @@
 //
 //  MasterViewController.h
-//  BlocSpot
+//  test
 //
-//  Created by Chad Clayton on 10/5/15.
+//  Created by Chad Clayton on 11/24/15.
 //  Copyright © 2015 Chad Clayton. All rights reserved.
 //
 
@@ -14,11 +14,9 @@
 @interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
-@property (strong, nonatomic) NSMutableArray *favoritesArray;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, assign) id <UITableViewDelegate> delegate;
 
 
 @end
