@@ -1,5 +1,5 @@
 //
-//  MagicButton.h
+//  CategoryButton.h
 //  BlocSpot
 //
 //  Created by Chad Clayton on 11/20/15.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SearchResult.h"
 
-@interface MagicButton : UIButton
+@interface CategoryButton : UIButton
 
 @property (nonatomic, strong) SearchResult *searchResult;
 

@@ -17,9 +17,10 @@
 #import "CallOutBubble.h"
 #import "LikeButton.h"
 #import "UIButton+LikeButton.h"
-#import "MagicButton.h"
+#import "CategoryButton.h"
+#import "CategorySelectionView.h"
 
-@interface MapViewController ()  <CLLocationManagerDelegate, UITextFieldDelegate, MKMapViewDelegate, UIPickerViewDelegate>
+@interface MapViewController ()  <CLLocationManagerDelegate, UITextFieldDelegate, MKMapViewDelegate, UIPickerViewDelegate, CategorySelectionViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *searchBar;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -324,6 +325,12 @@
 }
 
 -(void) likeButtonPressed: (LikeButton *) source {
+    
+    
+    CategorySelectionView *categorySelectionView = [[CategorySelectionView alloc] initInViewController:self ForLocationNamed:source.searchResult.name];
+    [self.view addSubview:categorySelectionView];
+    
+    /*
     self.buttonArray = [[NSMutableArray alloc] init];
     CGFloat cornerRadius = 15;
     
@@ -378,10 +385,10 @@
         [categorySelectionView addSubview:(MagicButton *)self.buttonArray[i]];
     }
     
-    
+    */
 }
 
-- (void) categorySelected: (MagicButton *) source {
+- (void) categorySelected: (CategoryButton *) source {
     
     SearchResult *searchResult = source.searchResult;
     

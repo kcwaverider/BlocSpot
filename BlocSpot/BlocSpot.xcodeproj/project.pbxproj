@@ -27,10 +27,11 @@
 		88D24A331BD16FC100EB3920 /* PointOfInterest.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2D1BD16FC100EB3920 /* PointOfInterest.m */; settings = {ASSET_TAGS = (); }; };
 		88D24A341BD16FC100EB3920 /* Location+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2F1BD16FC100EB3920 /* Location+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
 		88D24A351BD16FC100EB3920 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A311BD16FC100EB3920 /* Location.m */; settings = {ASSET_TAGS = (); }; };
+		88D8CFB81C0E523800D67B8D /* CategorySelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D8CFB71C0E523800D67B8D /* CategorySelectionView.m */; settings = {ASSET_TAGS = (); }; };
 		88D90D711BF3913900ABEA4E /* CallOutBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D90D701BF3913900ABEA4E /* CallOutBubble.m */; settings = {ASSET_TAGS = (); }; };
 		88D90D741BF6364A00ABEA4E /* UIButton+LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D90D731BF6364A00ABEA4E /* UIButton+LikeButton.m */; settings = {ASSET_TAGS = (); }; };
 		88D9BD681BE025DE0045CA17 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9BD671BE025DE0045CA17 /* SearchResult.m */; settings = {ASSET_TAGS = (); }; };
-		88DEFAE91C0010830011C576 /* MagicButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DEFAE81C0010830011C576 /* MagicButton.m */; settings = {ASSET_TAGS = (); }; };
+		88DEFAE91C0010830011C576 /* CategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DEFAE81C0010830011C576 /* CategoryButton.m */; settings = {ASSET_TAGS = (); }; };
 		88DEFAEC1C04270E0011C576 /* SavedLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DEFAEB1C04270E0011C576 /* SavedLocationCell.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -90,14 +91,16 @@
 		88D24A2F1BD16FC100EB3920 /* Location+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Location+CoreDataProperties.m"; path = "../Location+CoreDataProperties.m"; sourceTree = "<group>"; };
 		88D24A301BD16FC100EB3920 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = ../Location.h; sourceTree = "<group>"; };
 		88D24A311BD16FC100EB3920 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = ../Location.m; sourceTree = "<group>"; };
+		88D8CFB61C0E523800D67B8D /* CategorySelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategorySelectionView.h; sourceTree = "<group>"; };
+		88D8CFB71C0E523800D67B8D /* CategorySelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategorySelectionView.m; sourceTree = "<group>"; };
 		88D90D6F1BF3913900ABEA4E /* CallOutBubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallOutBubble.h; sourceTree = "<group>"; };
 		88D90D701BF3913900ABEA4E /* CallOutBubble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallOutBubble.m; sourceTree = "<group>"; };
 		88D90D721BF6364A00ABEA4E /* UIButton+LikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+LikeButton.h"; sourceTree = "<group>"; };
 		88D90D731BF6364A00ABEA4E /* UIButton+LikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+LikeButton.m"; sourceTree = "<group>"; };
 		88D9BD661BE025DE0045CA17 /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
 		88D9BD671BE025DE0045CA17 /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
-		88DEFAE71C0010830011C576 /* MagicButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicButton.h; sourceTree = "<group>"; };
-		88DEFAE81C0010830011C576 /* MagicButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicButton.m; sourceTree = "<group>"; };
+		88DEFAE71C0010830011C576 /* CategoryButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryButton.h; sourceTree = "<group>"; };
+		88DEFAE81C0010830011C576 /* CategoryButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryButton.m; sourceTree = "<group>"; };
 		88DEFAEA1C04270E0011C576 /* SavedLocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedLocationCell.h; sourceTree = "<group>"; };
 		88DEFAEB1C04270E0011C576 /* SavedLocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedLocationCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -223,10 +226,12 @@
 				8875317F1BD80188007D31C1 /* PointOfInterestCell.m */,
 				88D90D6F1BF3913900ABEA4E /* CallOutBubble.h */,
 				88D90D701BF3913900ABEA4E /* CallOutBubble.m */,
-				88DEFAE71C0010830011C576 /* MagicButton.h */,
-				88DEFAE81C0010830011C576 /* MagicButton.m */,
+				88DEFAE71C0010830011C576 /* CategoryButton.h */,
+				88DEFAE81C0010830011C576 /* CategoryButton.m */,
 				88DEFAEA1C04270E0011C576 /* SavedLocationCell.h */,
 				88DEFAEB1C04270E0011C576 /* SavedLocationCell.m */,
+				88D8CFB61C0E523800D67B8D /* CategorySelectionView.h */,
+				88D8CFB71C0E523800D67B8D /* CategorySelectionView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -382,6 +387,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88D90D741BF6364A00ABEA4E /* UIButton+LikeButton.m in Sources */,
+				88D8CFB81C0E523800D67B8D /* CategorySelectionView.m in Sources */,
 				88D9BD681BE025DE0045CA17 /* SearchResult.m in Sources */,
 				88A581811BC3299700B0E8A4 /* DetailViewController.m in Sources */,
 				88A5817E1BC3299700B0E8A4 /* MasterViewController.m in Sources */,
@@ -396,7 +402,7 @@
 				88D24A321BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m in Sources */,
 				88A581781BC3299700B0E8A4 /* AppDelegate.m in Sources */,
 				887531801BD80188007D31C1 /* PointOfInterestCell.m in Sources */,
-				88DEFAE91C0010830011C576 /* MagicButton.m in Sources */,
+				88DEFAE91C0010830011C576 /* CategoryButton.m in Sources */,
 				88D24A351BD16FC100EB3920 /* Location.m in Sources */,
 				88DEFAEC1C04270E0011C576 /* SavedLocationCell.m in Sources */,
 				88A581751BC3299700B0E8A4 /* main.m in Sources */,
