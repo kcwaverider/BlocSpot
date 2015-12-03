@@ -7,11 +7,14 @@
 //
 
 #import "PointOfInterestCell.h"
-#import "LikeButton.h"
+#import "CategorySelectionView.h"
+#import "AppDelegate.h"
+#import "Location.h"
 
-@interface PointOfInterestCell ()
+@interface PointOfInterestCell () <CategorySelectionViewDelegate>
 
-
+@property (nonatomic, strong) CategorySelectionView *categorySelectionView;
+@property (nonatomic, strong) NSManagedObjectContext *context;
 
 @end
 
@@ -22,11 +25,12 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     // Initialization code
-    [self.likeButton setTitle:nil forState:UIControlStateNormal];
-    [self.likeButton setImage:[UIImage imageNamed: @"heart-full-gray"] forState:UIControlStateNormal];
+    //[self.likeButton setTitle:nil forState:UIControlStateNormal];
+    //[self.likeButton setImage:[UIImage imageNamed: @"heart-full-gray"] forState:UIControlStateNormal];
     
-    [self.likeButton addTarget:self action: @selector(likePressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.likeButton addTarget:self action: @selector(likeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -35,22 +39,74 @@
     // Configure the view for the selected state
 }
 
-- (void) likePressed {
-    // button was pressed while in the like state, thus unliking the location
-    if (self.likeButton.liked) {
-        self.likeButton.liked = NO;
-        self.likeButton.alpha = 0.3;
-        //[self.likeButton setImage:[UIImage imageNamed: @"heart-empty"] forState:UIControlStateNormal];
-    // button was pressed while in the unlike state, thus liking the location
-    } else {
-        self.likeButton.liked = YES;
-        self.likeButton.alpha = 1.0;
-        //[self.likeButton setImage:[UIImage imageNamed: @"heart-full"] forState:UIControlStateNormal];
-    }
+-(void) likeButtonPressed {
     
-    [self.delegate cellDidPressLikeButton:self ToLikeState:self.likeButton.liked];
+        self.categorySelectionView = [[CategorySelectionView alloc] initInViewController:(UITableViewController *)self.delegate ForLocationNamed:self.searchResult.name];
+        self.categorySelectionView.delegate = self;
+        [((UITableViewController *)self.delegate).view addSubview:self.categorySelectionView];
     
 }
+
+- (void) categorySelected: (NSString *) category {
+    
+    //SearchResult *searchResult = source.searchResult;
+    
+    PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:self.context];
+    
+    Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.context];
+    
+    pointOfInterest.location = location;
+    pointOfInterest.name = self.searchResult.name;
+    pointOfInterest.location.latitude = self.searchResult.latitude;
+    pointOfInterest.location.longitude = self.searchResult.longitude;
+    
+    LocationType locationType;
+    
+    NSString *type = category;
+    
+    UIColor *pinColor;
+    
+    if ([type isEqualToString:@"Bar"]) {
+        locationType = LocationTypeBar;
+        pinColor = [UIColor redColor];
+    } else if ([type isEqualToString:@"Coffee Shop"]) {
+        locationType = LocationTypeCoffeeShop;
+        pinColor = [UIColor blueColor];
+    }else if ([type isEqualToString:@"Restaurant"]) {
+        locationType = LocationTypeRestaurant;
+        pinColor = [UIColor yellowColor];
+    }else if ([type isEqualToString:@"Shopping"]) {
+        locationType = LocationTypeShopping;
+        pinColor = [UIColor greenColor];
+    }else {
+        locationType = LocationTypeRecreation;
+        pinColor = [UIColor purpleColor];
+    }
+    pointOfInterest.locationType = locationType;
+    
+    NSError *error = nil;
+    if (![self.context save:&error]) {
+        NSLog(@"Whoops couldn't save after category selection due to: %@", [error localizedDescription]);
+    } else {
+        NSLog(@"Saved %@ to disk with category: %@ - %@", pointOfInterest.name, pointOfInterest.category, category);
+    }
+    /*
+    [self.mapView removeAnnotation:self.selectedSearchResult];
+    static NSString *defaultPinID = @"resultPin";
+    MKPinAnnotationView *pinView;
+    if (pinView == nil) {
+        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:self.selectedSearchResult reuseIdentifier:defaultPinID];
+    }
+    pinView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:defaultPinID];
+    pinView.pinTintColor = pinColor;
+    [self.mapView addSubview:pinView];
+     */
+    self.categorySelectionView.hidden = YES;
+    
+    
+    self.categorySelectionView = nil;
+}
+
 
 
 

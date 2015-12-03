@@ -68,8 +68,27 @@
     cell.delegate = self;
     // Configure the cell...
     cell.searchResult = [DataSource sharedInstance].localPlacesList[indexPath.row];
-    //pointOfInterest = [DataSource sharedInstance].localPlacesList[indexPath.row];
     cell.name.text = cell.searchResult.name;
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:self.context];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@ AND location.latitude == %@ AND location.longitude == %@", cell.searchResult.name, cell.searchResult.latitude, cell.searchResult.longitude];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *results = [self.context executeFetchRequest:fetchRequest error:&error];
+    
+    
+    if (results.count > 0) {
+        PointOfInterest *pointOfInterest = results[0];
+        [cell.likeButton setHeartColorForCategory:pointOfInterest.category];
+    } else {
+        NSNumber *category = [[NSNumber alloc] initWithInteger:0];
+        [cell.likeButton setHeartColorForCategory: category];
+    }
+    
+    /*
     if (cell.searchResult.favorite == [NSNumber numberWithBool:YES]) {
         //[cell.likeButton setImage:[UIImage imageNamed:@"heart-full"] forState:UIControlStateNormal];
         NSLog([NSString stringWithFormat:@"%@ - Category: %@", cell.searchResult.name, cell.searchResult.category]);
@@ -77,6 +96,7 @@
     } else {
         //cell.likeButton.alpha = 0.3;
     }
+     */
     
     return cell;
 }

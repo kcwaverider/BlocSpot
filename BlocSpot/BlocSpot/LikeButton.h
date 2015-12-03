@@ -25,5 +25,6 @@
 
 + (instancetype _Nonnull) buttonForCategory: (LocationType) category;
 + (instancetype _Nonnull) buttonWithColor: (UIColor *) color;
+- (void) setHeartColorForCategory: (NSNumber *) category;
 
 @end

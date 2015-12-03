@@ -35,6 +35,8 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) MKLocalSearch *search;
 @property (strong, nonatomic) NSMutableArray *pointOfInterestArray;
+@property (strong, nonatomic) CategorySelectionView *categorySelectionView;
+
 
 @end
 
@@ -326,9 +328,10 @@
 
 -(void) likeButtonPressed: (LikeButton *) source {
     
-    
-    CategorySelectionView *categorySelectionView = [[CategorySelectionView alloc] initInViewController:self ForLocationNamed:source.searchResult.name];
-    [self.view addSubview:categorySelectionView];
+    self.selectedSearchResult = source.searchResult;
+    self.categorySelectionView = [[CategorySelectionView alloc] initInViewController:self ForLocationNamed:source.searchResult.name];
+    self.categorySelectionView.delegate = self;
+    [self.view addSubview:self.categorySelectionView];
     
     /*
     self.buttonArray = [[NSMutableArray alloc] init];
@@ -388,22 +391,22 @@
     */
 }
 
-- (void) categorySelected: (CategoryButton *) source {
+- (void) categorySelected: (NSString *) category {
     
-    SearchResult *searchResult = source.searchResult;
+    //SearchResult *searchResult = source.searchResult;
     
     PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:self.context];
     
     Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.context];
     
     pointOfInterest.location = location;
-    pointOfInterest.name = searchResult.name;
-    pointOfInterest.location.latitude = searchResult.latitude;
-    pointOfInterest.location.longitude = searchResult.longitude;
+    pointOfInterest.name = self.selectedSearchResult.name;
+    pointOfInterest.location.latitude = self.selectedSearchResult.latitude;
+    pointOfInterest.location.longitude = self.selectedSearchResult.longitude;
     
     LocationType locationType;
     
-    NSString *type = source.titleLabel.text;
+    NSString *type = category;
     
     UIColor *pinColor;
     
@@ -429,22 +432,23 @@
     if (![self.context save:&error]) {
         NSLog(@"Whoops couldn't save after category selection due to: %@", [error localizedDescription]);
     } else {
-        NSLog(@"Saved %@ to disk with category: %@ - %@", pointOfInterest.name, pointOfInterest.category, source.titleLabel.text);
+        NSLog(@"Saved %@ to disk with category: %@ - %@", pointOfInterest.name, pointOfInterest.category, category);
     }
     
-    [self.mapView removeAnnotation:searchResult];
+    [self.mapView removeAnnotation:self.selectedSearchResult];
     static NSString *defaultPinID = @"resultPin";
     MKPinAnnotationView *pinView;
     if (pinView == nil) {
-        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:searchResult reuseIdentifier:defaultPinID];
+        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:self.selectedSearchResult reuseIdentifier:defaultPinID];
     }
     pinView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:defaultPinID];
     pinView.pinTintColor = pinColor;
     [self.mapView addSubview:pinView];
-    source.superview.hidden = YES;
-    UIView *view = source.superview;
+    self.categorySelectionView.hidden = YES;
     
-    view = nil;
+    
+    self.categorySelectionView = nil;
+    self.selectedSearchResult = nil;
 }
 
 

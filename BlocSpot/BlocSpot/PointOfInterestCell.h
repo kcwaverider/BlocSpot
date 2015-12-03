@@ -19,7 +19,7 @@
 
 @interface PointOfInterestCell : UITableViewCell
 
-- (void) likePressed;
+- (void) likeButtonPressed;
 
 @property (nonatomic, strong) IBOutlet UILabel *name;
 //@property (nonatomic, strong) IBOutlet UIImageView *likeImage;

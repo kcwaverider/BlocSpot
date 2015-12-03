@@ -12,18 +12,13 @@
 
 @protocol CategorySelectionViewDelegate <NSObject>
 
--(void)METHOD_HERE;
-
-//@required
+@required
 
 -(void)categorySelected: (NSString *) category;
 
 @end
 
 @interface CategorySelectionView : UIView
-
-- (instancetype) initForPoop;
-
 
 - (CategorySelectionView *) initInViewController: (UIViewController * _Nonnull) superViewController ForLocationNamed: (NSString * _Nonnull) locationName;
 

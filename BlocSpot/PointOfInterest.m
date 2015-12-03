@@ -22,6 +22,9 @@
 
 -(void) setLocationType:(LocationType)locationType {
     //self.locationType = LocationTypeRestaurant;
+    if (!self.category) {
+        self.category = [[NSNumber alloc] init];
+    }
     self.category = [NSNumber numberWithInteger:locationType];
 }
 

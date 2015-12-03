@@ -53,7 +53,7 @@
             imageName = @"heart-full-purple";
             break;
         default:
-            imageName = @"heart-full-purple";
+            imageName = @"heart-full-gray";
             break;
     }
     [likeButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
@@ -87,7 +87,32 @@
     return likeButton;
 }
 
-
+- (void) setHeartColorForCategory:(NSNumber *)category {
+    
+    NSString *imageName;
+    
+    switch ([category integerValue]) {
+        case LocationTypeBar:
+            imageName = @"heart-full-red";
+            break;
+        case LocationTypeCoffeeShop:
+            imageName = @"heart-full-blue";
+            break;
+        case LocationTypeRestaurant:
+            imageName = @"heart-full-yellow";
+            break;
+        case LocationTypeShopping:
+            imageName = @"heart-full-green";
+            break;
+        case LocationTypeRecreation:
+            imageName = @"heart-full-purple";
+            break;
+        default:
+            imageName = @"heart-full-gray";
+            break;
+    }
+    [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+}
 
 
 @end

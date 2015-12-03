@@ -20,10 +20,6 @@
 
 @implementation CategorySelectionView
 
-- (instancetype) initForPoop {
-    self = [super init];
-    return self;
-}
 
 - (CategorySelectionView *) initInViewController: (UIViewController *) superViewController ForLocationNamed: (NSString *) locationName {
     self = [super init];
@@ -90,6 +86,7 @@
 }
 
 -(void) categoryButtonTapped: (CategoryButton *) source {
+    [self.delegate categorySelected:source.titleLabel.text];
     
 }
 
