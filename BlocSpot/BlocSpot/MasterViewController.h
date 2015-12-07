@@ -20,6 +20,14 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, assign) id <UITableViewDelegate> delegate;
 
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *allButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *barButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *coffeeButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *restaurantButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *shoppingButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *recreationButton;
+
+
 
 @end
 

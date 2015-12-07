@@ -20,6 +20,7 @@
 @interface MasterViewController () <UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *savedLocationsArray;
+@property (nonatomic, strong) NSPredicate *predicate;
 
 
 @end
@@ -28,12 +29,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.predicate = nil;
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.fetchedResultsController = [self fetchedResultsController];
-
-//    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+    self.allButton.target = self;
+    self.allButton.action = @selector(myMethodCall:);
+    //    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 //    self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
@@ -41,11 +43,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     [super viewWillAppear:animated];
-    
+    [self.navigationController setToolbarHidden:NO animated:YES];
     //[self.tableView reloadData];
     NSLog(@"viewDidAppear");
     
     
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -130,6 +136,7 @@
     
 
     NSLog(@"Name: %@", cell.name.text);
+    
 
     return cell;
 }
@@ -170,6 +177,7 @@
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
+    [fetchRequest setPredicate:self.predicate];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
@@ -276,6 +284,10 @@
     cellBackgroundColor = [cellBackgroundColor colorWithAlphaComponent:0.1];
     
     return cellBackgroundColor;
+}
+
+- (void) myMethodCall: (UIBarButtonItem *) button {
+    NSLog(@"The ALL button was pushed");
 }
 
 /*

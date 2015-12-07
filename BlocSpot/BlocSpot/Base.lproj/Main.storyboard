@@ -9,7 +9,6 @@
         <!--Master-->
         <scene sceneID="pY4-Hu-kfo">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8fS-aE-onr" sceneMemberID="firstResponder"/>
                 <navigationController title="Master" id="RMx-3f-FxP" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Pmd-2v-anx">
                         <autoresizingMask key="autoresizingMask"/>
@@ -18,6 +17,7 @@
                         <segue destination="7bK-jq-Zjz" kind="relationship" relationship="rootViewController" id="tsl-Nk-0bq"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8fS-aE-onr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-32" y="-640"/>
         </scene>
@@ -110,12 +110,21 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <toolbarItems>
-                        <barButtonItem title="Item" id="hNh-L4-1Lb"/>
-                        <barButtonItem title="Item" id="Nj7-Oa-uOS"/>
-                        <barButtonItem title="Item" id="WpE-dU-xaY"/>
-                        <barButtonItem title="Item" id="aTi-Wi-krh"/>
-                        <barButtonItem title="Item" id="uwJ-JQ-dsO"/>
-                        <barButtonItem title="Item" id="SCw-SL-uEt"/>
+                        <barButtonItem title="ALL" width="59" id="hNh-L4-1Lb">
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        </barButtonItem>
+                        <barButtonItem title="Bars" width="45.5" id="Nj7-Oa-uOS">
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        </barButtonItem>
+                        <barButtonItem title="Coffee Shops" width="125" id="WpE-dU-xaY">
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        </barButtonItem>
+                        <barButtonItem title="Restaurants" width="107.5" id="aTi-Wi-krh">
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        </barButtonItem>
+                        <barButtonItem title="Shopping" id="uwJ-JQ-dsO">
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8">
                         <barButtonItem key="backBarButtonItem" title="Back" id="ptw-6o-Ndb"/>
@@ -126,8 +135,20 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="allButton" destination="hNh-L4-1Lb" id="Gno-HI-Qdh"/>
+                        <outlet property="barButton" destination="Nj7-Oa-uOS" id="IOv-We-dYO"/>
+                        <outlet property="coffeeButton" destination="WpE-dU-xaY" id="h0T-Tj-Rzl"/>
+                        <outlet property="restaurantButton" destination="aTi-Wi-krh" id="BrO-Se-rxD"/>
+                        <outlet property="shoppingButton" destination="uwJ-JQ-dsO" id="mCQ-fl-qVC"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cHo-Bz-5ez">
+                    <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Button"/>
+                </button>
             </objects>
             <point key="canvasLocation" x="729" y="-634"/>
         </scene>
