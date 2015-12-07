@@ -50,6 +50,11 @@
     instructionLabel.numberOfLines = 0;
     instructionLabel.textAlignment = NSTextAlignmentCenter;
     instructionLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    instructionLabel.backgroundColor = [UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.05];
+    CAShapeLayer *labelMaskLayer = [CAShapeLayer layer];
+    labelMaskLayer.path = [UIBezierPath bezierPathWithRoundedRect:instructionLabel.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:(CGSize){cornerRadius, cornerRadius}].CGPath;
+    labelMaskLayer.frame = instructionLabel.bounds;
+    instructionLabel.layer.mask = labelMaskLayer;
     [self addSubview:instructionLabel];
     
     
@@ -81,6 +86,7 @@
         
         [self addSubview:(CategoryButton *)self.buttonArray[i]];
     }
+    
     
     return self;
 }
