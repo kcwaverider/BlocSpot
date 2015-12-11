@@ -30,15 +30,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.predicate = nil;
+    
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.fetchedResultsController = [self fetchedResultsController];
-    self.allButton.target = self;
-    self.allButton.action = @selector(myMethodCall:);
+    [self setupCategoryButtons];
+    self.navigationController.toolbar.barTintColor = [UIColor blackColor];
     //    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 //    self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-}
+    }
 
 - (void)viewWillAppear:(BOOL)animated {
     self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
@@ -92,7 +93,16 @@
         SearchResultsTableViewController *controller = (MapViewController *)[segue destinationViewController];
         controller.context = [self.fetchedResultsController managedObjectContext];
         
-    }
+    } else if ([[segue identifier] isEqualToString:@"showMapView"]) {
+        
+            NSLog(@"Map button Clikced");
+        } else if ([[segue identifier] isEqualToString:@"savedLocationSelected"]) {
+            
+            NSLog(@"Point of Interest Clicked");
+        }
+        
+    
+
 }
 
 #pragma mark - Table View
@@ -139,6 +149,10 @@
     
 
     return cell;
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
 }
 
 
@@ -286,9 +300,20 @@
     return cellBackgroundColor;
 }
 
-- (void) myMethodCall: (UIBarButtonItem *) button {
-    NSLog(@"The ALL button was pushed");
+- (void) setupCategoryButtons {
+    NSArray *categoryButtonArray = @[self.allButton, self.barButton, self.coffeeShopButton, self.restaurantButton, self.shoppingButton, /*self.recreationButton*/];
+    
+    for (UIBarButtonItem *button in categoryButtonArray) {
+        button.target = self;
+        button.action = @selector(categoryButtonPushed:);
+    }
 }
+
+- (void) categoryButtonPushed: (UIBarButtonItem *) button {
+    NSLog(@"The %@ button was pushed", button.title);
+}
+
+
 
 /*
 // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
@@ -300,4 +325,14 @@
 }
  */
 
+// TODO from Steve
+//[NSFetchedResultsController deleteCacheWithName:@"Root"]; 
+//NSPredicate *predicate = [NSPredicate predicateWithFormat:@"list = %@",self.list];
+//[fetchedResultsController.fetchRequest setPredicate:predicate];
+//NSError *error = nil;
+//if (![[self fetchedResultsController] performFetch:&error]) {
+//    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+//    abort();
+//}
+//[table reloadData];
 @end

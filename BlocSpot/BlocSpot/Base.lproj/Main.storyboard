@@ -99,6 +99,7 @@
                                 <color key="backgroundColor" red="0.98823535439999999" green="0.078431375319999996" blue="0.43921571970000001" alpha="1" colorSpace="deviceRGB"/>
                                 <connections>
                                     <outlet property="name" destination="jtA-Pe-A6M" id="5rI-fc-txh"/>
+                                    <segue destination="C8b-UM-VgL" kind="show" identifier="savedLocationSelected" id="G1X-4e-jd5"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -110,20 +111,23 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <toolbarItems>
-                        <barButtonItem title="ALL" width="59" id="hNh-L4-1Lb">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <barButtonItem title="ALL" style="plain" id="5qO-dw-ZV8">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
-                        <barButtonItem title="Bars" width="45.5" id="Nj7-Oa-uOS">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <barButtonItem title="Bars" style="plain" id="8HP-rR-mPC">
+                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
-                        <barButtonItem title="Coffee Shops" width="125" id="WpE-dU-xaY">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <barButtonItem title="Coffee Shop" style="plain" id="2rO-xk-6e0">
+                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
-                        <barButtonItem title="Restaurants" width="107.5" id="aTi-Wi-krh">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <barButtonItem title="Restaurant" style="plain" id="tgQ-bh-QsS">
+                            <color key="tintColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
-                        <barButtonItem title="Shopping" id="uwJ-JQ-dsO">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <barButtonItem title="Shopping" style="plain" id="2ta-xF-dMo">
+                            <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                        <barButtonItem title="Recreation" style="plain" id="AJC-CR-QLB">
+                            <color key="tintColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8">
@@ -134,21 +138,17 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
                     <connections>
-                        <outlet property="allButton" destination="hNh-L4-1Lb" id="Gno-HI-Qdh"/>
-                        <outlet property="barButton" destination="Nj7-Oa-uOS" id="IOv-We-dYO"/>
-                        <outlet property="coffeeButton" destination="WpE-dU-xaY" id="h0T-Tj-Rzl"/>
-                        <outlet property="restaurantButton" destination="aTi-Wi-krh" id="BrO-Se-rxD"/>
-                        <outlet property="shoppingButton" destination="uwJ-JQ-dsO" id="mCQ-fl-qVC"/>
+                        <outlet property="allButton" destination="5qO-dw-ZV8" id="6l9-cy-Y48"/>
+                        <outlet property="barButton" destination="8HP-rR-mPC" id="yBR-dW-Pp4"/>
+                        <outlet property="coffeeShopButton" destination="2rO-xk-6e0" id="1t9-l0-seI"/>
+                        <outlet property="recreationButton" destination="AJC-CR-QLB" id="s6M-3I-gOH"/>
+                        <outlet property="restaurantButton" destination="tgQ-bh-QsS" id="uav-Xb-uvr"/>
+                        <outlet property="shoppingButton" destination="2ta-xF-dMo" id="TYp-1m-HbQ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cHo-Bz-5ez">
-                    <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
-                </button>
             </objects>
             <point key="canvasLocation" x="729" y="-634"/>
         </scene>
@@ -291,4 +291,7 @@
     <resources>
         <image name="heart-empty" width="28" height="27"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="G1X-4e-jd5"/>
+    </inferredMetricsTieBreakers>
 </document>

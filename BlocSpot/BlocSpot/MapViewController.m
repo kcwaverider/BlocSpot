@@ -36,6 +36,7 @@
 @property (strong, nonatomic) MKLocalSearch *search;
 @property (strong, nonatomic) NSMutableArray *pointOfInterestArray;
 @property (strong, nonatomic) CategorySelectionView *categorySelectionView;
+@property (nonatomic, assign) BOOL pinDropAnimated;
 
 
 @end
@@ -60,6 +61,7 @@
     // Do any additional setup after loading the view.
     self.context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     self.categorySelectionPicker.delegate = self;
+    self.pinDropAnimated = YES;
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -155,8 +157,6 @@
             pinPoint.longitude = [searchResult.longitude doubleValue];
             searchResult.coordinate = pinPoint;
             
-            searchResult.favorite = [self searchResult:searchResult matchesLocationInArray:[DataSource sharedInstance].favoritePlacesList];
-            
             self.pointOfInterestArray[i] = searchResult;
             
         }
@@ -214,14 +214,6 @@
         
         [pinView setCanShowCallout:YES];
         
-        
-        //pinView.leftCalloutAccessoryView = [[CallOutBubble alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        /*
-        LikeButton *likeButton = [LikeButton buttonWithType:UIButtonTypeCustom];
-        likeButton.searchResult = annot;
-        [likeButton setImage:[UIImage imageNamed:@"heart-full-gray"] forState:UIControlStateNormal];
-        likeButton.frame = CGRectMake(0, 0, 30, 30);
-         */
         LikeButton *likeButton = [LikeButton buttonWithColor:categoryColor];
         likeButton.searchResult = annot;
         
@@ -231,7 +223,7 @@
         //pinView.detailCalloutAccessoryView = [[CallOutBubble alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
         
         
-        pinView.animatesDrop = YES;
+        pinView.animatesDrop = self.pinDropAnimated;
     
     }
     
@@ -296,7 +288,7 @@
     // If it is favorited the appropriate color should be returned
     if ( results.count > 0) {
         LocationType category = [searchResult.category integerValue];
-        NSLog([NSString stringWithFormat:@"Name: %@ Category: %@", searchResult.name, searchResult.category]);
+        NSLog([NSString stringWithFormat:@"NamePOOP: %@ CategoryPOOP: %@", searchResult.name, searchResult.category]);
         switch (category) {
             case LocationTypeBar:
                 color = [UIColor redColor];
@@ -397,12 +389,14 @@
     
     PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:self.context];
     
+    
     Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.context];
     
     pointOfInterest.location = location;
     pointOfInterest.name = self.selectedSearchResult.name;
     pointOfInterest.location.latitude = self.selectedSearchResult.latitude;
     pointOfInterest.location.longitude = self.selectedSearchResult.longitude;
+
     
     LocationType locationType;
     
@@ -426,6 +420,7 @@
         locationType = LocationTypeRecreation;
         pinColor = [UIColor purpleColor];
     }
+     
     pointOfInterest.locationType = locationType;
     
     NSError *error = nil;
@@ -434,7 +429,7 @@
     } else {
         NSLog(@"Saved %@ to disk with category: %@ - %@", pointOfInterest.name, pointOfInterest.category, category);
     }
-    
+    /*
     [self.mapView removeAnnotation:self.selectedSearchResult];
     static NSString *defaultPinID = @"resultPin";
     MKPinAnnotationView *pinView;
@@ -444,6 +439,8 @@
     pinView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:defaultPinID];
     pinView.pinTintColor = pinColor;
     [self.mapView addSubview:pinView];
+     */
+    //[self dropPinsFor:[DataSource sharedInstance].localPlacesList];
     self.categorySelectionView.hidden = YES;
     
     
@@ -459,8 +456,13 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if ([[segue identifier] isEqualToString:@"showMapView"]) {
-        MapViewController *controller = (MapViewController *)[segue destinationViewController];
+        MapViewController *controller = (MapViewController *)segue.destinationViewController;
         controller.context = self.context;
+        NSLog(@"Map button Clikced");
+    } else if ([[segue identifier] isEqualToString:@"savedLocationSelected"]) {
+        MapViewController *controller = (MapViewController *)segue.destinationViewController;
+        controller.context = self.context;
+        NSLog(@"Point of Interest Clicked");
     }
     
 }

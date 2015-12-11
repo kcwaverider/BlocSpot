@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="14F27" minimumToolsVersion="Automatic">
-    <entity name="Event">
+    <entity name="Event" representedClassName="Event">
         <attribute name="timeStamp" optional="YES" attributeType="Date">
             <userInfo/>
         </attribute>
@@ -19,7 +19,7 @@
     </entity>
     <elements>
         <element name="Event" positionX="261" positionY="189" width="128" height="58"/>
-        <element name="PointOfInterest" positionX="225" positionY="-54" width="144" height="103"/>
         <element name="Location" positionX="486" positionY="11" width="128" height="88"/>
+        <element name="PointOfInterest" positionX="225" positionY="-54" width="144" height="103"/>
     </elements>
 </model>

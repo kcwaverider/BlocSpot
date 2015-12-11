@@ -88,16 +88,6 @@
         [cell.likeButton setHeartColorForCategory: category];
     }
     
-    /*
-    if (cell.searchResult.favorite == [NSNumber numberWithBool:YES]) {
-        //[cell.likeButton setImage:[UIImage imageNamed:@"heart-full"] forState:UIControlStateNormal];
-        NSLog([NSString stringWithFormat:@"%@ - Category: %@", cell.searchResult.name, cell.searchResult.category]);
-        cell.likeButton = [LikeButton buttonForCategory:[cell.searchResult.favorite integerValue]];
-    } else {
-        //cell.likeButton.alpha = 0.3;
-    }
-     */
-    
     return cell;
 }
 
@@ -111,7 +101,7 @@
         Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.context];
         pointOfInterest.name = cell.searchResult.name;
         pointOfInterest.category = cell.searchResult.category;
-        pointOfInterest.favorite = cell.searchResult.favorite;
+        
         
         location.latitude = cell.searchResult.latitude;
         location.longitude = cell.searchResult.longitude;

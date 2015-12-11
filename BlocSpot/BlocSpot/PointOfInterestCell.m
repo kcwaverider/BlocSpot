@@ -53,6 +53,11 @@
     
     PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:self.context];
     
+    //PointOfInterest *poi = [[PointOfInterest alloc] init];
+    
+    //poi = pointOfInterest;
+    
+    
     Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.context];
     
     pointOfInterest.location = location;
@@ -60,6 +65,7 @@
     pointOfInterest.location.latitude = self.searchResult.latitude;
     pointOfInterest.location.longitude = self.searchResult.longitude;
     
+    //poi = pointOfInterest;
     LocationType locationType;
     
     NSString *type = category;

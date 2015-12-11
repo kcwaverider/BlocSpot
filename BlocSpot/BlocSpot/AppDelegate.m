@@ -30,17 +30,7 @@
     [fetchRequest setEntity:entity];
     
     NSError *error = nil;
-    [DataSource sharedInstance].favoritePlacesList = [[context executeFetchRequest:fetchRequest error:&error] mutableCopy];
-    /*
-    for (PointOfInterest *info in [DataSource sharedInstance].favoritePlacesList) {
-        NSLog(@"Name: %@", info.name);
-        NSLog(@"Category: %@", info.category);
-        Location *location = info.location;
-        NSLog(@"Latitude: %@", location.latitude);
-        NSLog(@"Longitude: %@", location.longitude);
-        //[context deleteObject:info];
-    }
-     */
+
     if(![context save:&error]) {
         NSLog(@"Whoops, coudn't save: %@", [error localizedDescription]);
     }

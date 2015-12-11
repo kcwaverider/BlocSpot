@@ -20,7 +20,7 @@
 
 //- (BOOL) matchesLocationInArray:(NSArray * _Nullable)array;
 
-//+ (instancetype) init;
+
 
 - (BOOL) isSavedLocation;
 

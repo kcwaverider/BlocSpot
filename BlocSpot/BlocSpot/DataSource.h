@@ -13,7 +13,7 @@
 + (instancetype) sharedInstance;
 
 @property (nonatomic, strong) NSMutableArray *localPlacesList;
-@property (nonatomic, strong) NSMutableArray *favoritePlacesList;
+
 
 - (void) updateLocalPlacesList;
 
