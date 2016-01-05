@@ -10,11 +10,14 @@
 #import "CategorySelectionView.h"
 #import "AppDelegate.h"
 #import "Location.h"
+#import "ShadowMask.h"
 
 @interface PointOfInterestCell () <CategorySelectionViewDelegate>
 
 @property (nonatomic, strong) CategorySelectionView *categorySelectionView;
 @property (nonatomic, strong) NSManagedObjectContext *context;
+@property (nonatomic, strong) ShadowMask *shadowMask;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 
 @end
 
@@ -41,9 +44,15 @@
 
 -(void) likeButtonPressed {
     
+    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeCategorySelectionView)];
+    [[(UITableViewController*)self.delegate view] addGestureRecognizer:self.tapGesture];
+    
         self.categorySelectionView = [[CategorySelectionView alloc] initInViewController:(UITableViewController *)self.delegate ForLocationNamed:self.searchResult.name];
         self.categorySelectionView.delegate = self;
         [((UITableViewController *)self.delegate).view addSubview:self.categorySelectionView];
+    
+    self.shadowMask = [[ShadowMask alloc] initWithFrame:[(UITableViewController*)self.delegate view].frame];
+    [[(UITableViewController*)self.delegate view] insertSubview:self.shadowMask belowSubview:self.categorySelectionView];
     
 }
 
@@ -64,6 +73,7 @@
     pointOfInterest.name = self.searchResult.name;
     pointOfInterest.location.latitude = self.searchResult.latitude;
     pointOfInterest.location.longitude = self.searchResult.longitude;
+    location.pointOfInterest = pointOfInterest;
     
     //poi = pointOfInterest;
     LocationType locationType;
@@ -107,12 +117,17 @@
     pinView.pinTintColor = pinColor;
     [self.mapView addSubview:pinView];
      */
-    self.categorySelectionView.hidden = YES;
-    
-    
-    self.categorySelectionView = nil;
+    [self closeCategorySelectionView];
 }
 
+-(void) closeCategorySelectionView {
+    self.categorySelectionView.hidden = YES;
+    self.shadowMask.hidden = YES;
+    
+    self.categorySelectionView = nil;
+    self.shadowMask = nil;
+   // self.selectedSearchResult = nil;
+}
 
 
 

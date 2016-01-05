@@ -19,6 +19,7 @@
 #import "UIButton+LikeButton.h"
 #import "CategoryButton.h"
 #import "CategorySelectionView.h"
+#import "ShadowMask.h"
 
 @interface MapViewController ()  <CLLocationManagerDelegate, UITextFieldDelegate, MKMapViewDelegate, UIPickerViewDelegate, CategorySelectionViewDelegate>
 
@@ -32,6 +33,8 @@
 @property (nonatomic, strong) NSMutableArray *buttonArray;
 @property (nonatomic, strong) MKPinAnnotationView *lastSelectedPin;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
+@property (nonatomic, strong) ShadowMask *shadowMask;
+
 
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -300,7 +303,6 @@
     // If it is favorited the appropriate color should be returned
     if ( results.count > 0) {
         LocationType category = [searchResult.category integerValue];
-        NSLog([NSString stringWithFormat:@"NamePOOP: %@ CategoryPOOP: %@", searchResult.name, searchResult.category]);
         switch (category) {
             case LocationTypeBar:
                 color = [UIColor redColor];
@@ -337,6 +339,14 @@
     self.categorySelectionView.delegate = self;
     [self.view addSubview:self.categorySelectionView];
     
+    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeCategorySelectionView)];
+    [self.view addGestureRecognizer:self.tapGesture];
+    
+    //Add background shadow
+    self.shadowMask = [[ShadowMask alloc] initWithFrame:self.view.frame];
+    [self.view insertSubview:self.shadowMask belowSubview:self.categorySelectionView];
+    
+    //Remove the annotation callout bubble from the screen
     for (NSObject<MKAnnotation> *annotation in self.mapView.selectedAnnotations) {
         [self.mapView deselectAnnotation:annotation animated:YES];
     }
@@ -346,11 +356,7 @@
 }
 
 - (void) categorySelected: (NSString *) category {
-    
-    //SearchResult *searchResult = source.searchResult;
-    
-    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeCategorySelectionView)];
-    [self.view addGestureRecognizer:self.tapGesture];
+    // Set up a tap gesture recognizer & darken the map view
     
     PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:self.context];
     
@@ -409,13 +415,16 @@
      */
     //[self dropPinsFor:[DataSource sharedInstance].localPlacesList];
     [self closeCategorySelectionView];
+    self.tapGesture = nil;
+    self.view.alpha = 1;
 }
 
 -(void) closeCategorySelectionView {
     self.categorySelectionView.hidden = YES;
-    
+    self.shadowMask.hidden = YES;
     
     self.categorySelectionView = nil;
+    self.shadowMask = nil;
     self.selectedSearchResult = nil;
 }
 
