@@ -19,7 +19,7 @@
 
 @interface MasterViewController () <UITableViewDelegate>
 
-@property (nonatomic, strong) NSArray *savedLocationsArray;
+@property (nonatomic, strong) NSMutableArray *savedLocationsArray;
 @property (nonatomic, strong) NSPredicate *predicate;
 
 
@@ -46,6 +46,7 @@
     [super viewWillAppear:animated];
     [self.navigationController setToolbarHidden:NO animated:YES];
     //[self.tableView reloadData];
+
     NSLog(@"viewDidAppear");
     
     
@@ -94,7 +95,8 @@
         controller.context = [self.fetchedResultsController managedObjectContext];
         
     } else if ([[segue identifier] isEqualToString:@"showMapView"]) {
-        
+        MapViewController *mapViewController = segue.destinationViewController;
+        mapViewController.favoriteLocationArray = self.savedLocationsArray;
             NSLog(@"Map button Clikced");
         } else if ([[segue identifier] isEqualToString:@"savedLocationSelected"]) {
             
@@ -114,7 +116,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if([self.fetchedResultsController sections] > 0) {
         id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: section];
-        NSLog(@"Master Cells: %lu", [sectionInfo numberOfObjects]);
+        NSLog(@"Cells: %lu", [sectionInfo numberOfObjects]);
         return [sectionInfo numberOfObjects];
     } else {
         return 0;
@@ -142,6 +144,23 @@
     bgview.opaque = YES;
     bgview.backgroundColor = [self backgroundColorForCategory:pointOfInterest.category];
     [cell setBackgroundView:bgview];
+    
+    //Assign copy pointOfInterest to a searchResult so it can be displayed on the mapView
+    SearchResult *searchResult = [[SearchResult alloc] init];
+    searchResult.name = pointOfInterest.name;
+    searchResult.category = pointOfInterest.category;
+    searchResult.latitude = pointOfInterest.location.latitude;
+    searchResult.longitude = pointOfInterest.location.longitude;
+    CLLocationCoordinate2D pinPoint;
+    pinPoint.latitude = [searchResult.latitude doubleValue];
+    pinPoint.longitude = [searchResult.longitude doubleValue];
+    searchResult.coordinate = pinPoint;
+    
+    if (indexPath.row == 0) {
+        self.savedLocationsArray = nil;
+        self.savedLocationsArray = [[NSMutableArray alloc] init];
+    }
+    [self.savedLocationsArray addObject:searchResult];
     
     
 
@@ -177,6 +196,74 @@
     }
 }
 
+#pragma mark - Category Filtering
+
+- (UIColor *) backgroundColorForCategory:(NSNumber *) category {
+    
+    UIColor *cellBackgroundColor;
+    switch ([category integerValue]) {
+        case LocationTypeBar:
+            cellBackgroundColor = [UIColor redColor];
+            break;
+        case LocationTypeCoffeeShop:
+            cellBackgroundColor = [UIColor blueColor];
+            break;
+        case LocationTypeRestaurant:
+            cellBackgroundColor = [UIColor yellowColor];
+            break;
+        case LocationTypeShopping:
+            cellBackgroundColor = [UIColor greenColor];
+            break;
+        case LocationTypeRecreation:
+            cellBackgroundColor = [UIColor purpleColor];
+            break;
+        default:
+            cellBackgroundColor = [UIColor grayColor];
+            break;
+    }
+    
+    cellBackgroundColor = [cellBackgroundColor colorWithAlphaComponent:0.1];
+    
+    return cellBackgroundColor;
+}
+
+- (void) setupCategoryButtons {
+    NSArray *categoryButtonArray = @[self.allButton, self.barButton, self.coffeeShopButton, self.restaurantButton, self.shoppingButton, /*self.recreationButton*/];
+    
+    for (UIBarButtonItem *button in categoryButtonArray) {
+        button.target = self;
+        button.action = @selector(categoryButtonPushed:);
+    }
+}
+
+- (void) categoryButtonPushed: (UIBarButtonItem *) button {
+    [NSFetchedResultsController deleteCacheWithName:nil];
+    if ([button.title isEqualToString:@"Bars"]) {
+        self.predicate = [NSPredicate predicateWithFormat:@"category == %@",[NSNumber numberWithInteger:LocationTypeBar]];
+    } else if ([button.title isEqualToString:@"Coffee Shop"]) {
+        self.predicate = [NSPredicate predicateWithFormat:@"category == %@",[NSNumber numberWithInteger:LocationTypeCoffeeShop]];
+    } else if ([button.title isEqualToString:@"Restaurant"]) {
+        self.predicate = [NSPredicate predicateWithFormat:@"category == %@",[NSNumber numberWithInteger:LocationTypeRestaurant]];
+    } else if ([button.title isEqualToString:@"Shopping"]) {
+        self.predicate = [NSPredicate predicateWithFormat:@"category == %@",[NSNumber numberWithInteger:LocationTypeShopping]];
+    } else if ([button.title isEqualToString:@"Recreation"]) {
+        self.predicate = [NSPredicate predicateWithFormat:@"category == %@",[NSNumber numberWithInteger:LocationTypeRecreation]];
+    } else {
+        self.predicate = nil;
+    }
+    NSLog(@"The %@ button was pushed", button.title);
+    //[NSFetchedResultsController deleteCacheWithName:@"Root"];
+    // NSPredicate *predicate = [NSPredicate predicateWithFormat:@"list = %@",self.list];
+    [self.fetchedResultsController.fetchRequest setPredicate:self.predicate];
+    NSError *error = nil;
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    [self.tableView reloadData];
+}
+
+
 
 #pragma mark - Fetched results controller
 
@@ -203,7 +290,7 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -271,47 +358,6 @@
     [self.tableView endUpdates];
 }
 
-- (UIColor *) backgroundColorForCategory:(NSNumber *) category {
-    
-    UIColor *cellBackgroundColor;
-    switch ([category integerValue]) {
-        case LocationTypeBar:
-            cellBackgroundColor = [UIColor redColor];
-            break;
-        case LocationTypeCoffeeShop:
-            cellBackgroundColor = [UIColor blueColor];
-            break;
-        case LocationTypeRestaurant:
-            cellBackgroundColor = [UIColor yellowColor];
-            break;
-        case LocationTypeShopping:
-            cellBackgroundColor = [UIColor greenColor];
-            break;
-        case LocationTypeRecreation:
-            cellBackgroundColor = [UIColor purpleColor];
-            break;
-        default:
-            cellBackgroundColor = [UIColor grayColor];
-            break;
-    }
-    
-    cellBackgroundColor = [cellBackgroundColor colorWithAlphaComponent:0.1];
-    
-    return cellBackgroundColor;
-}
-
-- (void) setupCategoryButtons {
-    NSArray *categoryButtonArray = @[self.allButton, self.barButton, self.coffeeShopButton, self.restaurantButton, self.shoppingButton, /*self.recreationButton*/];
-    
-    for (UIBarButtonItem *button in categoryButtonArray) {
-        button.target = self;
-        button.action = @selector(categoryButtonPushed:);
-    }
-}
-
-- (void) categoryButtonPushed: (UIBarButtonItem *) button {
-    NSLog(@"The %@ button was pushed", button.title);
-}
 
 
 

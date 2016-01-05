@@ -15,6 +15,7 @@
 @required
 
 -(void)categorySelected: (NSString *) category;
+-(void)closeCategorySelectionView;
 
 @end
 

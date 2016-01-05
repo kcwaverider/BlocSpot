@@ -13,6 +13,7 @@
 @interface CategorySelectionView ()
 
 @property (nonatomic, strong) NSMutableArray *buttonArray;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 
 
 @end
@@ -87,8 +88,26 @@
         [self addSubview:(CategoryButton *)self.buttonArray[i]];
     }
     
+    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFired:)];
+    [self addGestureRecognizer:self.tapGesture];
     
     return self;
+}
+
+-(void)tapFired:(UITapGestureRecognizer *) recognizer {
+    
+    if (recognizer.state == UIGestureRecognizerStateRecognized) {
+        CGPoint location = [recognizer locationInView:self];
+        UIView *tappedView = [self hitTest:location withEvent:nil];
+        
+        if ([self.buttonArray containsObject:tappedView]) {
+            CategoryButton *tappedButton = (CategoryButton *)tappedView;
+            [self categoryButtonTapped:tappedButton];
+        } else {
+            [self.delegate closeCategorySelectionView];
+        }
+    }
+    
 }
 
 -(void) categoryButtonTapped: (CategoryButton *) source {

@@ -30,6 +30,8 @@
 @property (nonatomic, strong) UIView *categoryView;
 @property (nonatomic, strong) SearchResult *selectedSearchResult;
 @property (nonatomic, strong) NSMutableArray *buttonArray;
+@property (nonatomic, strong) MKPinAnnotationView *lastSelectedPin;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -62,6 +64,9 @@
     self.context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     self.categorySelectionPicker.delegate = self;
     self.pinDropAnimated = YES;
+    [self dropPinsFor:self.favoriteLocationArray];
+    
+    
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -102,6 +107,12 @@
     [self.mapView setRegion:viewRegion animated:YES];
      */
 }
+
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    
+}
 #pragma mark - Search Field
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -134,13 +145,12 @@
     self.search = [[MKLocalSearch alloc] initWithRequest:request];
     
     [self.search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
-        //NSLog(@"Map Items: %@", response.mapItems);
+        
         
         self.pointOfInterestArray = nil;
-       // [DataSource sharedInstance].localPlacesList = [response.mapItems mutableCopy];
-        self.pointOfInterestArray = [[ NSMutableArray alloc] init];
-        // TODO: call a method that deletes all items from the data store
-        //[DataSource sharedInstance].localPlacesList = nil;
+       
+        self.pointOfInterestArray = [[NSMutableArray alloc] init];
+        
         for (NSUInteger i = 0; i < response.mapItems.count; i++) {
 
             SearchResult *searchResult = [[SearchResult alloc] init];
@@ -230,17 +240,19 @@
     return pinView;
 }
 
--(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKPinAnnotationView *)view
 {
+    
     //[view setCanShowCallout:YES];
     //NSLog(@"Title:%@",[view.annotation title]);
+    self.lastSelectedPin = view;
 }
 
 
 
 -(void) mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     CLLocationCoordinate2D location = self.mapView.userLocation.location.coordinate;
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location, 1000.0, 1000.0);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location, 3200.0, 3200.0);
     
     [self.mapView setRegion:region animated:YES];
 }
@@ -325,67 +337,20 @@
     self.categorySelectionView.delegate = self;
     [self.view addSubview:self.categorySelectionView];
     
-    /*
-    self.buttonArray = [[NSMutableArray alloc] init];
-    CGFloat cornerRadius = 15;
-    
-    NSLog(@"likeButtonPressed");
-    CGFloat xLocation = self.view.bounds.size.width / 10;
-    CGFloat yLocation = self.view.bounds.size.height / 8;
-    CGFloat width = self.view.frame.size.width * (4.0/5.0);
-    CGFloat height = self.view.frame.size.height * (3.0/5.0);
-    NSLog(@"X: %f    Y: %f   Width: %f   Height: %f", xLocation, yLocation, height, width);
-    UIView *categorySelectionView = [[UIView alloc] initWithFrame:CGRectMake( xLocation, yLocation, width, height)];
-    
-    categorySelectionView.layer.cornerRadius = cornerRadius;
-    categorySelectionView.backgroundColor = [UIColor whiteColor];
-    categorySelectionView.tintColor = [UIColor blackColor];
-    categorySelectionView.hidden = NO;
-    
-    UILabel *instructionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, categorySelectionView.frame.size.width, categorySelectionView.frame.size.height * 2.0 / 7.0)];
-    NSString *instructionString = [NSString stringWithFormat:@"Select a category for \n %@.", source.searchResult.name];
-    [instructionLabel setText:instructionString];
-    instructionLabel.font = [UIFont boldSystemFontOfSize:20.0];
-    instructionLabel.numberOfLines = 0;
-    instructionLabel.textAlignment = NSTextAlignmentCenter;
-    instructionLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [categorySelectionView addSubview:instructionLabel];
-    
-    [self.view addSubview:categorySelectionView];
-    NSArray *categoryNames = @[@"Bar", @"Coffee Shop", @"Restaurant", @"Shopping", @"Recreation"];
-    NSArray *categoryColors = @[[UIColor redColor], [UIColor blueColor], [UIColor yellowColor], [UIColor greenColor], [UIColor purpleColor]];
-    
-    for (NSInteger i = 0; i < 5; i++) {
-        self.buttonArray[i] = [MagicButton buttonWithType:UIButtonTypeSystem];
-        MagicButton *button = (MagicButton *)self.buttonArray[i];
-        //UIButton *button = self.buttonArray[i];
-        [button addTarget:self action:@selector(categorySelected:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitle:categoryNames[i] forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:20.0];
-        
-        button.searchResult = source.searchResult;
-        
-        button.backgroundColor = [categoryColors[i] colorWithAlphaComponent:0.3];
-        CGPoint buttonOrigin = CGPointMake(0, (categorySelectionView.frame.size.height * (2.0 + (CGFloat)i) / 7.0));
-        button.frame = CGRectMake(buttonOrigin.x, buttonOrigin.y, categorySelectionView.frame.size.width, categorySelectionView.frame.size.height / 7);
-        
-        if (i == 4) {
-            
-            CAShapeLayer *maskLayer = [CAShapeLayer layer];
-            maskLayer.path = [UIBezierPath bezierPathWithRoundedRect:button.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:(CGSize){cornerRadius, cornerRadius}].CGPath;
-            maskLayer.frame = button.bounds;
-            button.layer.mask = maskLayer;
-            }
-        
-        [categorySelectionView addSubview:(MagicButton *)self.buttonArray[i]];
+    for (NSObject<MKAnnotation> *annotation in self.mapView.selectedAnnotations) {
+        [self.mapView deselectAnnotation:annotation animated:YES];
     }
     
-    */
+    
+
 }
 
 - (void) categorySelected: (NSString *) category {
     
     //SearchResult *searchResult = source.searchResult;
+    
+    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeCategorySelectionView)];
+    [self.view addGestureRecognizer:self.tapGesture];
     
     PointOfInterest *pointOfInterest = [NSEntityDescription insertNewObjectForEntityForName:@"PointOfInterest" inManagedObjectContext:self.context];
     
@@ -420,6 +385,8 @@
         locationType = LocationTypeRecreation;
         pinColor = [UIColor purpleColor];
     }
+    
+    self.lastSelectedPin.pinTintColor = pinColor;
      
     pointOfInterest.locationType = locationType;
     
@@ -441,6 +408,10 @@
     [self.mapView addSubview:pinView];
      */
     //[self dropPinsFor:[DataSource sharedInstance].localPlacesList];
+    [self closeCategorySelectionView];
+}
+
+-(void) closeCategorySelectionView {
     self.categorySelectionView.hidden = YES;
     
     
