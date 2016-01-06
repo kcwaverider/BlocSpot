@@ -32,6 +32,8 @@
 		88D90D741BF6364A00ABEA4E /* UIButton+LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D90D731BF6364A00ABEA4E /* UIButton+LikeButton.m */; settings = {ASSET_TAGS = (); }; };
 		88D9BD681BE025DE0045CA17 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9BD671BE025DE0045CA17 /* SearchResult.m */; settings = {ASSET_TAGS = (); }; };
 		88DC6A871C3C5DF800CC7B4D /* ShadowMask.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC6A861C3C5DF800CC7B4D /* ShadowMask.m */; settings = {ASSET_TAGS = (); }; };
+		88DC6A8A1C3C79F300CC7B4D /* POIAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC6A891C3C79F300CC7B4D /* POIAnnotationView.m */; settings = {ASSET_TAGS = (); }; };
+		88DC6A8E1C3C7ABE00CC7B4D /* POIAnnotationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88DC6A8D1C3C7ABE00CC7B4D /* POIAnnotationView.xib */; settings = {ASSET_TAGS = (); }; };
 		88DEFAE91C0010830011C576 /* CategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DEFAE81C0010830011C576 /* CategoryButton.m */; settings = {ASSET_TAGS = (); }; };
 		88DEFAEC1C04270E0011C576 /* SavedLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DEFAEB1C04270E0011C576 /* SavedLocationCell.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -102,6 +104,9 @@
 		88D9BD671BE025DE0045CA17 /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
 		88DC6A851C3C5DF800CC7B4D /* ShadowMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowMask.h; sourceTree = "<group>"; };
 		88DC6A861C3C5DF800CC7B4D /* ShadowMask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowMask.m; sourceTree = "<group>"; };
+		88DC6A881C3C79F300CC7B4D /* POIAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POIAnnotationView.h; path = ../POIAnnotationView.h; sourceTree = "<group>"; };
+		88DC6A891C3C79F300CC7B4D /* POIAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POIAnnotationView.m; path = ../POIAnnotationView.m; sourceTree = "<group>"; };
+		88DC6A8D1C3C7ABE00CC7B4D /* POIAnnotationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POIAnnotationView.xib; sourceTree = "<group>"; };
 		88DEFAE71C0010830011C576 /* CategoryButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryButton.h; sourceTree = "<group>"; };
 		88DEFAE81C0010830011C576 /* CategoryButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryButton.m; sourceTree = "<group>"; };
 		88DEFAEA1C04270E0011C576 /* SavedLocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedLocationCell.h; sourceTree = "<group>"; };
@@ -137,6 +142,7 @@
 		88A581671BC3299700B0E8A4 = {
 			isa = PBXGroup;
 			children = (
+				88DC6A8D1C3C7ABE00CC7B4D /* POIAnnotationView.xib */,
 				88A581AC1BC329A300B0E8A4 /* MapKit.framework */,
 				88A581721BC3299700B0E8A4 /* BlocSpot */,
 				88A581921BC3299700B0E8A4 /* BlocSpotTests */,
@@ -237,6 +243,8 @@
 				88D8CFB71C0E523800D67B8D /* CategorySelectionView.m */,
 				88DC6A851C3C5DF800CC7B4D /* ShadowMask.h */,
 				88DC6A861C3C5DF800CC7B4D /* ShadowMask.m */,
+				88DC6A881C3C79F300CC7B4D /* POIAnnotationView.h */,
+				88DC6A891C3C79F300CC7B4D /* POIAnnotationView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -364,6 +372,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88DC6A8E1C3C7ABE00CC7B4D /* POIAnnotationView.xib in Resources */,
 				88A581891BC3299700B0E8A4 /* LaunchScreen.storyboard in Resources */,
 				88A581861BC3299700B0E8A4 /* Assets.xcassets in Resources */,
 				88A581841BC3299700B0E8A4 /* Main.storyboard in Resources */,
@@ -401,6 +410,7 @@
 				88D24A331BD16FC100EB3920 /* PointOfInterest.m in Sources */,
 				88D90D711BF3913900ABEA4E /* CallOutBubble.m in Sources */,
 				88A5817B1BC3299700B0E8A4 /* BlocSpot.xcdatamodeld in Sources */,
+				88DC6A8A1C3C79F300CC7B4D /* POIAnnotationView.m in Sources */,
 				88D24A341BD16FC100EB3920 /* Location+CoreDataProperties.m in Sources */,
 				88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */,
 				882A6FCF1BD9561B00C2FF76 /* LikeButton.m in Sources */,
