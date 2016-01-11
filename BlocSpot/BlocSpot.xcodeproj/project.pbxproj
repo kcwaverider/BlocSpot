@@ -23,6 +23,7 @@
 		88A5819F1BC3299700B0E8A4 /* BlocSpotUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A5819E1BC3299700B0E8A4 /* BlocSpotUITests.m */; };
 		88A581AD1BC329A300B0E8A4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A581AC1BC329A300B0E8A4 /* MapKit.framework */; };
 		88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B693E41BC6D4500023DBF7 /* MapViewController.m */; settings = {ASSET_TAGS = (); }; };
+		88CC524E1C44406E005BA30E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88CC524D1C44406E005BA30E /* Info.plist */; settings = {ASSET_TAGS = (); }; };
 		88D24A141BD03E8D00EB3920 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A131BD03E8D00EB3920 /* DataSource.m */; settings = {ASSET_TAGS = (); }; };
 		88D24A321BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2B1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
 		88D24A331BD16FC100EB3920 /* PointOfInterest.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2D1BD16FC100EB3920 /* PointOfInterest.m */; settings = {ASSET_TAGS = (); }; };
@@ -76,7 +77,6 @@
 		88A581831BC3299700B0E8A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		88A581851BC3299700B0E8A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88A581881BC3299700B0E8A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		88A5818A1BC3299700B0E8A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88A5818F1BC3299700B0E8A4 /* BlocSpotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlocSpotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A581931BC3299700B0E8A4 /* BlocSpotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlocSpotTests.m; sourceTree = "<group>"; };
 		88A581951BC3299700B0E8A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -86,6 +86,7 @@
 		88A581AC1BC329A300B0E8A4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		88B693E31BC6D4500023DBF7 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		88B693E41BC6D4500023DBF7 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		88CC524D1C44406E005BA30E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88D24A121BD03E8D00EB3920 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
 		88D24A131BD03E8D00EB3920 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
 		88D24A2A1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PointOfInterest+CoreDataProperties.h"; path = "../PointOfInterest+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -167,7 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				88A581821BC3299700B0E8A4 /* Main.storyboard */,
-				88A5818A1BC3299700B0E8A4 /* Info.plist */,
+				88CC524D1C44406E005BA30E /* Info.plist */,
 				88A581791BC3299700B0E8A4 /* BlocSpot.xcdatamodeld */,
 				88A581871BC3299700B0E8A4 /* LaunchScreen.storyboard */,
 				88A581761BC3299700B0E8A4 /* AppDelegate.h */,
@@ -377,6 +378,7 @@
 			files = (
 				88DC6A8E1C3C7ABE00CC7B4D /* POIAnnotationView.xib in Resources */,
 				88A581891BC3299700B0E8A4 /* LaunchScreen.storyboard in Resources */,
+				88CC524E1C44406E005BA30E /* Info.plist in Resources */,
 				88A581861BC3299700B0E8A4 /* Assets.xcassets in Resources */,
 				883426B71C406E120096CA84 /* Info.plist in Resources */,
 				88A581841BC3299700B0E8A4 /* Main.storyboard in Resources */,
