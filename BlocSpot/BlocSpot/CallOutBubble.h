@@ -18,10 +18,7 @@ typedef NS_ENUM(NSInteger, Category) {
 
 @interface CallOutBubble : UIView
 
-@property (nonatomic, strong) IBOutlet LikeButton *foodPOIButton;
-@property (nonatomic, strong) IBOutlet LikeButton *drinkPOIButton;
-@property (nonatomic, strong) IBOutlet LikeButton *shoppingPOIButton;
-@property (nonatomic, strong) IBOutlet LikeButton *recreationPOIButton;
+
 
 
 @end

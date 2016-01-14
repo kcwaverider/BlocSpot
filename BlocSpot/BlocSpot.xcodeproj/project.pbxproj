@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		882A6FCF1BD9561B00C2FF76 /* LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 882A6FCE1BD9561B00C2FF76 /* LikeButton.m */; settings = {ASSET_TAGS = (); }; };
-		883426B71C406E120096CA84 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 883426B61C406E120096CA84 /* Info.plist */; settings = {ASSET_TAGS = (); }; };
-		884DD0921BD5779500A43B1C /* SearchResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */; settings = {ASSET_TAGS = (); }; };
-		887531801BD80188007D31C1 /* PointOfInterestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8875317F1BD80188007D31C1 /* PointOfInterestCell.m */; settings = {ASSET_TAGS = (); }; };
+		880382BA1C47FF9F00420FCF /* CalloutBubbleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880382B91C47FF9F00420FCF /* CalloutBubbleViewController.m */; };
+		882A6FCF1BD9561B00C2FF76 /* LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 882A6FCE1BD9561B00C2FF76 /* LikeButton.m */; };
+		883426B71C406E120096CA84 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 883426B61C406E120096CA84 /* Info.plist */; };
+		884DD0921BD5779500A43B1C /* SearchResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */; };
+		887531801BD80188007D31C1 /* PointOfInterestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8875317F1BD80188007D31C1 /* PointOfInterestCell.m */; };
 		88A581751BC3299700B0E8A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A581741BC3299700B0E8A4 /* main.m */; };
 		88A581781BC3299700B0E8A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A581771BC3299700B0E8A4 /* AppDelegate.m */; };
 		88A5817B1BC3299700B0E8A4 /* BlocSpot.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 88A581791BC3299700B0E8A4 /* BlocSpot.xcdatamodeld */; };
@@ -22,22 +23,22 @@
 		88A581941BC3299700B0E8A4 /* BlocSpotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A581931BC3299700B0E8A4 /* BlocSpotTests.m */; };
 		88A5819F1BC3299700B0E8A4 /* BlocSpotUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A5819E1BC3299700B0E8A4 /* BlocSpotUITests.m */; };
 		88A581AD1BC329A300B0E8A4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A581AC1BC329A300B0E8A4 /* MapKit.framework */; };
-		88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B693E41BC6D4500023DBF7 /* MapViewController.m */; settings = {ASSET_TAGS = (); }; };
-		88CC524E1C44406E005BA30E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88CC524D1C44406E005BA30E /* Info.plist */; settings = {ASSET_TAGS = (); }; };
-		88D24A141BD03E8D00EB3920 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A131BD03E8D00EB3920 /* DataSource.m */; settings = {ASSET_TAGS = (); }; };
-		88D24A321BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2B1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
-		88D24A331BD16FC100EB3920 /* PointOfInterest.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2D1BD16FC100EB3920 /* PointOfInterest.m */; settings = {ASSET_TAGS = (); }; };
-		88D24A341BD16FC100EB3920 /* Location+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2F1BD16FC100EB3920 /* Location+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
-		88D24A351BD16FC100EB3920 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A311BD16FC100EB3920 /* Location.m */; settings = {ASSET_TAGS = (); }; };
-		88D8CFB81C0E523800D67B8D /* CategorySelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D8CFB71C0E523800D67B8D /* CategorySelectionView.m */; settings = {ASSET_TAGS = (); }; };
-		88D90D711BF3913900ABEA4E /* CallOutBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D90D701BF3913900ABEA4E /* CallOutBubble.m */; settings = {ASSET_TAGS = (); }; };
-		88D90D741BF6364A00ABEA4E /* UIButton+LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D90D731BF6364A00ABEA4E /* UIButton+LikeButton.m */; settings = {ASSET_TAGS = (); }; };
-		88D9BD681BE025DE0045CA17 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9BD671BE025DE0045CA17 /* SearchResult.m */; settings = {ASSET_TAGS = (); }; };
-		88DC6A871C3C5DF800CC7B4D /* ShadowMask.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC6A861C3C5DF800CC7B4D /* ShadowMask.m */; settings = {ASSET_TAGS = (); }; };
-		88DC6A8A1C3C79F300CC7B4D /* POIAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC6A891C3C79F300CC7B4D /* POIAnnotationView.m */; settings = {ASSET_TAGS = (); }; };
-		88DC6A8E1C3C7ABE00CC7B4D /* POIAnnotationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88DC6A8D1C3C7ABE00CC7B4D /* POIAnnotationView.xib */; settings = {ASSET_TAGS = (); }; };
-		88DEFAE91C0010830011C576 /* CategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DEFAE81C0010830011C576 /* CategoryButton.m */; settings = {ASSET_TAGS = (); }; };
-		88DEFAEC1C04270E0011C576 /* SavedLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DEFAEB1C04270E0011C576 /* SavedLocationCell.m */; settings = {ASSET_TAGS = (); }; };
+		88B693E51BC6D4500023DBF7 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B693E41BC6D4500023DBF7 /* MapViewController.m */; };
+		88CC524E1C44406E005BA30E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88CC524D1C44406E005BA30E /* Info.plist */; };
+		88D24A141BD03E8D00EB3920 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A131BD03E8D00EB3920 /* DataSource.m */; };
+		88D24A321BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2B1BD16FC100EB3920 /* PointOfInterest+CoreDataProperties.m */; };
+		88D24A331BD16FC100EB3920 /* PointOfInterest.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2D1BD16FC100EB3920 /* PointOfInterest.m */; };
+		88D24A341BD16FC100EB3920 /* Location+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A2F1BD16FC100EB3920 /* Location+CoreDataProperties.m */; };
+		88D24A351BD16FC100EB3920 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D24A311BD16FC100EB3920 /* Location.m */; };
+		88D8CFB81C0E523800D67B8D /* CategorySelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D8CFB71C0E523800D67B8D /* CategorySelectionView.m */; };
+		88D90D711BF3913900ABEA4E /* CallOutBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D90D701BF3913900ABEA4E /* CallOutBubble.m */; };
+		88D90D741BF6364A00ABEA4E /* UIButton+LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D90D731BF6364A00ABEA4E /* UIButton+LikeButton.m */; };
+		88D9BD681BE025DE0045CA17 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9BD671BE025DE0045CA17 /* SearchResult.m */; };
+		88DC6A871C3C5DF800CC7B4D /* ShadowMask.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC6A861C3C5DF800CC7B4D /* ShadowMask.m */; };
+		88DC6A8A1C3C79F300CC7B4D /* POIAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DC6A891C3C79F300CC7B4D /* POIAnnotationView.m */; };
+		88DC6A8E1C3C7ABE00CC7B4D /* POIAnnotationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88DC6A8D1C3C7ABE00CC7B4D /* POIAnnotationView.xib */; };
+		88DEFAE91C0010830011C576 /* CategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DEFAE81C0010830011C576 /* CategoryButton.m */; };
+		88DEFAEC1C04270E0011C576 /* SavedLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DEFAEB1C04270E0011C576 /* SavedLocationCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		880382B81C47FF9F00420FCF /* CalloutBubbleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CalloutBubbleViewController.h; path = ../CalloutBubbleViewController.h; sourceTree = "<group>"; };
+		880382B91C47FF9F00420FCF /* CalloutBubbleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CalloutBubbleViewController.m; path = ../CalloutBubbleViewController.m; sourceTree = "<group>"; };
 		882A6FCD1BD9561B00C2FF76 /* LikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeButton.h; sourceTree = "<group>"; };
 		882A6FCE1BD9561B00C2FF76 /* LikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeButton.m; sourceTree = "<group>"; };
 		883426B61C406E120096CA84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -264,6 +267,8 @@
 				88B693E41BC6D4500023DBF7 /* MapViewController.m */,
 				884DD0901BD5779500A43B1C /* SearchResultsTableViewController.h */,
 				884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */,
+				880382B81C47FF9F00420FCF /* CalloutBubbleViewController.h */,
+				880382B91C47FF9F00420FCF /* CalloutBubbleViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -410,6 +415,7 @@
 				88D8CFB81C0E523800D67B8D /* CategorySelectionView.m in Sources */,
 				88D9BD681BE025DE0045CA17 /* SearchResult.m in Sources */,
 				88A581811BC3299700B0E8A4 /* DetailViewController.m in Sources */,
+				880382BA1C47FF9F00420FCF /* CalloutBubbleViewController.m in Sources */,
 				88A5817E1BC3299700B0E8A4 /* MasterViewController.m in Sources */,
 				884DD0921BD5779500A43B1C /* SearchResultsTableViewController.m in Sources */,
 				88D24A141BD03E8D00EB3920 /* DataSource.m in Sources */,
