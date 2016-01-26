@@ -17,5 +17,6 @@
 @dynamic category;
 @dynamic favorite;
 @dynamic location;
+@dynamic notes;
 
 @end

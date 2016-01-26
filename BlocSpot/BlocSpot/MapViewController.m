@@ -20,6 +20,8 @@
 #import "CategoryButton.h"
 #import "CategorySelectionView.h"
 #import "ShadowMask.h"
+#import "CalloutBubbleViewController.h"
+
 
 @interface MapViewController ()  <CLLocationManagerDelegate, UITextFieldDelegate, MKMapViewDelegate, UIPickerViewDelegate, CategorySelectionViewDelegate>
 
@@ -34,6 +36,7 @@
 @property (nonatomic, strong) MKPinAnnotationView *lastSelectedPin;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) ShadowMask *shadowMask;
+@property (assign) CGPoint touchLocation;
 
 
 
@@ -225,7 +228,7 @@
             }
         }
         
-        [pinView setCanShowCallout:YES];
+        //[pinView setCanShowCallout:YES];
         
         LikeButton *likeButton = [LikeButton buttonWithColor:categoryColor];
         likeButton.searchResult = annot;
@@ -247,8 +250,16 @@
 {
     
     //[view setCanShowCallout:YES];
-    //NSLog(@"Title:%@",[view.annotation title]);
+    NSLog(@"You clikced a pin!!!!");
     self.lastSelectedPin = view;
+    CGPoint touchPoint;
+    touchPoint.x = view.center.x;
+    touchPoint.y = view.center.y;
+    self.touchLocation = touchPoint;
+    
+    NSLog(@"Pin Origin: %f,%f   Pin Rectangle: %f x %f",view.center.y, view.center.x, view.bounds.size.height,view.bounds.size.width);
+    int i = 0;
+    [self performSegueWithIdentifier:@"ShowCalloutView" sender:self];
 }
 
 
@@ -443,6 +454,15 @@
         MapViewController *controller = (MapViewController *)segue.destinationViewController;
         controller.context = self.context;
         NSLog(@"Point of Interest Clicked");
+    } else if ([[segue identifier] isEqualToString:@"ShowCalloutView"]) {
+        //MapViewController *mapViewController = segue.destinationViewController;
+        CalloutBubbleViewController *calloutController = segue.destinationViewController;
+        calloutController.context = self.context;
+        calloutController.touchLocation = self.touchLocation;
+        CGFloat x = self.touchLocation.x;
+        //calloutController.selectedSearchResult
+
+        
     }
     
 }

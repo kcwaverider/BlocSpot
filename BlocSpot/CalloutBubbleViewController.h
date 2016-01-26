@@ -7,13 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
+#import "SearchResult.h"
 
-@interface CalloutBubbleViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIButton *likeButton;
+@interface CalloutBubbleViewController : UIViewController 
 
-@property (weak, nonatomic) IBOutlet UIButton *directionsButton;
+@property (nonatomic, strong) NSManagedObjectContext *context;
 
-@property (weak, nonatomic) IBOutlet UITextView *descriptionText;
+@property (nonatomic, strong) NSString *string;
 
-@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
+@property (assign) CGPoint touchLocation;
+
+@property (nonatomic, strong) SearchResult *selectedPointOfInterest;
+
+
 @end

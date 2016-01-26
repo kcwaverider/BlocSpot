@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *category;
 @property (nullable, nonatomic, retain) NSNumber *favorite;
 @property (nullable, nonatomic, retain) Location *location;
+@property (nullable, nonatomic, retain) NSString *notes;
 
 @end
 

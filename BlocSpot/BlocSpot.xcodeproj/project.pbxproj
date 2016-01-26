@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		880382BA1C47FF9F00420FCF /* CalloutBubbleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880382B91C47FF9F00420FCF /* CalloutBubbleViewController.m */; };
 		882A6FCF1BD9561B00C2FF76 /* LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 882A6FCE1BD9561B00C2FF76 /* LikeButton.m */; };
-		883426B71C406E120096CA84 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 883426B61C406E120096CA84 /* Info.plist */; };
 		884DD0921BD5779500A43B1C /* SearchResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */; };
 		887531801BD80188007D31C1 /* PointOfInterestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8875317F1BD80188007D31C1 /* PointOfInterestCell.m */; };
 		88A581751BC3299700B0E8A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A581741BC3299700B0E8A4 /* main.m */; };
@@ -63,7 +62,6 @@
 		880382B91C47FF9F00420FCF /* CalloutBubbleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CalloutBubbleViewController.m; path = ../CalloutBubbleViewController.m; sourceTree = "<group>"; };
 		882A6FCD1BD9561B00C2FF76 /* LikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeButton.h; sourceTree = "<group>"; };
 		882A6FCE1BD9561B00C2FF76 /* LikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeButton.m; sourceTree = "<group>"; };
-		883426B61C406E120096CA84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		884DD0901BD5779500A43B1C /* SearchResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsTableViewController.h; sourceTree = "<group>"; };
 		884DD0911BD5779500A43B1C /* SearchResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsTableViewController.m; sourceTree = "<group>"; };
 		8875317E1BD80188007D31C1 /* PointOfInterestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointOfInterestCell.h; sourceTree = "<group>"; };
@@ -234,7 +232,6 @@
 			isa = PBXGroup;
 			children = (
 				882A6FCD1BD9561B00C2FF76 /* LikeButton.h */,
-				883426B61C406E120096CA84 /* Info.plist */,
 				882A6FCE1BD9561B00C2FF76 /* LikeButton.m */,
 				88D90D721BF6364A00ABEA4E /* UIButton+LikeButton.h */,
 				88D90D731BF6364A00ABEA4E /* UIButton+LikeButton.m */,
@@ -335,7 +332,7 @@
 		88A581681BC3299700B0E8A4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Chad Clayton";
 				TargetAttributes = {
 					88A5816F1BC3299700B0E8A4 = {
@@ -385,7 +382,6 @@
 				88A581891BC3299700B0E8A4 /* LaunchScreen.storyboard in Resources */,
 				88CC524E1C44406E005BA30E /* Info.plist in Resources */,
 				88A581861BC3299700B0E8A4 /* Assets.xcassets in Resources */,
-				883426B71C406E120096CA84 /* Info.plist in Resources */,
 				88A581841BC3299700B0E8A4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

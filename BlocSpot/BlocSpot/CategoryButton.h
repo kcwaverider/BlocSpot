@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) SearchResult *searchResult;
 
+
+
 @end

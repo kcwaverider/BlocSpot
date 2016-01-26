@@ -21,10 +21,10 @@
 
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) _Nonnull id <LikeButtonDelegate> delegate;
-@property (nonatomic, strong) SearchResult *searchResult;
+@property (nonatomic, strong)  SearchResult * _Nonnull searchResult;
 
 + (instancetype _Nonnull) buttonForCategory: (LocationType) category;
-+ (instancetype _Nonnull) buttonWithColor: (UIColor *) color;
-- (void) setHeartColorForCategory: (NSNumber *) category;
++ (instancetype _Nonnull) buttonWithColor: (UIColor * _Nonnull)  color;
+- (void) setHeartColorForCategory: (NSNumber * _Nonnull)  category;
 
 @end

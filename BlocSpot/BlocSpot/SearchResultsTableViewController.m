@@ -12,6 +12,7 @@
 #import "Location.h"
 #import "PointOfInterest.h"
 #import "AppDelegate.h"
+#import "CalloutBubbleViewController.h"
 
 
 
@@ -24,6 +25,7 @@
 @implementation SearchResultsTableViewController
 
 - (void)viewDidLoad {
+    CalloutBubbleViewController *test = [[CalloutBubbleViewController alloc] init];
     [super viewDidLoad];
     self.context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     //[self.tableView registerClass:[SearchResultsTableViewController class] forCellReuseIdentifier:@"poiCell"];

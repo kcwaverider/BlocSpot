@@ -91,7 +91,7 @@
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
     } else if ([[segue identifier] isEqualToString:@"ShowSearchList"]) {
-        SearchResultsTableViewController *controller = (MapViewController *)[segue destinationViewController];
+        SearchResultsTableViewController *controller = (SearchResultsTableViewController *)[segue destinationViewController];
         controller.context = [self.fetchedResultsController managedObjectContext];
         
     } else if ([[segue identifier] isEqualToString:@"showMapView"]) {
