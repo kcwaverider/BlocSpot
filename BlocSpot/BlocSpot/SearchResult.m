@@ -36,6 +36,10 @@
     if (results.count > 0) {
         PointOfInterest *pointOfInterest = results[0];
         self.category = pointOfInterest.category;
+        if (pointOfInterest.notes) {
+            self.notes = pointOfInterest.notes;
+        }
+        
         return YES;
     }
     

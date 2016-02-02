@@ -16,10 +16,11 @@
 @property (nullable, nonatomic, retain) NSNumber *favorite;
 @property (nullable, nonatomic, retain) NSNumber *latitude;
 @property (nullable, nonatomic, retain) NSNumber *longitude;
+@property (nullable, nonatomic, strong) NSString *notes;
+@property (nullable, nonatomic, strong) MKPinAnnotationView *pinView;
 @property (nonatomic, strong)  NSManagedObjectContext * _Nonnull context;
 
 //- (BOOL) matchesLocationInArray:(NSArray * _Nullable)array;
-
 
 
 - (BOOL) isSavedLocation;

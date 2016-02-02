@@ -66,12 +66,12 @@
     [self.locationManager requestWhenInUseAuthorization];
     [_locationManager startUpdatingLocation];
     
+    
     // Do any additional setup after loading the view.
     self.context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     self.categorySelectionPicker.delegate = self;
     self.pinDropAnimated = YES;
     [self dropPinsFor:self.favoriteLocationArray];
-    
     
 }
 
@@ -211,10 +211,12 @@
         if (pinView == nil) {
             pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:defaultPinID];
         }
+        
         SearchResult *annot;
         annot = annotation;
         annot.title = annot.name;
         UIColor *categoryColor;
+        
         if (pinView.pinTintColor) {
             categoryColor = [self pinColorForSearchResult: annot];
             pinView.pinTintColor = categoryColor;
@@ -227,7 +229,7 @@
                 categoryColor = [UIColor redColor];
             }
         }
-        
+        /*
         //[pinView setCanShowCallout:YES];
         
         LikeButton *likeButton = [LikeButton buttonWithColor:categoryColor];
@@ -238,7 +240,7 @@
         
         //pinView.detailCalloutAccessoryView = [[CallOutBubble alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
         
-        
+        */
         pinView.animatesDrop = self.pinDropAnimated;
     
     }
@@ -248,10 +250,11 @@
 
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKPinAnnotationView *)view
 {
-    
+    self.selectedSearchResult = view.annotation;
     //[view setCanShowCallout:YES];
     NSLog(@"You clikced a pin!!!!");
     self.lastSelectedPin = view;
+    self.selectedSearchResult.pinView = view;
     CGPoint touchPoint;
     touchPoint.x = view.center.x;
     touchPoint.y = view.center.y;
@@ -342,7 +345,7 @@
     
     return color;
 }
-
+/*
 -(void) likeButtonPressed: (LikeButton *) source {
     
     self.selectedSearchResult = source.searchResult;
@@ -362,9 +365,10 @@
         [self.mapView deselectAnnotation:annotation animated:YES];
     }
     
-    
-
 }
+ */
+
+#pragma mark - Category Selection View Methods
 
 - (void) categorySelected: (NSString *) category {
     // Set up a tap gesture recognizer & darken the map view
@@ -404,6 +408,7 @@
     }
     
     self.lastSelectedPin.pinTintColor = pinColor;
+    self.selectedSearchResult.pinView = self.lastSelectedPin;
      
     pointOfInterest.locationType = locationType;
     
@@ -413,18 +418,7 @@
     } else {
         NSLog(@"Saved %@ to disk with category: %@ - %@", pointOfInterest.name, pointOfInterest.category, category);
     }
-    /*
-    [self.mapView removeAnnotation:self.selectedSearchResult];
-    static NSString *defaultPinID = @"resultPin";
-    MKPinAnnotationView *pinView;
-    if (pinView == nil) {
-        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:self.selectedSearchResult reuseIdentifier:defaultPinID];
-    }
-    pinView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:defaultPinID];
-    pinView.pinTintColor = pinColor;
-    [self.mapView addSubview:pinView];
-     */
-    //[self dropPinsFor:[DataSource sharedInstance].localPlacesList];
+
     [self closeCategorySelectionView];
     self.tapGesture = nil;
     self.view.alpha = 1;
@@ -459,15 +453,13 @@
         CalloutBubbleViewController *calloutController = segue.destinationViewController;
         calloutController.context = self.context;
         calloutController.touchLocation = self.touchLocation;
-        CGFloat x = self.touchLocation.x;
-        //calloutController.selectedSearchResult
-
+        calloutController.selectedPointOfInterest = self.selectedSearchResult;
+        calloutController.mapView = self.mapView;
+        calloutController.locationManager = self.locationManager;
         
     }
     
 }
-
-
 
 
 @end

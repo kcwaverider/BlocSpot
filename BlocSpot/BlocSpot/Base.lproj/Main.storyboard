@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H1p-Uh-vWS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H1p-Uh-vWS">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -117,10 +117,10 @@
                         <barButtonItem title="Bars" style="plain" id="8HP-rR-mPC">
                             <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
-                        <barButtonItem title="Coffee Shop" style="plain" id="2rO-xk-6e0">
+                        <barButtonItem title="Coffee" style="plain" id="2rO-xk-6e0">
                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
-                        <barButtonItem title="Restaurant" style="plain" id="tgQ-bh-QsS">
+                        <barButtonItem title="Food" style="plain" id="tgQ-bh-QsS">
                             <color key="tintColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                         <barButtonItem title="Shopping" style="plain" id="2ta-xF-dMo">
@@ -203,7 +203,7 @@
                         <outlet property="categorySelectionPicker" destination="AMG-Ud-Moj" id="iXi-cr-n9K"/>
                         <outlet property="listButton" destination="GMv-lf-Wck" id="TW8-42-SFi"/>
                         <outlet property="mapView" destination="O7w-CM-noD" id="Pl9-xx-9sc"/>
-                        <segue destination="pAG-gG-ugi" kind="presentation" identifier="ShowCalloutView" animates="NO" modalPresentationStyle="overCurrentContext" id="jWJ-hv-KkH"/>
+                        <segue destination="pAG-gG-ugi" kind="presentation" identifier="ShowCalloutView" modalPresentationStyle="overCurrentContext" id="jWJ-hv-KkH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lmf-Tq-L58" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -226,48 +226,64 @@
                                 <rect key="frame" x="91" y="225" width="274" height="149"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Notes..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="B1D-zE-3Ac" userLabel="DescriptionText">
-                                        <rect key="frame" x="0.0" y="43" width="186" height="106"/>
+                                        <rect key="frame" x="8" y="43" width="178" height="98"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
                                     </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NJd-av-FVo" userLabel="CompassButton">
-                                        <rect key="frame" x="217" y="85" width="37" height="49"/>
-                                        <state key="normal" image="compass-arrow">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19d-aS-PCi" userLabel="Like/Delete">
-                                        <rect key="frame" x="217" y="43" width="38" height="27"/>
-                                        <state key="normal" image="heart-empty">
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19d-aS-PCi" userLabel="DeleteButton">
+                                        <rect key="frame" x="217" y="52" width="31" height="31"/>
+                                        <state key="normal" image="trash">
                                             <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="likeButtonPressed:" destination="yhB-tT-hZv" eventType="touchUpInside" id="8wA-Na-S6P"/>
+                                            <action selector="deleteLocation" destination="pAG-gG-ugi" eventType="touchUpInside" id="Nex-cS-eUR"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gay-bo-mIZ">
-                                        <rect key="frame" x="8" y="0.0" width="158" height="21"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="LocationName">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="17" name="HelveticaNeue-Bold"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LocationName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gay-bo-mIZ">
+                                        <rect key="frame" x="10" y="3" width="126" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NJd-av-FVo" userLabel="CompassButton">
+                                        <rect key="frame" x="217" y="101" width="31" height="31"/>
+                                        <state key="normal" image="compass-arrow">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="directionsButtonPressed:" destination="pAG-gG-ugi" eventType="touchUpInside" id="fAC-sT-9gg"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" semanticContentAttribute="spatial" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="62O-7y-Id5" userLabel="Category">
+                                        <rect key="frame" x="160" y="3" width="109" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J7L-9C-rw5" userLabel="SaveButton">
+                                        <rect key="frame" x="219" y="54" width="28" height="27"/>
+                                        <state key="normal" image="heart-empty"/>
+                                        <connections>
+                                            <action selector="likeButtonPressed:" destination="pAG-gG-ugi" eventType="touchUpInside" id="TpT-Dm-2mN"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.17831503378378377" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="calloutBubble" destination="5Zl-BM-gdF" id="WkX-xp-rcU"/>
+                        <outlet property="categoryLabel" destination="62O-7y-Id5" id="BLV-EG-G0o"/>
+                        <outlet property="deleteButton" destination="19d-aS-PCi" id="CBp-ZP-DsB"/>
+                        <outlet property="descriptionText" destination="B1D-zE-3Ac" id="DJn-Rg-fVn"/>
+                        <outlet property="locationName" destination="gay-bo-mIZ" id="tbv-45-LQD"/>
+                        <outlet property="mapButton" destination="NJd-av-FVo" id="53q-I7-YZ4"/>
+                        <outlet property="saveButton" destination="J7L-9C-rw5" id="ncJ-xu-hzh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c5D-qp-YJq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -334,70 +350,6 @@
             </objects>
             <point key="canvasLocation" x="-38" y="85"/>
         </scene>
-        <!--Callout Bubble View Controller-->
-        <scene sceneID="YNz-wc-nFp">
-            <objects>
-                <viewController id="yhB-tT-hZv" customClass="CalloutBubbleViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="M1u-Gu-Beg"/>
-                        <viewControllerLayoutGuide type="bottom" id="c8f-r3-hni"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="C7C-Up-iGq">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AGe-dV-mMu" customClass="CallOutBubble">
-                                <rect key="frame" x="36" y="187" width="274" height="149"/>
-                                <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Notes..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="o4Y-fu-0SO" userLabel="DescriptionText">
-                                        <rect key="frame" x="0.0" y="43" width="186" height="106"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
-                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
-                                    </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xb5-br-b3C" userLabel="CompassButton">
-                                        <rect key="frame" x="217" y="85" width="37" height="49"/>
-                                        <state key="normal" image="compass-arrow">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lsl-ux-oQ8" userLabel="Like/Delete">
-                                        <rect key="frame" x="217" y="43" width="38" height="27"/>
-                                        <state key="normal" image="heart-empty">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="likeButtonPressed:" destination="yhB-tT-hZv" eventType="touchUpInside" id="cZX-FW-WPw"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWj-bW-5d6">
-                                        <rect key="frame" x="8" y="0.0" width="158" height="21"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="LocationName">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="17" name="HelveticaNeue-Bold"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </view>
-                    <toolbarItems/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="V9N-Zu-aYO" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2348" y="-2127"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="2K3-PP-Sc8">
             <objects>
@@ -418,8 +370,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="compass-arrow" width="28" height="55"/>
+        <image name="compass-arrow" width="32" height="32"/>
         <image name="heart-empty" width="28" height="27"/>
+        <image name="trash" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="G1X-4e-jd5"/>

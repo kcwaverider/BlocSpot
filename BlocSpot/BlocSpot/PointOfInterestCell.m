@@ -81,23 +81,32 @@
     NSString *type = category;
     
     UIColor *pinColor;
-    
+    UIImage *likeButton;
     if ([type isEqualToString:@"Bar"]) {
         locationType = LocationTypeBar;
         pinColor = [UIColor redColor];
+        likeButton = [UIImage imageNamed:@"heart-full-red"];
     } else if ([type isEqualToString:@"Coffee Shop"]) {
         locationType = LocationTypeCoffeeShop;
         pinColor = [UIColor blueColor];
+        likeButton = [UIImage imageNamed:@"heart-full-blue"];
     }else if ([type isEqualToString:@"Restaurant"]) {
         locationType = LocationTypeRestaurant;
         pinColor = [UIColor yellowColor];
+        likeButton = [UIImage imageNamed:@"heart-full-yellow"];
     }else if ([type isEqualToString:@"Shopping"]) {
         locationType = LocationTypeShopping;
         pinColor = [UIColor greenColor];
-    }else {
+        likeButton = [UIImage imageNamed:@"heart-full-green"];
+    }else  if ([type isEqualToString:@"Recreation"]){
         locationType = LocationTypeRecreation;
         pinColor = [UIColor purpleColor];
+        likeButton = [UIImage imageNamed:@"heart-full-purple"];
+    } else {
+        //likeBu
     }
+    
+    [self.likeButton setImage:likeButton forState:UIControlStateNormal];
     pointOfInterest.locationType = locationType;
     
     NSError *error = nil;

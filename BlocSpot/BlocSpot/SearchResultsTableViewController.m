@@ -109,6 +109,7 @@
         location.longitude = cell.searchResult.longitude;
         pointOfInterest.location = location;
         location.pointOfInterest = pointOfInterest;
+        NSLog(@"SAVED!!!");
         
         NSError *error;
         if(![self.context save:&error]) {

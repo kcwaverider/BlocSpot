@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "SearchResult.h"
+@import MapKit;
 
 @interface CalloutBubbleViewController : UIViewController 
 
@@ -18,7 +19,12 @@
 
 @property (assign) CGPoint touchLocation;
 
+@property (nonatomic, weak) MKMapView *mapView;
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
+
 @property (nonatomic, strong) SearchResult *selectedPointOfInterest;
+- (IBAction)likeButtonPressed:(id)sender;
 
 
 @end

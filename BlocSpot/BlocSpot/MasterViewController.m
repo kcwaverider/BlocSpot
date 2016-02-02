@@ -21,7 +21,7 @@
 
 @property (nonatomic, strong) NSMutableArray *savedLocationsArray;
 @property (nonatomic, strong) NSPredicate *predicate;
-
+@property (nonatomic, strong) SearchResult *selectedSearchResult;
 
 @end
 
@@ -83,6 +83,7 @@
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         PointOfInterest *pointOfInterest = [[self fetchedResultsController] objectAtIndexPath:indexPath];
@@ -98,12 +99,11 @@
         MapViewController *mapViewController = segue.destinationViewController;
         mapViewController.favoriteLocationArray = self.savedLocationsArray;
             NSLog(@"Map button Clikced");
-        } else if ([[segue identifier] isEqualToString:@"savedLocationSelected"]) {
-            
+    } else if ([[segue identifier] isEqualToString:@"savedLocationSelected"]) {
+        MapViewController *mapViewController = segue.destinationViewController;
+        mapViewController.favoriteLocationArray = self.savedLocationsArray;
             NSLog(@"Point of Interest Clicked");
-        }
-        
-    
+    }
 
 }
 
@@ -126,7 +126,7 @@
 
 - (void) tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
-    cell.backgroundColor = [UIColor redColor];
+    //cell.backgroundColor = [UIColor redColor];
    
 }
 
@@ -171,7 +171,24 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.savedLocationsArray removeAllObjects];
     
+    PointOfInterest *pointOfInterest = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    
+    //Assign copy pointOfInterest to a searchResult so it can be displayed on the mapView
+    SearchResult *searchResult = [[SearchResult alloc] init];
+    searchResult.name = pointOfInterest.name;
+    searchResult.category = pointOfInterest.category;
+    searchResult.latitude = pointOfInterest.location.latitude;
+    searchResult.longitude = pointOfInterest.location.longitude;
+    CLLocationCoordinate2D pinPoint;
+    pinPoint.latitude = [searchResult.latitude doubleValue];
+    pinPoint.longitude = [searchResult.longitude doubleValue];
+    searchResult.coordinate = pinPoint;
+    
+    [self.savedLocationsArray addObject:searchResult];
+
 }
 
 
@@ -228,7 +245,7 @@
 }
 
 - (void) setupCategoryButtons {
-    NSArray *categoryButtonArray = @[self.allButton, self.barButton, self.coffeeShopButton, self.restaurantButton, self.shoppingButton, /*self.recreationButton*/];
+    NSArray *categoryButtonArray = @[self.allButton, self.barButton, self.coffeeShopButton, self.restaurantButton, self.shoppingButton, self.recreationButton];
     
     for (UIBarButtonItem *button in categoryButtonArray) {
         button.target = self;
@@ -240,9 +257,9 @@
     [NSFetchedResultsController deleteCacheWithName:nil];
     if ([button.title isEqualToString:@"Bars"]) {
         self.predicate = [NSPredicate predicateWithFormat:@"category == %@",[NSNumber numberWithInteger:LocationTypeBar]];
-    } else if ([button.title isEqualToString:@"Coffee Shop"]) {
+    } else if ([button.title isEqualToString:@"Coffee"]) {
         self.predicate = [NSPredicate predicateWithFormat:@"category == %@",[NSNumber numberWithInteger:LocationTypeCoffeeShop]];
-    } else if ([button.title isEqualToString:@"Restaurant"]) {
+    } else if ([button.title isEqualToString:@"Food"]) {
         self.predicate = [NSPredicate predicateWithFormat:@"category == %@",[NSNumber numberWithInteger:LocationTypeRestaurant]];
     } else if ([button.title isEqualToString:@"Shopping"]) {
         self.predicate = [NSPredicate predicateWithFormat:@"category == %@",[NSNumber numberWithInteger:LocationTypeShopping]];

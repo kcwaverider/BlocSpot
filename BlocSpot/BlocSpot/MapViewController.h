@@ -18,4 +18,5 @@
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSMutableArray *favoriteLocationArray;
 
+
 @end
