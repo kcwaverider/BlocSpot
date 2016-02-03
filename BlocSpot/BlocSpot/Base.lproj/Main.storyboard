@@ -225,7 +225,7 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Zl-BM-gdF" customClass="CallOutBubble">
                                 <rect key="frame" x="91" y="225" width="274" height="149"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Notes..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="B1D-zE-3Ac" userLabel="DescriptionText">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" keyboardDismissMode="interactive" text="Notes..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="B1D-zE-3Ac" userLabel="DescriptionText">
                                         <rect key="frame" x="8" y="43" width="178" height="98"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>

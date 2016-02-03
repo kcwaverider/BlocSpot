@@ -13,7 +13,9 @@
 #import "Location.h"
 
 
-@interface MapViewController : UIViewController 
+@interface MapViewController : UIViewController
+
+extern NSString *const PointOfInterestWasDeleted;
 
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSMutableArray *favoriteLocationArray;

@@ -20,6 +20,7 @@
 @interface MasterViewController () <UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *savedLocationsArray;
+@property (nonatomic, strong) NSMutableArray *singleResultArray;
 @property (nonatomic, strong) NSPredicate *predicate;
 @property (nonatomic, strong) SearchResult *selectedSearchResult;
 
@@ -30,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.predicate = nil;
-    
+    self.savedLocationsArray = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.fetchedResultsController = [self fetchedResultsController];
@@ -39,13 +40,15 @@
     //    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 //    self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    
+    [self registerForPOIDeleteNotification];
     }
 
 - (void)viewWillAppear:(BOOL)animated {
     self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
     [super viewWillAppear:animated];
     [self.navigationController setToolbarHidden:NO animated:YES];
-    //[self.tableView reloadData];
+    [self.tableView reloadData];
 
     NSLog(@"viewDidAppear");
     
@@ -101,7 +104,7 @@
             NSLog(@"Map button Clikced");
     } else if ([[segue identifier] isEqualToString:@"savedLocationSelected"]) {
         MapViewController *mapViewController = segue.destinationViewController;
-        mapViewController.favoriteLocationArray = self.savedLocationsArray;
+        mapViewController.favoriteLocationArray = self.singleResultArray;
             NSLog(@"Point of Interest Clicked");
     }
 
@@ -157,8 +160,7 @@
     searchResult.coordinate = pinPoint;
     
     if (indexPath.row == 0) {
-        self.savedLocationsArray = nil;
-        self.savedLocationsArray = [[NSMutableArray alloc] init];
+        [self.savedLocationsArray removeAllObjects];
     }
     [self.savedLocationsArray addObject:searchResult];
     
@@ -170,8 +172,15 @@
     return cell;
 }
 
+-(void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.savedLocationsArray removeAllObjects];
+    if (!self.singleResultArray) {
+        self.singleResultArray = [[NSMutableArray alloc] init];
+    }
+    [self.singleResultArray removeAllObjects];
     
     PointOfInterest *pointOfInterest = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
@@ -187,7 +196,7 @@
     pinPoint.longitude = [searchResult.longitude doubleValue];
     searchResult.coordinate = pinPoint;
     
-    [self.savedLocationsArray addObject:searchResult];
+    [self.singleResultArray addObject:searchResult];
 
 }
 
@@ -375,6 +384,14 @@
     [self.tableView endUpdates];
 }
 
+-(void) registerForPOIDeleteNotification{
+    [[NSNotificationCenter defaultCenter] addObserverForName:PointOfInterestWasDeleted object:nil queue:nil usingBlock:^(NSNotification *note) {
+        NSLog(@"Stuff Got Deleted!!!!!");
+        if ([self.savedLocationsArray containsObject:note.object]) {
+            [self.savedLocationsArray removeObject:note.object];
+        }
+    }];
+}
 
 
 

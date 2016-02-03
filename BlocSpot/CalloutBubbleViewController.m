@@ -13,7 +13,7 @@
 #import "Location.h"
 
 
-@interface CalloutBubbleViewController () <CategorySelectionViewDelegate>
+@interface CalloutBubbleViewController () <CategorySelectionViewDelegate, UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet CallOutBubble *calloutBubble;
 
@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (nonatomic, strong) CategorySelectionView *categorySelectionView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
+@property (nonatomic, strong) UIImage *secondarySaveImage;
 @property (assign) BOOL isSavedLocation;
 
 
@@ -38,11 +39,10 @@
     self.calloutBubble.layer.cornerRadius = 5.0;
     self.categoryLabel.layer.masksToBounds = YES;
     self.categoryLabel.layer.cornerRadius = self.categoryLabel.frame.size.height / 2;
+    self.descriptionText.delegate = self;
     
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
     [self.view addGestureRecognizer:self.tapGesture];
-    
-    
 
     // Do any additional setup after loading the view.
     
@@ -50,15 +50,18 @@
 
 -(void) viewDidLayoutSubviews {
     self.locationName.text = self.selectedPointOfInterest.title;
-   // self.locationName.attributedText = self.selectedPointOfInterest.title;
-    [self checkForSavedLocation];
+  
     
     [self keepCalloutBubbleInsideView];
     
 }
 
 -(void) viewDidAppear:(BOOL)animated {
+    
+}
 
+-(void) viewWillAppear:(BOOL)animated{
+    [self checkForSavedLocation];
 }
 
 -(void) keepCalloutBubbleInsideView{
@@ -96,22 +99,27 @@
         case LocationTypeBar:
             self.categoryLabel.backgroundColor = [UIColor redColor];
             self.categoryLabel.text = @"Bar";
+            self.secondarySaveImage = [UIImage imageNamed:@"heart-full-red"];
             break;
         case LocationTypeCoffeeShop:
             self.categoryLabel.backgroundColor = [UIColor blueColor];
             self.categoryLabel.text = @"Coffee Shop";
+            self.secondarySaveImage = [UIImage imageNamed:@"heart-full-blue"];
             break;
         case LocationTypeRestaurant:
             self.categoryLabel.backgroundColor = [UIColor yellowColor];
             self.categoryLabel.text = @"Restaurant";
+            self.secondarySaveImage = [UIImage imageNamed:@"heart-full-yellow"];
             break;
         case LocationTypeShopping:
             self.categoryLabel.backgroundColor = [UIColor greenColor];
             self.categoryLabel.text = @"Shopping";
+            self.secondarySaveImage = [UIImage imageNamed:@"heart-full-green"];
             break;
         case LocationTypeRecreation:
             self.categoryLabel.backgroundColor = [UIColor purpleColor];
             self.categoryLabel.text = @"Recreation";
+            self.secondarySaveImage = [UIImage imageNamed:@"heart-full-purple"];
             break;
         default:
             self.categoryLabel.backgroundColor = [UIColor clearColor];
@@ -135,19 +143,35 @@
 #pragma mark - Callout Bubble Controlls
 
 - (IBAction)likeButtonPressed:(UIButton *)sender {
-    
-    self.categorySelectionView = [[CategorySelectionView alloc] initInViewController:self ForLocationNamed:self.selectedPointOfInterest.name];
-    self.categorySelectionView.delegate = self;
-    [self.view addSubview:self.categorySelectionView];
-    
-    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeCategorySelectionView)];
-    [self.view addGestureRecognizer:self.tapGesture];
-    self.calloutBubble.hidden = YES;
+    self.selectedPointOfInterest.notes = self.descriptionText.text;
+    if (self.isSavedLocation) {
+        [self.descriptionText resignFirstResponder];
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:self.context];
+        [fetchRequest setEntity:entity];
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"name == %@ AND location.latitude == %@ AND location.longitude == %@", self.selectedPointOfInterest.name, self.selectedPointOfInterest.latitude, self.selectedPointOfInterest.longitude]];
+        NSError *error = nil;
+        PointOfInterest *pointOfInterest = [[self.context executeFetchRequest:fetchRequest error:&error] objectAtIndex:0];
+        pointOfInterest.notes = self.selectedPointOfInterest.notes;
+        
+        if(![self.context save:&error]) {
+            NSLog(@"Whoops, coudn't save: %@", [error localizedDescription]);
+        }
+        
+    } else {
+        self.categorySelectionView = [[CategorySelectionView alloc] initInViewController:self ForLocationNamed:self.selectedPointOfInterest.name];
+        self.categorySelectionView.delegate = self;
+        [self.view addSubview:self.categorySelectionView];
+        
+        self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeCategorySelectionView)];
+        [self.view addGestureRecognizer:self.tapGesture];
+        self.calloutBubble.hidden = YES;
+    }
     
 }
 
 - (IBAction)directionsButtonPressed:(UIButton *)sender {
-    CLLocation *fromLocation = self.locationManager.location;
     
     CLLocationCoordinate2D toLocationCoordinate = CLLocationCoordinate2DMake([self.selectedPointOfInterest.latitude floatValue], [self.selectedPointOfInterest.longitude floatValue]);
     MKPlacemark *placeMark = [[MKPlacemark alloc] initWithCoordinate:toLocationCoordinate addressDictionary:nil];
@@ -282,8 +306,34 @@
     } else {
         [self.mapView removeAnnotation:self.selectedPointOfInterest.pinView.annotation];
         [self dismissViewControllerAnimated:YES completion:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:PointOfInterestWasDeleted object:self.selectedPointOfInterest];
     }
 
+}
+
+#pragma mark - Delegate Methods
+
+-(void) textViewDidBeginEditing:(UITextView *)textView{
+    if (!self.saveButton.enabled) {
+        
+        [self.saveButton setImage:self.secondarySaveImage forState:UIControlStateNormal];
+        self.saveButton.hidden = NO;
+        self.saveButton.enabled = YES;
+        
+        self.deleteButton.hidden = YES;
+        self.deleteButton.enabled = NO;
+        
+        
+        
+        //[self.view setNeedsLayout];
+    } /*else {
+        self.saveButton.hidden = NO;
+        self.saveButton.enabled = YES;
+        
+        self.deleteButton.hidden = YES;
+        self.deleteButton.enabled = NO;
+
+    }*/
 }
 /*
 #pragma mark - Navigation

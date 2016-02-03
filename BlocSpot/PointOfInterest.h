@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PointOfInterest : NSManagedObject
 
+extern NSString *const PointOfInterestWasDeleted;
+
 typedef NS_ENUM(NSInteger, LocationType) {
     LocationTypeNone            = 0,
     LocationTypeBar             = 1,

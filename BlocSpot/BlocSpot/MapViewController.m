@@ -55,6 +55,8 @@
 
 @implementation MapViewController
 
+
+
 #pragma mark - Standard View Controls
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -71,7 +73,7 @@
     self.context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     self.categorySelectionPicker.delegate = self;
     self.pinDropAnimated = YES;
-    [self dropPinsFor:self.favoriteLocationArray];
+    //[self dropPinsFor:self.favoriteLocationArray];
     
 }
 
@@ -116,8 +118,7 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    
+    [self dropPinsFor:self.favoriteLocationArray];
 }
 #pragma mark - Search Field
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
@@ -261,7 +262,7 @@
     self.touchLocation = touchPoint;
     
     NSLog(@"Pin Origin: %f,%f   Pin Rectangle: %f x %f",view.center.y, view.center.x, view.bounds.size.height,view.bounds.size.width);
-    int i = 0;
+
     [self performSegueWithIdentifier:@"ShowCalloutView" sender:self];
 }
 

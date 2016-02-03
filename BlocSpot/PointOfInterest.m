@@ -13,6 +13,8 @@
 
 // Insert code here to add functionality to your managed object subclass
 
+NSString *const PointOfInterestWasDeleted = @"PointOfInterestWasDeleted";
+
 - (instancetype) init {
     self = [super init];
     self.locationType = 0;
