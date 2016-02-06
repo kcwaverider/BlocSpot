@@ -13,7 +13,10 @@
 #import "Location.h"
 #import "DataSource.h"
 
-@interface AppDelegate () <UISplitViewControllerDelegate>
+@interface AppDelegate () <UISplitViewControllerDelegate, CLLocationManagerDelegate, NSFetchedResultsControllerDelegate>
+
+
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -163,4 +166,72 @@
     }
 }
 
+#pragma mark - Location Notifications
+-(void) startSignificantChangeUpdates {
+    if (self.locationManager == nil) {
+        self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager.delegate = self;
+        [self.locationManager startMonitoringSignificantLocationChanges];
+    }
+}
+
+- (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(nonnull NSArray<CLLocation *> *)locations {
+    
+    CLLocation *location = [locations lastObject];
+    NSDate *eventDate = location.timestamp;
+    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+    
+    if (fabs(howRecent) < 15.0) {
+        [self checkForLocationsNearLocation:location];
+    }
+    
+}
+
+- (void) checkForLocationsNearLocation: (CLLocation *) location {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    aFetchedResultsController.delegate = self;
+    self.fetchedResultsController = aFetchedResultsController;
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:self.managedObjectContext];
+    
+    [fetchRequest setEntity:entity];
+    
+    NSError *error = nil;
+    NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    PointOfInterest *pointA, *nearest;
+    CLLocationDistance distanceA, distanceB;
+    
+    nearest = results[0]
+    
+    for (int i = 1; i <= results.count; i++) {
+        pointA = results[i -1 ];
+        pointB = results[i];
+        
+        CLLocation *locNearest = [[CLLocation alloc] initWithLatitude: [nearest.location.latitude floatValue] longitude:[nearest.location.longitude floatValue]];
+        
+        CLLocation *locB = [[CLLocation alloc] initWithLatitude: [pointA.location.latitude floatValue] longitude:[pointA.location.longitude floatValue]];
+        
+        
+
+        
+    }
+    
+}
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
