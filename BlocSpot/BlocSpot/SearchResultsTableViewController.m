@@ -16,6 +16,7 @@
 
 
 
+
 @interface SearchResultsTableViewController ()<PointOfInterestCellDelegate>
 
 
@@ -27,6 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    self.pointOfInterestArray = [DataSource sharedInstance].localPlacesList;
 
     // Uncomment the following line to preserve selection between presentations.
      self.clearsSelectionOnViewWillAppear = NO;
@@ -57,7 +59,7 @@
     
     // TODO: this needs to be populated from the data store
     //NSLog(@"Local POI Rows: %lu", (unsigned long)[DataSource sharedInstance].localPlacesList.count);
-    return [DataSource sharedInstance].localPlacesList.count;
+    return self.pointOfInterestArray.count;
 }
 
 
@@ -68,7 +70,7 @@
     PointOfInterestCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.delegate = self;
     // Configure the cell...
-    cell.searchResult = [DataSource sharedInstance].localPlacesList[indexPath.row];
+    cell.searchResult = self.pointOfInterestArray[indexPath.row];
     cell.name.text = cell.searchResult.name;
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:self.context];
@@ -84,6 +86,7 @@
     if (results.count > 0) {
         PointOfInterest *pointOfInterest = results[0];
         [cell.likeButton setHeartColorForCategory:pointOfInterest.category];
+        cell.likeButton.enabled = NO;
     } else {
         NSNumber *category = [[NSNumber alloc] initWithInteger:0];
         [cell.likeButton setHeartColorForCategory: category];
@@ -136,25 +139,32 @@
 
 
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
 
-/*
+
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        
+        
+        [self.pointOfInterestArray removeObjectAtIndex:indexPath.row];
+        [self.mapViewController.favoriteLocationArray removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        //[self.tableView reloadData];
+    }/* 
+      else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    } 
+      */
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.
@@ -170,14 +180,16 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
+
+    self.mapViewController.favoriteLocationArray = self.pointOfInterestArray;
     // Pass the selected object to the new view controller.
 }
-*/
+
 
 @end

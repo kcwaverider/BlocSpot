@@ -27,12 +27,14 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) UIImage *secondarySaveImage;
 @property (assign) BOOL isSavedLocation;
+@property (assign) CGPoint calloutBubbleCenterPoint;
 
 
 
 @end
 
 @implementation CalloutBubbleViewController
+
 #pragma mark - View
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,6 +45,9 @@
     
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
     [self.view addGestureRecognizer:self.tapGesture];
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self selector:@selector(keyboardOnScreen:) name:UIKeyboardDidShowNotification object:nil];
 
     // Do any additional setup after loading the view.
     
@@ -323,17 +328,25 @@
         self.deleteButton.hidden = YES;
         self.deleteButton.enabled = NO;
         
-        
-        
-        //[self.view setNeedsLayout];
-    } /*else {
-        self.saveButton.hidden = NO;
-        self.saveButton.enabled = YES;
-        
-        self.deleteButton.hidden = YES;
-        self.deleteButton.enabled = NO;
+    }
+}
 
-    }*/
+-(void) textViewDidEndEditing:(UITextView *)textView {
+    self.calloutBubble.center = self.calloutBubbleCenterPoint;
+}
+
+-(void)keyboardOnScreen:(NSNotification *) notification {
+    
+    self.calloutBubbleCenterPoint = self.calloutBubble.center;
+    NSDictionary *info = notification.userInfo;
+    NSValue *value = info[UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect rawFrame = [value CGRectValue];
+    CGRect keybordFrame = [self.view convertRect:rawFrame fromView:nil];
+    
+    self.calloutBubble.center = CGPointMake(self.view.bounds.size.width / 2, keybordFrame.origin.y - (self.calloutBubble.frame.size.height /2) - 10 );
+    
+    NSLog(@"KeyboardFrame: %@", NSStringFromCGRect(keybordFrame));
 }
 /*
 #pragma mark - Navigation

@@ -118,8 +118,13 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    if (self.pointOfInterestArray) {
+        self.favoriteLocationArray = self.pointOfInterestArray;
+    }
     [self dropPinsFor:self.favoriteLocationArray];
 }
+
+
 #pragma mark - Search Field
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -154,9 +159,13 @@
     [self.search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
         
         
-        self.pointOfInterestArray = nil;
+        if (!self.pointOfInterestArray) {
+            self.pointOfInterestArray = [[NSMutableArray alloc] init];
+        } else {
+            [self.pointOfInterestArray removeAllObjects];
+        }
        
-        self.pointOfInterestArray = [[NSMutableArray alloc] init];
+        
         
         for (NSUInteger i = 0; i < response.mapItems.count; i++) {
 
@@ -173,9 +182,11 @@
             pinPoint.latitude = [searchResult.latitude doubleValue];
             pinPoint.longitude = [searchResult.longitude doubleValue];
             searchResult.coordinate = pinPoint;
+            searchResult.latitude = [NSNumber numberWithDouble: searchResult.coordinate.latitude];
+            searchResult.longitude = [NSNumber numberWithDouble:searchResult.coordinate.longitude];
             
             self.pointOfInterestArray[i] = searchResult;
-            
+            int j = 0;
         }
         [DataSource sharedInstance].localPlacesList = self.pointOfInterestArray;
         
@@ -184,6 +195,8 @@
         [self dropPinsFor:[DataSource sharedInstance].localPlacesList];
         NSLog(@"PINS DROPPED");
     }];
+    self.favoriteLocationArray = self.pointOfInterestArray;
+    int i = 0;
 }
 
 - (NSNumber *) searchResult:(SearchResult *)searchResult matchesLocationInArray:(NSArray*) array {
@@ -292,7 +305,7 @@
     for (SearchResult *result in mapItemsArray) {
         
         //MKPinAnnotationView *annotView = [[MKPinAnnotationView alloc] init];
-        
+        result.pinView.pinTintColor = [self pinColorForSearchResult:result];
         [self.mapView addAnnotation:result];
         
     }
@@ -317,7 +330,9 @@
     
     // If it is favorited the appropriate color should be returned
     if ( results.count > 0) {
-        LocationType category = [searchResult.category integerValue];
+        PointOfInterest *poi = results[0];
+        LocationType category = [poi.category integerValue];
+        //LocationType category = [searchResult.category integerValue]; TEST TEST
         switch (category) {
             case LocationTypeBar:
                 color = [UIColor redColor];

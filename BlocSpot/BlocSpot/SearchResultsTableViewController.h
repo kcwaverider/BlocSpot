@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MapViewController.h"
 
 
 @interface SearchResultsTableViewController : UITableViewController
 
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSMutableArray *pointOfInterestArray;
+@property (nonatomic, weak) MapViewController *mapViewController;
 
 
 @end
