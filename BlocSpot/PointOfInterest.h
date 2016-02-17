@@ -30,6 +30,8 @@ typedef NS_ENUM(NSInteger, LocationType) {
 
 // Insert code here to declare functionality of your managed object subclass
 @property (nonatomic, assign) LocationType locationType;
+@property (nonatomic, assign, nullable) NSInteger *distanceFromUser;
+
 - (instancetype) init;
 @end
 

@@ -18,7 +18,7 @@ NSString *const PointOfInterestWasDeleted = @"PointOfInterestWasDeleted";
 - (instancetype) init {
     self = [super init];
     self.locationType = 0;
-    
+    self.distanceFromUser = [self.category integerValue];
     return self;
 }
 

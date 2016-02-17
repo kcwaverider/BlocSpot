@@ -200,14 +200,14 @@
     NSError *error = nil;
     NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     
-    PointOfInterest *pointA, *nearest;
+    PointOfInterest *pointA,*current, *nearest;
     CLLocationDistance distanceA, distanceB;
     
-    nearest = results[0]
+    nearest = results[0];
     
     for (int i = 1; i <= results.count; i++) {
         pointA = results[i -1 ];
-        pointB = results[i];
+
         
         CLLocation *locNearest = [[CLLocation alloc] initWithLatitude: [nearest.location.latitude floatValue] longitude:[nearest.location.longitude floatValue]];
         

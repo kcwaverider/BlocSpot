@@ -27,7 +27,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>BlocSpot tracks your location when in use!</string>
 	<key>UILaunchStoryboardName</key>
-	<string>BlocSpotSplashImage</string>
+	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

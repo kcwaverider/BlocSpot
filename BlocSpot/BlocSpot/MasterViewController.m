@@ -49,10 +49,6 @@
     [super viewWillAppear:animated];
     [self.navigationController setToolbarHidden:NO animated:YES];
     [self.tableView reloadData];
-
-    NSLog(@"viewDidAppear");
-    
-    
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -119,7 +115,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if([self.fetchedResultsController sections] > 0) {
         id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: section];
-        NSLog(@"Cells: %lu", [sectionInfo numberOfObjects]);
+        
         return [sectionInfo numberOfObjects];
     } else {
         return 0;
@@ -140,7 +136,10 @@
     PointOfInterest *pointOfInterest = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.name.text = pointOfInterest.name;
-    NSLog(@"Name: %@", pointOfInterest.name);
+    if (![pointOfInterest.notes hasPrefix:@"Notes"]) {
+        cell.notes.text = pointOfInterest.notes;
+    }
+    //NSLog(@"Name: %@", pointOfInterest.name);
 
     
     UIView* bgview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
@@ -166,7 +165,7 @@
     
     
 
-    NSLog(@"Name: %@", cell.name.text);
+   // NSLog(@"Name: %@", cell.name.text);
     
 
     return cell;
@@ -248,7 +247,7 @@
             break;
     }
     
-    cellBackgroundColor = [cellBackgroundColor colorWithAlphaComponent:0.1];
+    cellBackgroundColor = [cellBackgroundColor colorWithAlphaComponent:0.2];
     
     return cellBackgroundColor;
 }
@@ -310,7 +309,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
 
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
     

@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "BlocSpotSplashImage@2x.png",
+      "filename" : "BlocSpotSplashScreen.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "BlocSpotSplashImage@3x.png",
+      "filename" : "BlocSpotSplashScreen@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "BlocSpotSplashImage@3x copy.png",
+      "filename" : "BlocSpotSplashScreen@3x.png",
       "scale" : "3x"
     }
   ],

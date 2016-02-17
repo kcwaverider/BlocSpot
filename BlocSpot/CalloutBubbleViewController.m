@@ -28,6 +28,7 @@
 @property (nonatomic, strong) UIImage *secondarySaveImage;
 @property (assign) BOOL isSavedLocation;
 @property (assign) CGPoint calloutBubbleCenterPoint;
+@property (assign) NSUInteger layoutTracker;
 
 
 
@@ -38,6 +39,7 @@
 #pragma mark - View
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.layoutTracker = 1;
     self.calloutBubble.layer.cornerRadius = 5.0;
     self.categoryLabel.layer.masksToBounds = YES;
     self.categoryLabel.layer.cornerRadius = self.categoryLabel.frame.size.height / 2;
@@ -56,8 +58,11 @@
 -(void) viewDidLayoutSubviews {
     self.locationName.text = self.selectedPointOfInterest.title;
   
+    if (self.layoutTracker < 2) {
+        [self keepCalloutBubbleInsideView];
+        self.layoutTracker++;
+    }
     
-    [self keepCalloutBubbleInsideView];
     
 }
 
@@ -67,6 +72,7 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [self checkForSavedLocation];
+    
 }
 
 -(void) keepCalloutBubbleInsideView{
@@ -239,7 +245,7 @@
     }
     
     [self closeCategorySelectionView];
-    self.categoryLabel.backgroundColor = [UIColor yellowColor];
+    //self.categoryLabel.backgroundColor = [UIColor yellowColor];
     self.tapGesture = nil;
     //self.view.alpha = 1;
 }
@@ -330,11 +336,11 @@
         
     }
 }
-
+/*
 -(void) textViewDidEndEditing:(UITextView *)textView {
     self.calloutBubble.center = self.calloutBubbleCenterPoint;
 }
-
+*/
 -(void)keyboardOnScreen:(NSNotification *) notification {
     
     self.calloutBubbleCenterPoint = self.calloutBubble.center;

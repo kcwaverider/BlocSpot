@@ -89,9 +89,15 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jtA-Pe-A6M">
-                                            <rect key="frame" x="8" y="8" width="397" height="21"/>
+                                            <rect key="frame" x="8" y="3" width="397" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lun-8l-Vig" userLabel="Notes">
+                                            <rect key="frame" x="59" y="22" width="445" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -99,6 +105,7 @@
                                 <color key="backgroundColor" red="0.98823535439999999" green="0.078431375319999996" blue="0.43921571970000001" alpha="1" colorSpace="deviceRGB"/>
                                 <connections>
                                     <outlet property="name" destination="jtA-Pe-A6M" id="5rI-fc-txh"/>
+                                    <outlet property="notes" destination="Lun-8l-Vig" id="p9g-ry-lqQ"/>
                                     <segue destination="C8b-UM-VgL" kind="show" identifier="savedLocationSelected" id="G1X-4e-jd5"/>
                                 </connections>
                             </tableViewCell>
@@ -127,7 +134,7 @@
                             <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                         <barButtonItem title="Recreation" style="plain" id="AJC-CR-QLB">
-                            <color key="tintColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.5" green="0.32678865131578949" blue="0.62363795230263153" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8">

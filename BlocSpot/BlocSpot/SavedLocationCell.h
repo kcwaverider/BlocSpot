@@ -16,11 +16,12 @@
 @interface SavedLocationCell : UITableViewCell
 
 @property (nonatomic, strong) IBOutlet UILabel *name;
-//@property (nonatomic, strong) IBOutlet UIImageView *likeImage;
+@property (weak, nonatomic) IBOutlet UILabel *notes;
+
 @property (nonatomic, strong) SearchResult *searchResult;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) UIColor *backgroundColor;
-//@property (nonatomic, assign) id <SavedLocationCellDelegate> delegate;
+
 
 
 
