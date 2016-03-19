@@ -67,6 +67,7 @@
     _locationManager.delegate = self;
     [self.locationManager requestWhenInUseAuthorization];
     [_locationManager startUpdatingLocation];
+    NSLog(@"Map_Lat: %f  Map_Lng: %f", _locationManager.location.coordinate.latitude, _locationManager.location.coordinate.longitude);
     
     
     // Do any additional setup after loading the view.

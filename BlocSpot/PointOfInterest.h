@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <CoreLocation/CoreLocation.h>
 
 @class Location;
 
@@ -30,7 +31,7 @@ typedef NS_ENUM(NSInteger, LocationType) {
 
 // Insert code here to declare functionality of your managed object subclass
 @property (nonatomic, assign) LocationType locationType;
-@property (nonatomic, assign, nullable) NSInteger *distanceFromUser;
+@property (nonatomic, assign, readonly) CLLocationDistance distanceFromUser;
 
 - (instancetype) init;
 @end

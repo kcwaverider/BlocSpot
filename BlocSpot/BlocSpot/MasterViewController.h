@@ -17,6 +17,7 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, assign) id <UITableViewDelegate> delegate;
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *allButton;

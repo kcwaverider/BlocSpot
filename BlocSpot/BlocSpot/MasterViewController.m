@@ -40,12 +40,14 @@
     //    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 //    self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-    
     [self registerForPOIDeleteNotification];
+    self.dataArray = [[self sortedDataArray] mutableCopy];
+    
     }
 
 - (void)viewWillAppear:(BOOL)animated {
     self.clearsSelectionOnViewWillAppear = self.splitViewController.isCollapsed;
+    self.dataArray = [[self sortedDataArray] mutableCopy];
     [super viewWillAppear:animated];
     [self.navigationController setToolbarHidden:NO animated:YES];
     [self.tableView reloadData];
@@ -109,10 +111,11 @@
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[self.fetchedResultsController sections] count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    /*
     if([self.fetchedResultsController sections] > 0) {
         id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: section];
         
@@ -120,6 +123,9 @@
     } else {
         return 0;
     }
+     */
+    NSLog(@"Data Array Count: %lu", self.dataArray.count);
+    return self.dataArray.count;
     
 }
 
@@ -132,9 +138,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"savedLocationCell";
     
-    SavedLocationCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    PointOfInterest *pointOfInterest = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
+    
+    SavedLocationCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    PointOfInterest * pointOfInterest = self.dataArray[indexPath.row];
+    
+    /*
+    PointOfInterest *pointOfInterest = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    */
     cell.name.text = pointOfInterest.name;
     if (![pointOfInterest.notes hasPrefix:@"Notes"]) {
         cell.notes.text = pointOfInterest.notes;
@@ -181,7 +192,7 @@
     }
     [self.singleResultArray removeAllObjects];
     
-    PointOfInterest *pointOfInterest = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    PointOfInterest *pointOfInterest = self.dataArray[indexPath.row];
     
     
     //Assign copy pointOfInterest to a searchResult so it can be displayed on the mapView
@@ -207,10 +218,12 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        PointOfInterest *poi = self.dataArray[indexPath.row];
+        
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
         
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-            
+        [context deleteObject:poi];
+        [self.dataArray removeObjectAtIndex:indexPath.row];
         NSError *error = nil;
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
@@ -392,6 +405,30 @@
     }];
 }
 
+-(NSArray *) sortedDataArray {
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PointOfInterest" inManagedObjectContext:self.managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    
+    
+    [fetchRequest setEntity:entity];
+    NSError *error = nil;
+    NSArray *unsortedArray = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"distanceFromUser" ascending:YES];
+    
+    NSArray *sortedArray = [unsortedArray sortedArrayUsingDescriptors:@[sort]];
+    PointOfInterest *pointOfInterest = sortedArray[0];
+    
+    for (int i = 0; i < sortedArray.count; i++) {
+        PointOfInterest *poi1, *poi2;
+        poi1 = sortedArray[i];
+        poi2 = unsortedArray[i];
+        //NSLog(@"Sorted: %f  Unsorted: %f", poi1.distanceFromUser, poi2.distanceFromUser);
+    }
+    return sortedArray;
+}
 
 
 /*
